@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
+<title>Votapp!!</title>
 
-<title>Insert title here</title>
+<link rel="stylesheet" href="resources/css/bootstrap.min.css">
+
 </head>
 <body>
-	<h1>Hola Mundo</h1>
+		
+	<div ng-controller="firstController" class="container">
+		<div class="col-xs-4"> 
+			<div class="form-group">
+				<label for="idConsultora">Id consultora:</label>
+				<input type="text" class="form-control" id="idConsultora" name="idConsultora" autofocus placeholder="ID" ng-model="idConsultora">
+			</div>
+			<button type="submit" class="btn btn-success btn-block" id="botonEnviar" ng-click="updateResultado()">Enviar</button>
+			<br>
+			<div id="resultado">
+				<h3> El nombre es: {{nombreConsultora}} </h3>
+				<h3> La descripcion es: {{descConsultora}} </h3>
+
+			</div>	
+		</div>
+
+	</div>
+	
+	<script type="text/javascript" src="resources/js/angular.min.js"></script>
+	<script type="text/javascript" src="resources/js/main.js"></script>
 </body>
 </html>
