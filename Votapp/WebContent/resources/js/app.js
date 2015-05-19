@@ -1,4 +1,4 @@
-var app = angular.module("app", []) ;
+/*var app = angular.module("app", []) ;
 
 app.controller('Main', ['$scope','$http', function($scope, $http){
 	
@@ -19,3 +19,5 @@ app.controller('Main', ['$scope','$http', function($scope, $http){
 }
 	
 }])
+
+*/
