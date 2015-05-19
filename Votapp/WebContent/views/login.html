@@ -1,36 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Votapp!!</title>
+ <div class="container">
+ <div class="img">
+	<img src="resources/img/votapp.png" width="240px" /> </div>
+      <form class="form-signin">
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me
+          </label>
+        </div>
+        <button class="btn btn-lg btn-info btn-block" type="submit">Sign in</button>
+      </form>
 
-<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-
-</head>
-<body ng-controller="Main as main">
-
-  	<div class="img">
-		<img src="resources/img/votapp4.png" width="240px" /> 
-	</div>	
-	<section class="form-signin">
-	
-        <label for="inputUsername" class="sr-only">Email address</label>
-	    <input id="inputUsername" type="text" class="form-control" ng-model="main.username" placeholder="username" required autofocus><br>
-	    
-	    <label for="inputPassword" class="sr-only">Password</label>
-	    <input id="inputPassword" type="password" class="form-control" ng-model="main.password" placeholder="password" required><br>
-	    <br>
-	
-	    <button ng-click="register(main.username, main.password)">Register</button>
-	    <button >Login</button>
-	    <button >Logout</button>
-  <div class="img">
-		<img src="resources/img/votapp.png" width="240px" /> </div>
-
-	    <br><br>
-	
-	    <br><br><br>
-    </section>
-	<script type="text/javascript" src="resources/js/angular.min.js"></script>
-	<script type="text/javascript" src="resources/js/app.js"></script>
-</body>
-</html>
+    </div> <!-- /container -->
