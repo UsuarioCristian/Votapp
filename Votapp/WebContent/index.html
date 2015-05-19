@@ -4,32 +4,16 @@
 <title>Votapp!!</title>
 
 <link rel="stylesheet" href="resources/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/css/footer.css">
 
 </head>
-<body ng-controller="Main as main">
-
-  	<div class="img">
-		<img src="resources/img/votapp4.png" width="240px" /> 
-	</div>	
-	<section class="form-signin">
+<body>
+	<div ng-include src="'layout/header.html'"></div>
 	
-        <label for="inputUsername" class="sr-only">Email address</label>
-	    <input id="inputUsername" type="text" class="form-control" ng-model="main.username" placeholder="username" required autofocus><br>
-	    
-	    <label for="inputPassword" class="sr-only">Password</label>
-	    <input id="inputPassword" type="password" class="form-control" ng-model="main.password" placeholder="password" required><br>
-	    <br>
+	<div ng-view>
+	</div>
 	
-	    <button ng-click="register(main.username, main.password)">Register</button>
-	    <button >Login</button>
-	    <button >Logout</button>
-  <div class="img">
-		<img src="resources/img/votapp.png" width="240px" /> </div>
-
-	    <br><br>
-	
-	    <br><br><br>
-    </section>
+	<div ng-include src="'layout/footer.html'"></div>
 	<script type="text/javascript" src="resources/js/angular.min.js"></script>
 	<script type="text/javascript" src="resources/js/app.js"></script>
 </body>
