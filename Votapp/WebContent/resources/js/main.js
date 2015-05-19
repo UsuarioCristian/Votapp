@@ -1,4 +1,4 @@
-var app = angular.module("app", ['ngRoute']);
+//var app = angular.module("app", ['ngRoute']);
 /*
 app.controller('firstController', ['$scope','$http', function($scope, $http){
 		
@@ -16,7 +16,7 @@ app.controller('firstController', ['$scope','$http', function($scope, $http){
 	
 }])
 */
-app.config(["$routeProvider", function($routeProvider){
+/*app.config(["$routeProvider", function($routeProvider){
 
 	$routeProvider.when("/login", {
 		templateUrl: "views/login.html"
@@ -26,3 +26,4 @@ app.config(["$routeProvider", function($routeProvider){
 	})
 
 }])
+*/
