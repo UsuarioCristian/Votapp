@@ -28,7 +28,7 @@ public interface UsuarioService {
 	@POST
 	@Path("/loginAdmin")
 	@Consumes("application/json")
-	@Produces({"application/json"})
+	@Produces({"text/plain"})
 	public Response loginAdmin(Usuario user);
 	
 }

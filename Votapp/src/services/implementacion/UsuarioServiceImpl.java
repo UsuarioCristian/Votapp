@@ -71,10 +71,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 			String token = securityService.crearToken(map);
 
-			List<String> lista = new ArrayList<String>();
-			lista.add(token);
+			/*List<String> lista = new ArrayList<String>();
+			lista.add(token);*/
 
-			return Response.ok(lista).build();
+			return Response.ok(token).build();
 		}
 
 	}
