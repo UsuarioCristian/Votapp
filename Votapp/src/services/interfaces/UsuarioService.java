@@ -21,7 +21,14 @@ public interface UsuarioService {
 	public Response findUserById(@PathParam("id") final int id);
 	
 	@POST
-	@Path("/crear")
+	@Path("/protected/crear")
 	@Consumes("application/json")
 	public Response crearUsuario(Usuario user);
+	
+	@POST
+	@Path("/loginAdmin")
+	@Consumes("application/json")
+	@Produces({"application/json"})
+	public Response loginAdmin(Usuario user);
+	
 }

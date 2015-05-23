@@ -6,14 +6,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({
+	@NamedQuery(name = "Usuario.findUserByName",
+			query = "SELECT u FROM Usuario u WHERE u.username = :username"),	
+})
 
 @Entity
 public class Usuario implements Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4698796275387208168L;
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;

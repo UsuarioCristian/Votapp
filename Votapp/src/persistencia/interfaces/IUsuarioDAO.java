@@ -8,5 +8,6 @@ import dominio.Usuario;
 public interface IUsuarioDAO {
 	public Usuario findUsuarioById(int id);
 	public boolean crearUsuario(Usuario user);
+	public Usuario findUsuario(String username);
 	
 }
