@@ -61,7 +61,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Response loginAdmin(Usuario user) {
 
 		Usuario usuario = usuarioDAO.findUsuario(user.getUsername());
-		if (usuario == null) {
+		
+		if (usuario == null || !(usuario.getPassword().equalsIgnoreCase(user.getPassword()))) {
 			return Response.status(Status.NOT_FOUND).build();
 		} else {
 			// armar el token y enviarselo
