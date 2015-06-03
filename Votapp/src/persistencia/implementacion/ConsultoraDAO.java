@@ -29,4 +29,16 @@ public class ConsultoraDAO implements IConsultoraDAO {
 		}
 	}
 
+	@Override
+	public boolean crearConsultora(Consultora consultora) {
+		try {
+			em.persist(consultora);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 }

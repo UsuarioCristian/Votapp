@@ -10,6 +10,8 @@ import javax.transaction.Transactional;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import negocio.interfaces.IConsultoraHandler;
+import datas.DataConsultora;
 import dominio.Consultora;
 import persistencia.interfaces.IConsultoraDAO;
 import services.interfaces.ConsultoraService;
@@ -20,6 +22,9 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 	
 	@EJB
 	IConsultoraDAO consultoraDAO;
+	
+	@EJB
+	IConsultoraHandler consultoraHandler;
 
 	@Transactional
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -31,6 +36,16 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 		}
 		
 		return Response.ok(consultora).build();
+	}
+
+	@Override
+	public Response crear(DataConsultora dataConsultora) {
+		
+		if(consultoraHandler.altaConsultora(dataConsultora)){
+			return Response.status(200).build();
+		}
+		
+		return null;
 	}
 
 }

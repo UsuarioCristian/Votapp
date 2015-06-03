@@ -7,4 +7,5 @@ import dominio.Consultora;
 @Local
 public interface IConsultoraDAO {
 	public Consultora findConsultoraById(int id);
+	public boolean crearConsultora(Consultora consultora);
 }
