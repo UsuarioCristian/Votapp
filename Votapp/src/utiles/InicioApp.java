@@ -10,11 +10,11 @@ import javax.ejb.TransactionManagementType;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import java.util.Base64;
+
 import org.apache.commons.codec.binary.Hex;
 
-import dominio.Usuario;
 import persistencia.interfaces.IUsuarioDAO;
+import dominio.Usuario;
 
 @WebListener
 @TransactionManagement(TransactionManagementType.CONTAINER)
