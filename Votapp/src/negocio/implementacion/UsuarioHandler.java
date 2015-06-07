@@ -14,6 +14,7 @@ import negocio.interfaces.IUsuarioHandler;
 import persistencia.interfaces.IUsuarioDAO;
 import utiles.UnauthorizedException;
 import datas.DataUsuario;
+import dominio.AdminConsultora;
 import dominio.Usuario;
 
 @Stateless
@@ -27,7 +28,7 @@ public class UsuarioHandler implements IUsuarioHandler {
 	ISecurityService securityService;
 
 	@Override
-	public String LoginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
+	public String loginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
 
 		Usuario usuario = usuarioDAO.findUsuario(dataUsuario.getUsername());
 
@@ -49,6 +50,30 @@ public class UsuarioHandler implements IUsuarioHandler {
 
 		}
 
+	}
+
+	@Override
+	public String loginConsultora(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
+		Usuario usuario = usuarioDAO.findUsuario(dataUsuario.getUsername());
+		if (usuario == null || !(usuario.getPassword().equalsIgnoreCase(dataUsuario.getPassword()))) {
+			throw new NotFoundException();
+		} else {
+			// REFLECTION para saber el nombre de la clase del objeto usuario			
+			if (usuario.getClass() == AdminConsultora.class) {
+				// armar el token y enviarselo
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("username", usuario.getUsername());
+				map.put("Admin", false);
+				map.put("AdminConsultora", true);
+
+				String token = securityService.crearToken(map);
+
+				return token;
+			} else {
+				throw new UnauthorizedException();
+			}
+
+		}
 	}
 
 }

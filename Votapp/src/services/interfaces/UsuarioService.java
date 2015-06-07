@@ -20,4 +20,10 @@ public interface UsuarioService {
 	@Produces({"text/plain"})
 	public Response loginAdmin(DataUsuario user);
 	
+	@POST
+	@Path("/loginConsultora")
+	@Consumes("application/json")
+	@Produces({"text/plain"})
+	public Response loginConsultora(DataUsuario user);
+	
 }

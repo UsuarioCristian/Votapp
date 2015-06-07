@@ -33,7 +33,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Response loginAdmin(DataUsuario user) {
 
 		try {
-			String token = usuarioHandler.LoginAdmin(user);
+			String token = usuarioHandler.loginAdmin(user);
 			return Response.ok(token).build();
 
 		} catch (NotFoundException e) {
@@ -42,6 +42,21 @@ public class UsuarioServiceImpl implements UsuarioService {
 			return Response.status(Status.UNAUTHORIZED).build();
 		}
 
+	}
+
+	@Override
+	@Transactional
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Response loginConsultora(DataUsuario user) {
+		try {
+			String token = usuarioHandler.loginConsultora(user);
+			return Response.ok(token).build();
+
+		} catch (NotFoundException e) {
+			return Response.status(Status.NOT_FOUND).build();
+		} catch (UnauthorizedException e) {
+			return Response.status(Status.UNAUTHORIZED).build();
+		}
 	}
 
 }

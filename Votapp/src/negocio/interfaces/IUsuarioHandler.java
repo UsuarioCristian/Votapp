@@ -9,5 +9,6 @@ import datas.DataUsuario;
 @Local
 public interface IUsuarioHandler {
 	
-	public String LoginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException;
+	public String loginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException;
+	public String loginConsultora(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException;
 }
