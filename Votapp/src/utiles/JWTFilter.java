@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.auth0.jwt.JWTVerifier;
 
-@WebFilter("/services/usuario/protected/*")
+@WebFilter({"/services/usuario/protected/*", "/services/consultoras/protected/*"})
 public class JWTFilter implements Filter {
   private JWTVerifier jwtVerifier;
   
