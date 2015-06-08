@@ -11,4 +11,5 @@ public interface IUsuarioHandler {
 	
 	public String loginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException;
 	public String loginConsultora(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException;
+	public String loginEncuestador(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException;
 }
