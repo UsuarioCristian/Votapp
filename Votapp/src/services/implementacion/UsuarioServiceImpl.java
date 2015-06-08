@@ -58,5 +58,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 			return Response.status(Status.UNAUTHORIZED).build();
 		}
 	}
+	
+	@Override
+	@Transactional
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Response loginEncuestador(DataUsuario user) {
+		try {
+			String token = usuarioHandler.loginEncuestador(user);
+			return Response.ok(token).build();
+
+		} catch (NotFoundException e) {
+			return Response.status(Status.NOT_FOUND).build();
+		} catch (UnauthorizedException e) {
+			return Response.status(Status.UNAUTHORIZED).build();
+		}
+	}
 
 }

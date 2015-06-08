@@ -26,4 +26,10 @@ public interface UsuarioService {
 	@Produces({"text/plain"})
 	public Response loginConsultora(DataUsuario user);
 	
+	@POST
+	@Path("/loginEncuestador")
+	@Consumes("application/json")
+	@Produces({"text/plain"})
+	public Response loginEncuestador(DataUsuario user);
+	
 }
