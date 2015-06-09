@@ -59,13 +59,18 @@ public class UsuarioHandler implements IUsuarioHandler {
 		if (usuario == null || !(usuario.getPassword().equalsIgnoreCase(dataUsuario.getPassword()))) {
 			throw new NotFoundException();
 		} else {
-			// REFLECTION para saber el nombre de la clase del objeto usuario			
+			// REFLECTION para saber el nombre de la clase del objeto usuario
 			if (usuario.getClass() == AdminConsultora.class) {
 				// armar el token y enviarselo
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("username", usuario.getUsername());
 				map.put("Admin", false);
 				map.put("AdminConsultora", true);
+
+				// Castear usuario a AdminConsultora para acceder a datos q solo pertenecen al hijo (AdminConsultora)
+				// Si bien, el id se podria haber obtenido del padre, igual dejo esto x las dudas q se necesiten mas datos 
+				AdminConsultora adminConsultora = (AdminConsultora) usuario;
+				map.put("consultoraID", adminConsultora.getConsultora().getId());
 
 				String token = securityService.crearToken(map);
 
@@ -76,7 +81,7 @@ public class UsuarioHandler implements IUsuarioHandler {
 
 		}
 	}
-	
+
 	@Override
 	public String loginEncuestador(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
 		Usuario usuario = usuarioDAO.findUsuario(dataUsuario.getUsername());

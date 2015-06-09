@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import dominio.Consultora;
+import dominio.Encuestador;
 import persistencia.interfaces.IConsultoraDAO;
 
 @Stateless
@@ -39,6 +40,17 @@ public class ConsultoraDAO implements IConsultoraDAO {
 			return false;
 		}
 
+	}
+
+	@Override
+	public boolean crearEncuestador(Encuestador encuestador) {
+		try {
+			em.persist(encuestador);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

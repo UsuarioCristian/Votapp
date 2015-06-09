@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import datas.DataConsultora;
+import datas.DataUsuario;
 
 @RequestScoped
 @Path("/consultoras")
@@ -24,4 +25,10 @@ public interface ConsultoraService {
 	@Path("/protected/crear")
 	@Consumes("application/json")
 	public Response crear(DataConsultora dataConsultora);
+	
+	@POST
+	@Path("/protected/crearEncuestador")
+	@Consumes("application/json")
+	public Response crearEncuestador(DataUsuario dataUsuario);
+	
 }

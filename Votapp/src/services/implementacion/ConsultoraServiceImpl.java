@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response.Status;
 
 import negocio.interfaces.IConsultoraHandler;
 import datas.DataConsultora;
+import datas.DataUsuario;
 import dominio.Consultora;
 import persistencia.interfaces.IConsultoraDAO;
 import services.interfaces.ConsultoraService;
@@ -45,6 +46,15 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 			return Response.status(200).build();
 		}
 		
+		return null;
+	}
+
+	@Override
+	public Response crearEncuestador(DataUsuario dataUsuario) {
+		
+		if(consultoraHandler.altaEncuestador(dataUsuario)){
+			return Response.status(200).build();
+		}
 		return null;
 	}
 

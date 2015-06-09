@@ -29,7 +29,7 @@ public class Consultora implements Serializable {
 	private AdminConsultora adminConsultora;
 	
 	@OneToMany(mappedBy = "consultora")
-	private Set<Encuestador> encuestadores = new LinkedHashSet<Encuestador>();
+	private Set<Encuestador> encuestadores;
 
 	public Consultora(int id, String nombre, Date fechaFundacion, String descripcion, AdminConsultora adminConsultora) {
 		this.id = id;
@@ -37,10 +37,12 @@ public class Consultora implements Serializable {
 		this.fechaFundacion = fechaFundacion;
 		this.descripcion = descripcion;
 		this.adminConsultora = adminConsultora;
+		this.encuestadores = new LinkedHashSet<Encuestador>();
 	}
 	
 	public Consultora(){
 		super();
+		this.encuestadores = new LinkedHashSet<Encuestador>();		
 	}
 
 	public int getId() {
@@ -74,6 +76,14 @@ public class Consultora implements Serializable {
 
 	public void setAdminConsultora(AdminConsultora adminConsultora) {
 		this.adminConsultora = adminConsultora;
+	}	
+
+	public Set<Encuestador> getEncuestadores() {
+		return encuestadores;
+	}
+
+	public void setEncuestadores(Set<Encuestador> encuestadores) {
+		this.encuestadores = encuestadores;
 	}
 
 	@Override
