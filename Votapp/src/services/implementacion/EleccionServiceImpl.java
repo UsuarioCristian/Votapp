@@ -7,9 +7,8 @@ import javax.ejb.TransactionManagementType;
 import javax.ws.rs.core.Response;
 
 import negocio.interfaces.IEleccionHandler;
-import datas.DataEleccion;
 import services.interfaces.EleccionService;
-import utiles.TipoEleccion;
+import datas.DataEleccion;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -20,9 +19,8 @@ public class EleccionServiceImpl implements EleccionService {
 
 	@Override
 	public Response crear(DataEleccion dataEleccion) {
-		
-		//Hay q modificar la funcion del handler para que maneje el dataEleccion
-		if(eleccionHdlr.crearEleccion(TipoEleccion.Nacional, dataEleccion.getNombre(), dataEleccion.getDescripcion()))
+				
+		if(eleccionHdlr.crearEleccion(dataEleccion))
 			return Response.status(200).build();
 		return null;
 	}

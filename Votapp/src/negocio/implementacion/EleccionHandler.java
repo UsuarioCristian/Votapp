@@ -5,11 +5,11 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import negocio.interfaces.IEleccionHandler;
 import persistencia.interfaces.IEleccionDAO;
+import datas.DataEleccion;
 import dominio.Eleccion;
 import dominio.EleccionNacional;
-import utiles.TipoEleccion;
-import negocio.interfaces.IEleccionHandler;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -19,13 +19,13 @@ public class EleccionHandler implements IEleccionHandler {
 	IEleccionDAO eleccionDAO;
 
 	@Override
-	public boolean crearEleccion(TipoEleccion tipoEleccion, String nombre, String descripcion) {
+	public boolean crearEleccion(DataEleccion data) {
 
 		boolean exito = false;
 
-		switch (tipoEleccion) {
+		switch (data.getTipoEleccion()) {
 			case Nacional:
-				Eleccion eleccion = new EleccionNacional(nombre, descripcion);
+				Eleccion eleccion = new EleccionNacional(data.getNombre(), data.getDescripcion(), data.getFecha());
 				exito = eleccionDAO.crearEleccion(eleccion);
 				break;
 

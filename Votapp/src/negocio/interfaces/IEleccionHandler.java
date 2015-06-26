@@ -2,11 +2,11 @@ package negocio.interfaces;
 
 import javax.ejb.Local;
 
-import utiles.TipoEleccion;
+import datas.DataEleccion;
 
 @Local
 public interface IEleccionHandler {
 	
-	public boolean crearEleccion(TipoEleccion tipoEleccion, String nombre, String descripcion);
+	public boolean crearEleccion(DataEleccion dataEleccion);
 	
 }

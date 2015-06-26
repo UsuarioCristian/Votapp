@@ -12,10 +12,10 @@ public class EleccionNacional extends Eleccion implements Serializable{
 	
 	public EleccionNacional() { }
 	
-	public EleccionNacional(String nombre, String descripcion){
+	public EleccionNacional(String nombre, String descripcion, Date fecha){
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.fecha = new Date();
+		this.fecha = fecha;
 	}
 	
 

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import utiles.TipoEleccion;
+
 public class DataEleccion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,6 +18,7 @@ public class DataEleccion implements Serializable {
 	private List<DataPartido> dataPartidos;
 	private List<DataLista> dataListas;
 	private List<DataCandidato> dataCandidatos;
+	private TipoEleccion tipoEleccion;
 	
 	public DataEleccion(){
 		this.dataPartidos = new ArrayList<DataPartido>();
@@ -77,6 +80,14 @@ public class DataEleccion implements Serializable {
 
 	public void setDataCandidatos(List<DataCandidato> dataCandidatos) {
 		this.dataCandidatos = dataCandidatos;
+	}
+
+	public TipoEleccion getTipoEleccion() {
+		return tipoEleccion;
+	}
+
+	public void setTipoEleccion(TipoEleccion tipoEleccion) {
+		this.tipoEleccion = tipoEleccion;
 	}	
 
 }
