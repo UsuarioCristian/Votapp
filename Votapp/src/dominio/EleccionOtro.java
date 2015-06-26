@@ -12,30 +12,34 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public class EleccionDepartamental extends Eleccion implements Serializable {
-
+public class EleccionOtro extends Eleccion implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
-	public EleccionDepartamental() { }
-	public EleccionDepartamental(String nombre, String descripcion, Date fecha){
+	public EleccionOtro() {	}
+	
+	public EleccionOtro(String nombre, String descripcion, Date fecha){
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
 	}
+
 	@Override
 	public boolean asignarPartidos(List<DataPartido> dataPartidos) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean asignarListas(List<DataLista> dataListas) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean asignarCandidatos(List<DataCandidato> dataCandidatos) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	   
+   
 }

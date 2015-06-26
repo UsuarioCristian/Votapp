@@ -11,6 +11,7 @@ public class DataCandidato implements Serializable {
 	private String nombre;
 	private int edad;
 	private List<DataFuenteDatos> dataFuenteDatos;
+	private List<DataLista> dataListas;
 	
 	public DataCandidato(){
 		this.dataFuenteDatos = new ArrayList<DataFuenteDatos>();
@@ -38,6 +39,14 @@ public class DataCandidato implements Serializable {
 
 	public void setDataFuenteDatos(List<DataFuenteDatos> dataFuenteDatos) {
 		this.dataFuenteDatos = dataFuenteDatos;
+	}
+
+	public List<DataLista> getDataListas() {
+		return dataListas;
+	}
+
+	public void setDataListas(List<DataLista> dataListas) {
+		this.dataListas = dataListas;
 	}
 
 }

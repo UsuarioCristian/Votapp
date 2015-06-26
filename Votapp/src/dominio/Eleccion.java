@@ -1,13 +1,21 @@
 package dominio;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 
-@MappedSuperclass
+import datas.DataCandidato;
+import datas.DataLista;
+import datas.DataPartido;
+
+@Entity
 public abstract class Eleccion {
 
 	@Id
@@ -16,6 +24,15 @@ public abstract class Eleccion {
 	protected Date fecha;
 	protected String nombre;
 	protected String descripcion;
+	
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
+	protected Set<Partido> partidos;
+	
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
+	protected Set<Lista> listas;
+	
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
+	protected Set<Candidato> candidatos;
 
 	public int getId() {
 		return id;
@@ -48,5 +65,37 @@ public abstract class Eleccion {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+	public Set<Partido> getPartidos() {
+		return partidos;
+	}
+
+	public void setPartidos(Set<Partido> partidos) {
+		this.partidos = partidos;
+	}
+
+	public Set<Lista> getListas() {
+		return listas;
+	}
+
+	public void setListas(Set<Lista> listas) {
+		this.listas = listas;
+	}
+
+	public Set<Candidato> getCandidatos() {
+		return candidatos;
+	}
+
+	public void setCandidatos(Set<Candidato> candidatos) {
+		this.candidatos = candidatos;
+	}
+
+	public abstract boolean asignarPartidos(List<DataPartido> dataPartidos);
+
+	public abstract boolean asignarListas(List<DataLista> dataListas);
+
+	public abstract boolean asignarCandidatos(List<DataCandidato> dataCandidatos);
+	
+	
 
 }
