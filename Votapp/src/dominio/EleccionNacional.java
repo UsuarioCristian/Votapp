@@ -136,6 +136,9 @@ public class EleccionNacional extends Eleccion implements Serializable{
 				candidato.setNombre(data.getNombre());
 				candidato.setCargo(TipoCargo.PRESIDENTE); // Hardcoded, debe venir desde la vista el campo del TipoCargo
 				candidato.setEdad(data.getEdad());
+				
+				this.getCandidatos().add(candidato);
+				candidato.setEleccion(this);
 
 				// Transformar el DataFuenteDatos a FuenteDatos y asignarle al candidato
 				for (DataFuenteDatos dataFuenteDatos : data.getDataFuenteDatos()) {
@@ -145,25 +148,22 @@ public class EleccionNacional extends Eleccion implements Serializable{
 				}
 
 				// Buscar listas (a esta altura la lista fue agregado en el paso2... Ver EleccionHandler)
-				// como es una eleccion Nacional entonces el candidato esta en todas las listas del partido.
-				// es complicado xq es una relacion @ManyToMany (peor caso es n^3)..
-				// deberia venir de la vista el partido al cual pertenece el candidato (n^2)
-
-				for (DataLista dataLista : data.getDataListas()) {
-					boolean encontre = false;
-					Lista lista = null;
-					Iterator<Lista> iter = this.getListas().iterator();
-					while (!encontre && iter.hasNext()) {
-						lista = iter.next();
-						if (lista.getNumero() == dataLista.getNumero())
-							encontre = true;
-					}
+				// como es una eleccion Nacional entonces el candidato esta en todas las listas del partido.				
+				String nombrePartido = data.getDataListas().get(0).getNombrePartido();//Obtengo el nombre del partido de la 1era lista
+				Partido partido = null;
+				boolean encontre = false;
+				Iterator<Partido> iter = this.getPartidos().iterator();
+				
+				while(!encontre && iter.hasNext()){
+					partido = iter.next();
+					if(partido.getNombre().equals(nombrePartido))
+						encontre = true;
+				}
+				
+				for (Lista lista : partido.getListas()) {
 					lista.getCandidatos().add(candidato);
 					candidato.getListas().add(lista);
-				}
-
-				this.getCandidatos().add(candidato);
-				candidato.setEleccion(this);
+				}				
 
 			}
 
