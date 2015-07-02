@@ -1,5 +1,8 @@
 package negocio.implementacion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -7,6 +10,7 @@ import javax.ejb.TransactionManagementType;
 
 import negocio.interfaces.IEleccionHandler;
 import persistencia.interfaces.IEleccionDAO;
+import utiles.TipoEleccion;
 import datas.DataEleccion;
 import dominio.Eleccion;
 import dominio.EleccionNacional;
@@ -56,6 +60,37 @@ public class EleccionHandler implements IEleccionHandler {
 			return null;
 		}
 		return eleccion;
+	}
+
+	@Override
+	public List<DataEleccion> getEleccionesActuales() {
+		
+		List<Eleccion> elecciones = eleccionDAO.getEleccionesActuales();
+		List<DataEleccion> dataElecciones = new ArrayList<DataEleccion>();
+		
+		for (Eleccion eleccion : elecciones) {
+			DataEleccion dataEleccion = new DataEleccion();
+			dataEleccion.setNombre(eleccion.getNombre());
+			dataEleccion.setFecha(eleccion.getFecha());
+			dataEleccion.setId(eleccion.getId());
+			switch (eleccion.getClass().getName()) {
+				case "dominio.EleccionNacional":
+					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);
+					break;
+				case "dominio.EleccionDepartamental":
+					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
+					break;
+				case "dominio.EleccionOtro":
+					dataEleccion.setTipoEleccion(TipoEleccion.Otro);
+					break;
+				default:
+					break;
+			}
+			
+			dataElecciones.add(dataEleccion);
+		}
+		
+		return dataElecciones;
 	}
 
 }

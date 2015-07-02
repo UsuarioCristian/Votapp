@@ -1,5 +1,7 @@
 package services.implementacion;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -35,6 +37,12 @@ public class EleccionServiceImpl implements EleccionService {
 		}
 		
 		return Response.ok(eleccion).build();
+	}
+
+	@Override
+	public Response getEleccionesActuales() {
+		List<DataEleccion> elecciones = eleccionHdlr.getEleccionesActuales();
+		return Response.ok(elecciones).build();
 	}
 
 }

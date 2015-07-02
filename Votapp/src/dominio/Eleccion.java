@@ -9,11 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import datas.DataCandidato;
 import datas.DataLista;
 import datas.DataPartido;
+
+@NamedQueries({
+	@NamedQuery (name = "Eleccion.getEleccionesActuales",
+			query = "SELECT e FROM Eleccion e WHERE e.fecha > :today"),
+})
 
 @Entity
 public abstract class Eleccion {
