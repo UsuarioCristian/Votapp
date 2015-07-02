@@ -12,6 +12,7 @@ public class FuenteDatos implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String url;
+	private String tipo;
 
 	public FuenteDatos() {
 		super();
@@ -30,6 +31,14 @@ public class FuenteDatos implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 }
