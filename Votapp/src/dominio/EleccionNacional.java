@@ -145,12 +145,13 @@ public class EleccionNacional extends Eleccion implements Serializable{
 				for (DataFuenteDatos dataFuenteDatos : data.getDataFuenteDatos()) {
 					FuenteDatos fuenteDatos = new FuenteDatos();
 					fuenteDatos.setUrl(dataFuenteDatos.getUrl());
+					fuenteDatos.setTipo(dataFuenteDatos.getTipo());
 					candidato.getFuenteDatos().add(fuenteDatos);
 				}
 
 				// Buscar listas (a esta altura la lista fue agregado en el paso2... Ver EleccionHandler)
 				// como es una eleccion Nacional entonces el candidato esta en todas las listas del partido.				
-				String nombrePartido = data.getDataListas().get(0).getNombrePartido();//Obtengo el nombre del partido de la 1era lista
+				String nombrePartido = data.getNombrePartido();//Obtengo el nombre del partido de la 1era lista
 				Partido partido = null;
 				boolean encontre = false;
 				Iterator<Partido> iter = this.getPartidos().iterator();
@@ -170,6 +171,7 @@ public class EleccionNacional extends Eleccion implements Serializable{
 
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}
