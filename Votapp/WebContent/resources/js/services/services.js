@@ -18,3 +18,10 @@ value('version', '0.1')
 		
 	}
 }])
+.factory('EleccionFactory', ['$http',function($http) {
+	return{
+		getConsultora:function(idEleccion){
+			return $http.get('http://localhost:8080/Votapp/services/eleccion/'+idEleccion)
+		}
+	}
+}])

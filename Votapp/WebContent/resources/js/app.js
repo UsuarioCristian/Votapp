@@ -36,7 +36,8 @@ angular.module('app', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {templateUrl: 'views/login.html', controller: 'LoginController'});
   $routeProvider.when('/consultora', {templateUrl: 'index2.html', controller: 'ConsultoraController'});
-  $routeProvider.otherwise({redirectTo: '/', templateUrl:"views/home.html"});
+  $routeProvider.when('/eleccion', {templateUrl: 'views/login.html', controller: 'ConsultoraController'});
+  $routeProvider.otherwise({redirectTo: '/', templateUrl:"views/home.html", controller: 'EleccionController'});
 }]);
 
 
