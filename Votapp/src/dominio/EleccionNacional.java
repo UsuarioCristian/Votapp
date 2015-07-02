@@ -83,6 +83,7 @@ public class EleccionNacional extends Eleccion implements Serializable{
 				for (DataFuenteDatos dataFuenteDatos : data.getDataFuenteDatos()) {
 					FuenteDatos fuenteDatos = new FuenteDatos();
 					fuenteDatos.setUrl(dataFuenteDatos.getUrl());
+					fuenteDatos.setTipo(dataFuenteDatos.getTipo());
 					partido.getFuenteDatos().add(fuenteDatos);
 				}
 			}
