@@ -49,4 +49,13 @@ public class EleccionHandler implements IEleccionHandler {
 
 	}
 
+	@Override
+	public Eleccion findEleccionById(int id) {
+		Eleccion eleccion = eleccionDAO.findEleccionById(id);
+		if (eleccion == null){
+			return null;
+		}
+		return eleccion;
+	}
+
 }

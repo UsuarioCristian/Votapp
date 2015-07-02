@@ -8,8 +8,8 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import dominio.Eleccion;
 import persistencia.interfaces.IEleccionDAO;
+import dominio.Eleccion;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -27,6 +27,17 @@ public class EleccionDAO implements IEleccionDAO {
 		} catch (Exception e) {
 			return false;
 		}		
+	}
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Eleccion findEleccionById(int id) {
+		try {
+			return em.find(Eleccion.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
