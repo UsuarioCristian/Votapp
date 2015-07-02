@@ -2,12 +2,15 @@ package dominio;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -24,6 +27,9 @@ public class Consultora implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private AdminConsultora adminConsultora;
+	
+	@OneToMany(mappedBy = "consultora")
+	private Set<Encuestador> encuestadores;
 
 	public Consultora(int id, String nombre, Date fechaFundacion, String descripcion, AdminConsultora adminConsultora) {
 		this.id = id;
@@ -31,10 +37,12 @@ public class Consultora implements Serializable {
 		this.fechaFundacion = fechaFundacion;
 		this.descripcion = descripcion;
 		this.adminConsultora = adminConsultora;
+		this.encuestadores = new LinkedHashSet<Encuestador>();
 	}
 	
 	public Consultora(){
 		super();
+		this.encuestadores = new LinkedHashSet<Encuestador>();		
 	}
 
 	public int getId() {
@@ -68,6 +76,14 @@ public class Consultora implements Serializable {
 
 	public void setAdminConsultora(AdminConsultora adminConsultora) {
 		this.adminConsultora = adminConsultora;
+	}	
+
+	public Set<Encuestador> getEncuestadores() {
+		return encuestadores;
+	}
+
+	public void setEncuestadores(Set<Encuestador> encuestadores) {
+		this.encuestadores = encuestadores;
 	}
 
 	@Override

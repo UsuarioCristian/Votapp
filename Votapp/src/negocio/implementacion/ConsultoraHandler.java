@@ -10,8 +10,10 @@ import javax.ejb.TransactionManagementType;
 import persistencia.interfaces.IConsultoraDAO;
 import negocio.interfaces.IConsultoraHandler;
 import datas.DataConsultora;
+import datas.DataUsuario;
 import dominio.AdminConsultora;
 import dominio.Consultora;
+import dominio.Encuestador;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -37,6 +39,23 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		consultora.setAdminConsultora(adminConsultora);
 				
 		return consultoraDAO.crearConsultora(consultora);
+	}
+
+	
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean altaEncuestador(DataUsuario dataUsuario) {
+		
+		Encuestador encuestador = new Encuestador();
+		Consultora consultora = consultoraDAO.findConsultoraById(dataUsuario.getConsultoraID());
+		
+		encuestador.setUsername(dataUsuario.getUsername());
+		encuestador.setPassword(dataUsuario.getPassword());
+		encuestador.setConsultora(consultora);
+		
+		consultora.getEncuestadores().add(encuestador);
+		
+		return consultoraDAO.crearEncuestador(encuestador);
 	}
 
 }
