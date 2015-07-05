@@ -24,4 +24,9 @@ public interface EleccionService {
 	@Path("/{id}")
 	@Produces({"application/json"})
 	public Response findById(@PathParam("id") final int id);
+	
+	@GET
+	@Path("/protected/getEleccionesActuales")
+	@Produces({"application/json"})
+	public Response getEleccionesActuales();
 }

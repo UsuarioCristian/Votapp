@@ -1,5 +1,7 @@
 package negocio.interfaces;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import datas.DataEleccion;
@@ -11,5 +13,7 @@ public interface IEleccionHandler {
 	public boolean crearEleccion(DataEleccion dataEleccion);
 
 	public Eleccion findEleccionById(int id);
+
+	public List<DataEleccion> getEleccionesActuales();
 	
 }

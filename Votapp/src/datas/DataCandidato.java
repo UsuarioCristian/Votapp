@@ -9,10 +9,12 @@ public class DataCandidato implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String nombre;
+	private String nombrePartido;
 	private int edad;
 	private List<DataFuenteDatos> dataFuenteDatos;
 	private List<DataLista> dataListas;
 	
+
 	public DataCandidato(){
 		this.dataFuenteDatos = new ArrayList<DataFuenteDatos>();
 	}
@@ -48,5 +50,13 @@ public class DataCandidato implements Serializable {
 	public void setDataListas(List<DataLista> dataListas) {
 		this.dataListas = dataListas;
 	}
+	
+	
+	public String getNombrePartido() {
+		return nombrePartido;
+	}
 
+	public void setNombrePartido(String nombrePartido) {
+		this.nombrePartido = nombrePartido;
+	}
 }

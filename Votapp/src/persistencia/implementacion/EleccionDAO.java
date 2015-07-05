@@ -1,5 +1,8 @@
 package persistencia.implementacion;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -38,6 +41,20 @@ public class EleccionDAO implements IEleccionDAO {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Eleccion> getEleccionesActuales() {
+		Date today = new Date();
+		try {
+			return em.createNamedQuery("Eleccion.getEleccionesActuales", Eleccion.class)
+					.setParameter("today", today)
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
 	}
 
 }
