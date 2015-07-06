@@ -8,9 +8,9 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import persistencia.interfaces.IConsultoraDAO;
 import dominio.Consultora;
 import dominio.Encuestador;
-import persistencia.interfaces.IConsultoraDAO;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -51,6 +51,20 @@ public class ConsultoraDAO implements IConsultoraDAO {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Consultora getConsultoraByUsername(String username) {
+		try {
+			return em.createNamedQuery("Consultora.getConsultoraByUsername", Consultora.class).
+					setParameter("username", username).
+					getSingleResult();
+		} catch (Exception e) {
+			System.out.println("Ocurrio un error en ConsultoraDAO.getConsultoraByIdUsuario");
+			return null;
+		}
+		
 	}
 
 }

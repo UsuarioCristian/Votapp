@@ -11,5 +11,6 @@ public interface IConsultoraHandler {
 	boolean altaConsultora(DataConsultora dataConsultora);
 
 	boolean altaEncuestador(DataUsuario dataUsuario);
+	public DataConsultora getDataConsultoraByUsername(String username);
 
 }

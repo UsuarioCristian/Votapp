@@ -58,4 +58,20 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		return consultoraDAO.crearEncuestador(encuestador);
 	}
 
+
+	@Override
+	public DataConsultora getDataConsultoraByUsername(String username) {
+		
+		DataConsultora data = new DataConsultora();
+		Consultora consultora = consultoraDAO.getConsultoraByUsername(username);
+		
+		data.setNombre(consultora.getNombre());
+		data.setId(consultora.getId());
+		data.setNombreAdminConsultora(username);
+		data.setFechaFundacion(consultora.getFechaFundacion());
+		consultora = null;
+		
+		return data;
+	}
+
 }

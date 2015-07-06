@@ -24,6 +24,7 @@ public class EleccionNacional extends Eleccion implements Serializable{
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 	
 	public EleccionNacional(String nombre, String descripcion, Date fecha){
@@ -33,6 +34,7 @@ public class EleccionNacional extends Eleccion implements Serializable{
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 
 	@Override
@@ -63,6 +65,16 @@ public class EleccionNacional extends Eleccion implements Serializable{
 	@Override
 	public void setCandidatos(Set<Candidato> candidatos) {
 		this.candidatos = candidatos;
+	}
+	
+	@Override
+	public Set<Encuesta> getEncuestas() {
+		return encuestas;
+	}
+	
+	@Override
+	public void setEncuestas(Set<Encuesta> encuestas) {
+		this.encuestas = encuestas;
 	}
 
 	@Override
