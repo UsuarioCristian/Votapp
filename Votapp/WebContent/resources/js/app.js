@@ -36,8 +36,15 @@ angular.module('app', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/login', {templateUrl: 'views/login.html', controller: 'LoginController'});
   $routeProvider.when('/consultora', {templateUrl: 'index2.html', controller: 'ConsultoraController'});
-  $routeProvider.when('/eleccion', {templateUrl: 'views/login.html', controller: 'ConsultoraController'});
-  $routeProvider.otherwise({redirectTo: '/', templateUrl:"views/home.html", controller: 'EleccionController'});
+  $routeProvider.when('/eleccion', {templateUrl: 'views/eleccion.html', controller: 'EleccionController'});
+  $routeProvider.when('/partido', {templateUrl: 'views/partido.html', controller: 'EleccionController'});
+  $routeProvider.otherwise({redirectTo: '/', templateUrl:"views/home.html", controller: 'EleccionController',
+	    resolve:{
+	        load:function(EleccionFactory){
+	          // MyServiceData will also be injectable in your controller, if you don't want this you could create a new promise with the $q service
+	          return EleccionFactory.promise;
+	        }
+	      }});
 }]);
 
 

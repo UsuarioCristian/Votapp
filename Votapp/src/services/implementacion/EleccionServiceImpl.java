@@ -44,5 +44,11 @@ public class EleccionServiceImpl implements EleccionService {
 		List<DataEleccion> elecciones = eleccionHdlr.getEleccionesActuales();
 		return Response.ok(elecciones).build();
 	}
+	
+	@Override
+	public Response getElecciones() {
+		List<DataEleccion> elecciones = eleccionHdlr.getElecciones();
+		return Response.ok(elecciones).build();
+	}
 
 }

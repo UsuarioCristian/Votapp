@@ -29,4 +29,9 @@ public interface EleccionService {
 	@Path("/protected/getEleccionesActuales")
 	@Produces({"application/json"})
 	public Response getEleccionesActuales();
+	
+	@GET
+	@Path("/getElecciones")
+	@Produces({"application/json"})
+	public Response getElecciones();
 }

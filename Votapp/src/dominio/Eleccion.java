@@ -20,6 +20,8 @@ import datas.DataPartido;
 @NamedQueries({
 	@NamedQuery (name = "Eleccion.getEleccionesActuales",
 			query = "SELECT e FROM Eleccion e WHERE e.fecha > :today"),
+	@NamedQuery (name = "Eleccion.getElecciones",
+			query = "SELECT e FROM Eleccion e"),		
 })
 
 @Entity

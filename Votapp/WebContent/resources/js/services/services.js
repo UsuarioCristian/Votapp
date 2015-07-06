@@ -19,9 +19,19 @@ value('version', '0.1')
 	}
 }])
 .factory('EleccionFactory', ['$http',function($http) {
-	return{
-		getConsultora:function(idEleccion){
-			return $http.get('http://localhost:8080/Votapp/services/eleccion/'+idEleccion)
-		}
-	}
+	var elecciones = null;
+    var promise = $http.get('http://localhost:8080/Votapp/services/eleccion/getElecciones')
+    .success(function (data) {
+    	elecciones = data;
+    });
+
+    return {
+      promise:promise,
+      getEleccionesActuales: function () {
+          return elecciones;//.getSomeData();
+      },
+      getConsultora:function(idEleccion){
+    	  return $http.get('http://localhost:8080/Votapp/services/eleccion/'+idEleccion)
+      }
+    }
 }])

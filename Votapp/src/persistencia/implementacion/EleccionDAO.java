@@ -57,4 +57,15 @@ public class EleccionDAO implements IEleccionDAO {
 		}		
 	}
 
+	@Override
+	public List<Eleccion> getElecciones() {
+		try {
+			return em.createNamedQuery("Eleccion.getElecciones", Eleccion.class)
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
+	}
+
 }

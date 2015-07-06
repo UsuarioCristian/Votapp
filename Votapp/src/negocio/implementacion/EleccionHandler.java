@@ -93,4 +93,35 @@ public class EleccionHandler implements IEleccionHandler {
 		return dataElecciones;
 	}
 
+	@Override
+	public List<DataEleccion> getElecciones() {
+		List<Eleccion> elecciones = eleccionDAO.getElecciones();
+		List<DataEleccion> dataElecciones = new ArrayList<DataEleccion>();
+		
+		for (Eleccion eleccion : elecciones) {
+			DataEleccion dataEleccion = new DataEleccion();
+			dataEleccion.setNombre(eleccion.getNombre());
+			dataEleccion.setDescripcion(eleccion.getDescripcion());
+			dataEleccion.setFecha(eleccion.getFecha());
+			dataEleccion.setId(eleccion.getId());
+			switch (eleccion.getClass().getName()) {
+				case "dominio.EleccionNacional":
+					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);
+					break;
+				case "dominio.EleccionDepartamental":
+					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
+					break;
+				case "dominio.EleccionOtro":
+					dataEleccion.setTipoEleccion(TipoEleccion.Otro);
+					break;
+				default:
+					break;
+			}
+			
+			dataElecciones.add(dataEleccion);
+		}
+		
+		return dataElecciones;
+	}
+
 }

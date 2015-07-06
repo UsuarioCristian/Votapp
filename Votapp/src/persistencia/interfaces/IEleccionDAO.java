@@ -14,5 +14,7 @@ public interface IEleccionDAO {
 	Eleccion findEleccionById(int id);
 
 	public List<Eleccion> getEleccionesActuales();
+
+	public List<Eleccion> getElecciones();
 	
 }

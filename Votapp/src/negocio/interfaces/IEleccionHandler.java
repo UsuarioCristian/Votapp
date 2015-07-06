@@ -15,5 +15,7 @@ public interface IEleccionHandler {
 	public Eleccion findEleccionById(int id);
 
 	public List<DataEleccion> getEleccionesActuales();
+
+	public List<DataEleccion> getElecciones();
 	
 }
