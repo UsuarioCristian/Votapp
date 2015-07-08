@@ -30,7 +30,7 @@ public class SecurityService implements ISecurityService {
 		// OPCIONES del cifrado
 		JWTSigner.Options options = new JWTSigner.Options();
 		options.setIssuedAt(true);
-		options.setExpirySeconds(60);
+		options.setExpirySeconds(180);
 
 		String token = signer.sign(mapToToken, options);
 

@@ -42,6 +42,9 @@ public abstract class Eleccion {
 	
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Candidato> candidatos;
+	
+	@OneToMany(mappedBy = "eleccion")
+	protected Set<Encuesta> encuestas;
 
 	public int getId() {
 		return id;
@@ -97,6 +100,14 @@ public abstract class Eleccion {
 
 	public void setCandidatos(Set<Candidato> candidatos) {
 		this.candidatos = candidatos;
+	}
+
+	public Set<Encuesta> getEncuestas() {
+		return encuestas;
+	}
+
+	public void setEncuestas(Set<Encuesta> encuestas) {
+		this.encuestas = encuestas;
 	}
 
 	public abstract boolean asignarPartidos(List<DataPartido> dataPartidos);

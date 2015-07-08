@@ -34,27 +34,30 @@ public class InicioApp implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent arg0) {
 
 		System.out.println("Iniciando app... creando usuario admin");
-		String passHex = null;
+		
+		if (usuarioDAO.findUsuario("Admin") == null) {
+			String passHex = null;
 
-		try {
-			MessageDigest md = MessageDigest.getInstance("SHA-256");
-			String pass = "Admin";
-			md.update(pass.getBytes("UTF-8"));
-			byte[] digest = md.digest();
+			try {
+				MessageDigest md = MessageDigest.getInstance("SHA-256");
+				String pass = "Admin";
+				md.update(pass.getBytes("UTF-8"));
+				byte[] digest = md.digest();
 
-			passHex = Hex.encodeHexString(digest);
+				passHex = Hex.encodeHexString(digest);
 
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+			Usuario user = new Usuario();
+			user.setUsername("Admin");
+			user.setPassword(passHex);
+			usuarioDAO.crearUsuario(user);
 		}
-
-		Usuario user = new Usuario();
-		user.setUsername("Admin");
-		user.setPassword(passHex);
-		usuarioDAO.crearUsuario(user);
+		
 
 	}
 

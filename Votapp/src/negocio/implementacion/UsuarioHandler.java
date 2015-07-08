@@ -9,6 +9,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.ws.rs.NotFoundException;
 
+import negocio.interfaces.IConsultoraHandler;
 import negocio.interfaces.ISecurityService;
 import negocio.interfaces.IUsuarioHandler;
 import persistencia.interfaces.IUsuarioDAO;
@@ -27,6 +28,9 @@ public class UsuarioHandler implements IUsuarioHandler {
 	
 	@EJB
 	ISecurityService securityService;
+	
+	@EJB
+	IConsultoraHandler consultoraHdlr;
 
 	@Override
 	public String loginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
@@ -95,7 +99,7 @@ public class UsuarioHandler implements IUsuarioHandler {
 				map.put("username", usuario.getUsername());
 				map.put("Admin", false);
 				map.put("Encuestador", true);
-
+				
 				String token = securityService.crearToken(map);
 
 				return token;

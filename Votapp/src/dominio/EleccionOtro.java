@@ -7,6 +7,7 @@ import dominio.Eleccion;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import javax.persistence.*;
@@ -16,12 +17,15 @@ public class EleccionOtro extends Eleccion implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	public EleccionOtro() {	}
+	public EleccionOtro() {
+		this.encuestas = new LinkedHashSet<Encuesta>();
+	}
 	
 	public EleccionOtro(String nombre, String descripcion, Date fecha){
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 
 	@Override

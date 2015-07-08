@@ -10,9 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@NamedQueries({
+	@NamedQuery(name = "Consultora.getConsultoraByUsername", 
+			query = "SELECT c FROM Consultora c WHERE c.adminConsultora.username = :username")
+})
 @Entity
 public class Consultora implements Serializable {
 
@@ -30,6 +36,9 @@ public class Consultora implements Serializable {
 	
 	@OneToMany(mappedBy = "consultora")
 	private Set<Encuestador> encuestadores;
+	
+	@OneToMany(mappedBy = "consultora")
+	private Set<Encuesta> encuestas;
 
 	public Consultora(int id, String nombre, Date fechaFundacion, String descripcion, AdminConsultora adminConsultora) {
 		this.id = id;
@@ -38,11 +47,13 @@ public class Consultora implements Serializable {
 		this.descripcion = descripcion;
 		this.adminConsultora = adminConsultora;
 		this.encuestadores = new LinkedHashSet<Encuestador>();
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 	
 	public Consultora(){
 		super();
 		this.encuestadores = new LinkedHashSet<Encuestador>();		
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 
 	public int getId() {
@@ -84,6 +95,14 @@ public class Consultora implements Serializable {
 
 	public void setEncuestadores(Set<Encuestador> encuestadores) {
 		this.encuestadores = encuestadores;
+	}
+
+	public Set<Encuesta> getEncuestas() {
+		return encuestas;
+	}
+
+	public void setEncuestas(Set<Encuesta> encuestas) {
+		this.encuestas = encuestas;
 	}
 
 	@Override

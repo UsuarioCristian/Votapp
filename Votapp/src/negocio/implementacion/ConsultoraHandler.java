@@ -8,6 +8,7 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import persistencia.interfaces.IConsultoraDAO;
+import persistencia.interfaces.IUsuarioDAO;
 import negocio.interfaces.IConsultoraHandler;
 import datas.DataConsultora;
 import datas.DataUsuario;
@@ -21,24 +22,31 @@ public class ConsultoraHandler implements IConsultoraHandler {
 
 	@EJB
 	IConsultoraDAO consultoraDAO;
+	@EJB
+	IUsuarioDAO usuarioDAO;
 	
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean altaConsultora(DataConsultora dataConsultora) {
+		if(usuarioDAO.findUsuario(dataConsultora.getNombre()) == null){
+			Consultora consultora = new Consultora();
+			AdminConsultora adminConsultora = new AdminConsultora();
+			
+			consultora.setNombre(dataConsultora.getNombre());
+			consultora.setDescripcion(dataConsultora.getDescripcion());
+			
+			adminConsultora.setUsername(dataConsultora.getNombreAdminConsultora());
+			adminConsultora.setPassword(dataConsultora.getPassAdminConsultora());
+			adminConsultora.setConsultora(consultora);
+			
+			consultora.setAdminConsultora(adminConsultora);
+					
+			return consultoraDAO.crearConsultora(consultora);
+		}else{
+			System.out.println("El usuario ya existe (ConsultoraHandler.altaConsultora)");
+			return false;
+		}
 		
-		Consultora consultora = new Consultora();
-		AdminConsultora adminConsultora = new AdminConsultora();
-		
-		consultora.setNombre(dataConsultora.getNombre());
-		consultora.setDescripcion(dataConsultora.getDescripcion());
-		
-		adminConsultora.setUsername(dataConsultora.getNombreAdminConsultora());
-		adminConsultora.setPassword(dataConsultora.getPassAdminConsultora());
-		adminConsultora.setConsultora(consultora);
-		
-		consultora.setAdminConsultora(adminConsultora);
-				
-		return consultoraDAO.crearConsultora(consultora);
 	}
 
 	
@@ -46,16 +54,38 @@ public class ConsultoraHandler implements IConsultoraHandler {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean altaEncuestador(DataUsuario dataUsuario) {
 		
-		Encuestador encuestador = new Encuestador();
-		Consultora consultora = consultoraDAO.findConsultoraById(dataUsuario.getConsultoraID());
+		if(usuarioDAO.findUsuario(dataUsuario.getUsername()) == null){
+			Encuestador encuestador = new Encuestador();
+			Consultora consultora = consultoraDAO.findConsultoraById(dataUsuario.getConsultoraID());
+			
+			encuestador.setUsername(dataUsuario.getUsername());
+			encuestador.setPassword(dataUsuario.getPassword());
+			encuestador.setConsultora(consultora);
+			
+			consultora.getEncuestadores().add(encuestador);
+			
+			return consultoraDAO.crearEncuestador(encuestador);
+		}else{
+			System.out.println("El usuario ya existe (ConsultoraHandler.altaEncuestador)");
+			return false;
+		}
 		
-		encuestador.setUsername(dataUsuario.getUsername());
-		encuestador.setPassword(dataUsuario.getPassword());
-		encuestador.setConsultora(consultora);
+	}
+
+
+	@Override
+	public DataConsultora getDataConsultoraByUsername(String username) {
 		
-		consultora.getEncuestadores().add(encuestador);
+		DataConsultora data = new DataConsultora();
+		Consultora consultora = consultoraDAO.getConsultoraByUsername(username);
 		
-		return consultoraDAO.crearEncuestador(encuestador);
+		data.setNombre(consultora.getNombre());
+		data.setId(consultora.getId());
+		data.setNombreAdminConsultora(username);
+		data.setFechaFundacion(consultora.getFechaFundacion());
+		consultora = null;
+		
+		return data;
 	}
 
 }

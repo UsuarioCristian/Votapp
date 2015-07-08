@@ -10,4 +10,5 @@ public interface IConsultoraDAO {
 	public Consultora findConsultoraById(int id);
 	public boolean crearConsultora(Consultora consultora);
 	public boolean crearEncuestador(Encuestador encuestador);
+	public Consultora getConsultoraByUsername(String username);
 }
