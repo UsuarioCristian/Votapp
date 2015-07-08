@@ -19,23 +19,8 @@ angular.module("app.controllers",[])
 		)
 	}
 }])
-.controller('ConsultoraController', ['$scope', 'ConsultoraFactory', function($scope, ConsultoraFactory) {
-	
-	$scope.updateResultado = function(consultoraId){
+
+.controller('HomeController', ['$scope', function($scope){
 		
-		ConsultoraFactory.getConsultora(consultoraId).then(
-				function(response){
-					$scope.consultora.nombre = response.data.nombre;
-					$scope.consultora.descripcion = response.data.descripcion;
-				},
-				
-				function(response){
-					//error messagge
-				}
-		)
-		
-	};
-	
-	//$scope.updateResultado(1); //valor inicial de la consulta
 	
 }])

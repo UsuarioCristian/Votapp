@@ -14,9 +14,11 @@ public class DataPartido implements Serializable {
 	private String presidente;
 	private Date fechaFundacion;
 	private List<DataFuenteDatos> dataFuenteDatos;
+	private List<DataDepartamento> dataDeptos;
 	
 	public DataPartido() {
 		this.dataFuenteDatos = new ArrayList<DataFuenteDatos>();
+		this.dataDeptos = new ArrayList<DataDepartamento>();
 	}
 
 	public String getNombre() {
@@ -57,6 +59,14 @@ public class DataPartido implements Serializable {
 
 	public void setDataFuenteDatos(List<DataFuenteDatos> dataFuenteDatos) {
 		this.dataFuenteDatos = dataFuenteDatos;
+	}
+
+	public List<DataDepartamento> getDataDeptos() {
+		return dataDeptos;
+	}
+
+	public void setDataDeptos(List<DataDepartamento> dataDeptos) {
+		this.dataDeptos = dataDeptos;
 	}
 
 }
