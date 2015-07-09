@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import dominio.Departamento;
+import utiles.TipoCargo;
+
 public class DataCandidato implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -13,6 +16,8 @@ public class DataCandidato implements Serializable {
 	private int edad;
 	private List<DataFuenteDatos> dataFuenteDatos;
 	private List<DataLista> dataListas;
+	private TipoCargo cargo;
+	private Departamento departamento; //Solo si es eleccion departamental
 	
 
 	public DataCandidato(){
@@ -58,5 +63,21 @@ public class DataCandidato implements Serializable {
 
 	public void setNombrePartido(String nombrePartido) {
 		this.nombrePartido = nombrePartido;
+	}
+
+	public TipoCargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(TipoCargo cargo) {
+		this.cargo = cargo;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 }

@@ -58,6 +58,8 @@ public class InicioApp implements ServletContextListener {
 			usuarioDAO.crearUsuario(user);
 		}
 		
+		System.out.println("Creando Departamentos...");
+		
 
 	}
 

@@ -24,6 +24,9 @@ public class Lista implements Serializable {
 	
 	@ManyToMany
 	private Set<Candidato> candidatos;
+	
+	@ManyToOne
+	private Departamento departamento;
 
 	public Lista() {
 		super();
@@ -67,6 +70,14 @@ public class Lista implements Serializable {
 
 	public void setCandidatos(Set<Candidato> candidatos) {
 		this.candidatos = candidatos;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 }

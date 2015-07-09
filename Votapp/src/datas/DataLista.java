@@ -8,7 +8,16 @@ public class DataLista implements Serializable {
 	
 	private int numero;
 	private String nombrePartido;
+	private DataDepartamento dataDepartamento;
 	
+	public DataDepartamento getDataDepartamento() {
+		return dataDepartamento;
+	}
+
+	public void setDataDepartamento(DataDepartamento dataDepartamento) {
+		this.dataDepartamento = dataDepartamento;
+	}
+
 	public DataLista() { }
 
 	public int getNumero() {

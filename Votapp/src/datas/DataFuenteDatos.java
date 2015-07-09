@@ -2,12 +2,14 @@ package datas;
 
 import java.io.Serializable;
 
+import utiles.TipoFuente;
+
 public class DataFuenteDatos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private String url;
-	private String tipo;
+	private TipoFuente tipo;
 
 	public String getUrl() {
 		return url;
@@ -17,11 +19,11 @@ public class DataFuenteDatos implements Serializable {
 		this.url = url;
 	}
 	
-	public String getTipo() {
+	public TipoFuente getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoFuente tipo) {
 		this.tipo = tipo;
 	}
 	

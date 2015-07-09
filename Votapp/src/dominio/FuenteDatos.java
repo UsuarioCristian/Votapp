@@ -3,6 +3,8 @@ package dominio;
 import java.io.Serializable;
 
 import javax.persistence.*;
+
+import utiles.TipoFuente;
 @Entity
 public class FuenteDatos implements Serializable {
 	   
@@ -12,7 +14,12 @@ public class FuenteDatos implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String url;
-	private String tipo;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoFuente tipo;
+	
+	@ManyToOne
+	private Departamento departamento;
 
 	public FuenteDatos() {
 		super();
@@ -33,12 +40,20 @@ public class FuenteDatos implements Serializable {
 		this.url = url;
 	}
 	
-	public String getTipo() {
+	public TipoFuente getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoFuente tipo) {
 		this.tipo = tipo;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
 	}
 
 }

@@ -9,25 +9,24 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 
-import utiles.TipoCargo;
 import datas.DataCandidato;
 import datas.DataFuenteDatos;
 import datas.DataLista;
 import datas.DataPartido;
 
 @Entity
-public class EleccionNacional extends Eleccion implements Serializable{
+public class EleccionNacional extends Eleccion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-		
+
 	public EleccionNacional() {
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
-	
-	public EleccionNacional(String nombre, String descripcion, Date fecha){
+
+	public EleccionNacional(String nombre, String descripcion, Date fecha) {
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
@@ -66,12 +65,12 @@ public class EleccionNacional extends Eleccion implements Serializable{
 	public void setCandidatos(Set<Candidato> candidatos) {
 		this.candidatos = candidatos;
 	}
-	
+
 	@Override
 	public Set<Encuesta> getEncuestas() {
 		return encuestas;
 	}
-	
+
 	@Override
 	public void setEncuestas(Set<Encuesta> encuestas) {
 		this.encuestas = encuestas;
@@ -147,9 +146,9 @@ public class EleccionNacional extends Eleccion implements Serializable{
 			for (DataCandidato data : dataCandidatos) {
 				candidato = new Candidato();
 				candidato.setNombre(data.getNombre());
-				candidato.setCargo(TipoCargo.PRESIDENTE); // Hardcoded, debe venir desde la vista el campo del TipoCargo
+				candidato.setCargo(data.getCargo());
 				candidato.setEdad(data.getEdad());
-				
+
 				this.getCandidatos().add(candidato);
 				candidato.setEleccion(this);
 
@@ -162,22 +161,22 @@ public class EleccionNacional extends Eleccion implements Serializable{
 				}
 
 				// Buscar listas (a esta altura la lista fue agregado en el paso2... Ver EleccionHandler)
-				// como es una eleccion Nacional entonces el candidato esta en todas las listas del partido.				
-				String nombrePartido = data.getNombrePartido();//Obtengo el nombre del partido de la 1era lista
+				// como es una eleccion Nacional entonces el candidato esta en todas las listas del partido.
+				String nombrePartido = data.getNombrePartido();// Obtengo el nombre del partido de la 1era lista
 				Partido partido = null;
 				boolean encontre = false;
 				Iterator<Partido> iter = this.getPartidos().iterator();
-				
-				while(!encontre && iter.hasNext()){
+
+				while (!encontre && iter.hasNext()) {
 					partido = iter.next();
-					if(partido.getNombre().equals(nombrePartido))
+					if (partido.getNombre().equals(nombrePartido))
 						encontre = true;
 				}
-				
+
 				for (Lista lista : partido.getListas()) {
 					lista.getCandidatos().add(candidato);
 					candidato.getListas().add(lista);
-				}				
+				}
 
 			}
 

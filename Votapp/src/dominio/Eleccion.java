@@ -45,6 +45,9 @@ public abstract class Eleccion {
 	
 	@OneToMany(mappedBy = "eleccion")
 	protected Set<Encuesta> encuestas;
+	
+	@OneToMany(mappedBy = "eleccion")
+	protected Set<Departamento> departamentos;
 
 	public int getId() {
 		return id;
@@ -108,6 +111,14 @@ public abstract class Eleccion {
 
 	public void setEncuestas(Set<Encuesta> encuestas) {
 		this.encuestas = encuestas;
+	}
+
+	public Set<Departamento> getDepartamentos() {
+		return departamentos;
+	}
+
+	public void setDepartamentos(Set<Departamento> departamentos) {
+		this.departamentos = departamentos;
 	}
 
 	public abstract boolean asignarPartidos(List<DataPartido> dataPartidos);
