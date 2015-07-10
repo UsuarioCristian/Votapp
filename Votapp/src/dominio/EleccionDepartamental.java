@@ -22,12 +22,19 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public EleccionDepartamental() { 
+		this.partidos = new LinkedHashSet<Partido>();
+		this.listas = new LinkedHashSet<Lista>();
+		this.candidatos = new LinkedHashSet<Candidato>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
+		this.departamentos = new LinkedHashSet<Departamento>();
 	}
 	public EleccionDepartamental(String nombre, String descripcion, Date fecha){
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
+		this.partidos = new LinkedHashSet<Partido>();
+		this.listas = new LinkedHashSet<Lista>();
+		this.candidatos = new LinkedHashSet<Candidato>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.departamentos = new LinkedHashSet<Departamento>();
 	}

@@ -13,6 +13,7 @@ import persistencia.interfaces.IEleccionDAO;
 import utiles.TipoEleccion;
 import datas.DataEleccion;
 import dominio.Eleccion;
+import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
 
 @Stateless
@@ -26,19 +27,33 @@ public class EleccionHandler implements IEleccionHandler {
 	public boolean crearEleccion(DataEleccion data) {
 
 		boolean exito = false;
+		Eleccion eleccion = null;
+		boolean paso1, paso2, paso3;
 
 		switch (data.getTipoEleccion()) {
 			case Nacional:
-				Eleccion eleccion = new EleccionNacional(data.getNombre(), data.getDescripcion(), data.getFecha());
-				boolean paso1 = eleccion.asignarPartidos(data.getDataPartidos());
-				boolean paso2 = eleccion.asignarListas(data.getDataListas());
-				boolean paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				eleccion = new EleccionNacional(data.getNombre(), data.getDescripcion(), data.getFecha());
+				paso1 = eleccion.asignarPartidos(data.getDataPartidos());
+				paso2 = eleccion.asignarListas(data.getDataListas());
+				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
 				
 				if(paso1 && paso2 && paso3)
 					exito = eleccionDAO.crearEleccion(eleccion);
 				else
 					System.out.println("ERROR...paso1= "+paso1+" paso2= "+paso2+ " paso3= "+paso3);
-				break;
+			break;
+			
+			case Departamental:
+				eleccion = new EleccionDepartamental(data.getNombre(), data.getDescripcion(), data.getFecha());
+				paso1 = eleccion.asignarPartidos(data.getDataPartidos());
+				paso2 = eleccion.asignarListas(data.getDataListas());
+				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				
+				if(paso1 && paso2 && paso3)
+					exito = eleccionDAO.crearEleccion(eleccion);
+				else
+					System.out.println("ERROR...paso1= "+paso1+" paso2= "+paso2+ " paso3= "+paso3);
+			break;
 
 			default:
 				break;
