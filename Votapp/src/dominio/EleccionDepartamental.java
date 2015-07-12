@@ -103,7 +103,7 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 						Departamento departamento = null;
 						while(iter.hasNext() && !encontre){
 							departamento = iter.next();
-							if(departamento.equals(dataDepartamento.getNombre()))
+							if(departamento.getNombre().equals((dataDepartamento.getNombre())))
 								encontre = true;
 						}
 						fuenteDatos.setDepartamento(departamento);
@@ -149,12 +149,12 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 				encontre = false;
 				Iterator<Departamento> iterador = departamentos.iterator();
 				Departamento departamento = null;
-				while(iter.hasNext() && !encontre){
+				while(iterador.hasNext() && !encontre){
 					departamento = iterador.next();
 					if(departamento.getNombre().equals(data.getDataDepartamento().getNombre()))
 						encontre = true;
 				}
-				
+								
 				departamento.getListas().add(lista);
 				lista.setDepartamento(departamento);
 
@@ -164,6 +164,7 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

@@ -46,7 +46,7 @@ public abstract class Eleccion {
 	@OneToMany(mappedBy = "eleccion")
 	protected Set<Encuesta> encuestas;
 	
-	@OneToMany(mappedBy = "eleccion")
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Departamento> departamentos;
 
 	public int getId() {
