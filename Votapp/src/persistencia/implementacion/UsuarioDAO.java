@@ -51,7 +51,6 @@ public class UsuarioDAO implements IUsuarioDAO {
 					.setParameter("username", username)
 					.getSingleResult();
 		} catch (Exception e) {
-			System.out.println("El usuario no existe");
 		}
 		return null;
 	}

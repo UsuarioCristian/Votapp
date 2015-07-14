@@ -12,6 +12,9 @@ public class Departamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
 	private String nombre;
 	private int numHabitantes;
 	private int numHabilitadosVotar;
@@ -33,6 +36,14 @@ public class Departamento implements Serializable {
 		this.fuenteDatos = new LinkedHashSet<FuenteDatos>();
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNombre() {

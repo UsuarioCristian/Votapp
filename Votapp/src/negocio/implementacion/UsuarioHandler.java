@@ -7,13 +7,13 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.ws.rs.NotFoundException;
 
 import negocio.interfaces.IConsultoraHandler;
 import negocio.interfaces.ISecurityService;
 import negocio.interfaces.IUsuarioHandler;
 import persistencia.interfaces.IUsuarioDAO;
 import utiles.UnauthorizedException;
+import utiles.UserNotFoundException;
 import datas.DataUsuario;
 import dominio.AdminConsultora;
 import dominio.Encuestador;
@@ -33,12 +33,12 @@ public class UsuarioHandler implements IUsuarioHandler {
 	IConsultoraHandler consultoraHdlr;
 
 	@Override
-	public String loginAdmin(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
+	public String loginAdmin(DataUsuario dataUsuario) throws UserNotFoundException, UnauthorizedException {
 
 		Usuario usuario = usuarioDAO.findUsuario(dataUsuario.getUsername());
 
 		if (usuario == null || !(usuario.getPassword().equalsIgnoreCase(dataUsuario.getPassword()))) {
-			throw new NotFoundException();
+			throw new UserNotFoundException();
 		} else {
 			if (usuario.getUsername().equals("Admin")) {
 				// armar el token y enviarselo
@@ -58,10 +58,10 @@ public class UsuarioHandler implements IUsuarioHandler {
 	}
 
 	@Override
-	public String loginConsultora(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
+	public String loginConsultora(DataUsuario dataUsuario) throws UserNotFoundException, UnauthorizedException {
 		Usuario usuario = usuarioDAO.findUsuario(dataUsuario.getUsername());
 		if (usuario == null || !(usuario.getPassword().equalsIgnoreCase(dataUsuario.getPassword()))) {
-			throw new NotFoundException();
+			throw new UserNotFoundException();
 		} else {
 			// REFLECTION para saber el nombre de la clase del objeto usuario
 			if (usuario.getClass() == AdminConsultora.class) {
@@ -87,10 +87,10 @@ public class UsuarioHandler implements IUsuarioHandler {
 	}
 
 	@Override
-	public String loginEncuestador(DataUsuario dataUsuario) throws NotFoundException, UnauthorizedException {
+	public String loginEncuestador(DataUsuario dataUsuario) throws UserNotFoundException, UnauthorizedException {
 		Usuario usuario = usuarioDAO.findUsuario(dataUsuario.getUsername());
 		if (usuario == null || !(usuario.getPassword().equalsIgnoreCase(dataUsuario.getPassword()))) {
-			throw new NotFoundException();
+			throw new UserNotFoundException();
 		} else {
 			// REFLECTION para saber el nombre de la clase del objeto usuario			
 			if (usuario.getClass() == Encuestador.class) {
