@@ -1,6 +1,8 @@
 package datas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataEncuesta implements Serializable {
 
@@ -17,8 +19,11 @@ public class DataEncuesta implements Serializable {
 	private boolean preguntarEdad;
 	private boolean preguntarSexo;
 	private boolean preguntarNivelEstudio;
+	private List<DataDepartamento> listaEncuestaDeptos;
 	
-	public DataEncuesta(){ }
+	public DataEncuesta(){
+		this.listaEncuestaDeptos = new ArrayList<DataDepartamento>();
+	}
 
 	public int getId() {
 		return id;
@@ -98,6 +103,14 @@ public class DataEncuesta implements Serializable {
 
 	public void setIdConsultora(int idConsultora) {
 		this.idConsultora = idConsultora;
+	}
+
+	public List<DataDepartamento> getListaEncuestaDeptos() {
+		return listaEncuestaDeptos;
+	}
+
+	public void setListaEncuestaDeptos(List<DataDepartamento> listaEncuestaDeptos) {
+		this.listaEncuestaDeptos = listaEncuestaDeptos;
 	};
 
 }

@@ -10,7 +10,10 @@ import javax.ejb.TransactionManagementType;
 import persistencia.interfaces.IConsultoraDAO;
 import persistencia.interfaces.IEleccionDAO;
 import persistencia.interfaces.IEncuestaDAO;
+import datas.DataDepartamento;
 import datas.DataEncuesta;
+import dominio.Eleccion;
+import dominio.EleccionNacional;
 import dominio.Encuesta;
 import negocio.interfaces.IEncuestaHandler;
 
@@ -29,19 +32,50 @@ public class EncuestaHandler implements IEncuestaHandler {
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean crearEncuesta(DataEncuesta dataEncuesta) {
 		
-		Encuesta encuesta = new Encuesta();
-		encuesta.setNombre(dataEncuesta.getNombre());
-		encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
-		encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
-		encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
-		encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
-		encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
-		encuesta.setCantidadRespuestas(dataEncuesta.getCantidadRespuestas());
+		//Dependiendo de tipo de Eleccion se debe crear una (eleccion nacional) o varias (elecc departamental) encuestas
 		
-		encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
-		encuesta.setEleccion(eleccionDAO.findEleccionById(dataEncuesta.getIdEleccion()));
+		Eleccion eleccion = eleccionDAO.findEleccionById(dataEncuesta.getIdEleccion());
 		
-		return encuestaDAO.crearEncuesta(encuesta);
+		if(eleccion.getClass() == EleccionNacional.class){
+			Encuesta encuesta = new Encuesta();
+			encuesta.setNombre(dataEncuesta.getNombre());
+			encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
+			encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
+			encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
+			encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
+			encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
+			encuesta.setCantidadRespuestas(dataEncuesta.getCantidadRespuestas());
+			
+			encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+			encuesta.setEleccion(eleccion);
+			
+			return encuestaDAO.crearEncuesta(encuesta);
+		}else{
+			boolean retorno = false;
+			for (DataDepartamento data : dataEncuesta.getListaEncuestaDeptos()) {
+				Encuesta encuesta = new Encuesta();
+				encuesta.setNombre(dataEncuesta.getNombre());
+				encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
+				encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
+				encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
+				encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
+				encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
+				
+				encuesta.setCantidadRespuestas(data.getCantidadRespuestas());
+				encuesta.setNombreDepartamento(data.getNombre());
+				
+				encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+				encuesta.setEleccion(eleccion);
+				
+				retorno = encuestaDAO.crearEncuesta(encuesta);
+			}
+			
+			return retorno;
+		}
+		
+		
+		
+		
 		
 	}
 

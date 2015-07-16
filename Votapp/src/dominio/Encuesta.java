@@ -18,6 +18,7 @@ public class Encuesta implements Serializable {
 	private boolean preguntarSexo;
 	private boolean preguntarNivelEstudio;
 	private int cantidadRespuestas;
+	private String nombreDepartamento;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Consultora consultora;
@@ -106,6 +107,14 @@ public class Encuesta implements Serializable {
 
 	public void setCantidadRespuestas(int cantidadRespuestas) {
 		this.cantidadRespuestas = cantidadRespuestas;
+	}
+
+	public String getNombreDepartamento() {
+		return nombreDepartamento;
+	}
+
+	public void setNombreDepartamento(String nombreDepartamento) {
+		this.nombreDepartamento = nombreDepartamento;
 	}
 
 }
