@@ -19,6 +19,7 @@ public class DataEleccion implements Serializable {
 	private List<DataLista> dataListas;
 	private List<DataCandidato> dataCandidatos;
 	private TipoEleccion tipoEleccion;
+	private DataImagen logo;
 	
 	public DataEleccion(){
 		this.dataPartidos = new ArrayList<DataPartido>();
@@ -88,6 +89,14 @@ public class DataEleccion implements Serializable {
 
 	public void setTipoEleccion(TipoEleccion tipoEleccion) {
 		this.tipoEleccion = tipoEleccion;
+	}
+
+	public DataImagen getLogo() {
+		return logo;
+	}
+
+	public void setLogo(DataImagen logo) {
+		this.logo = logo;
 	}	
 
 }
