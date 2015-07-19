@@ -1,16 +1,32 @@
-package datas;
+package dominio;
 
 import java.io.Serializable;
 
-public class DataImagen implements Serializable {
+import javax.persistence.*;
 
+@Entity
+public class Imagen implements Serializable {
+	   
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private static final long serialVersionUID = 1L;
-
+	
 	private String name;
-	private String file;
 	private String tipo;
 
-	public DataImagen() {
+	@Column(length=100000)
+	private String file;
+
+	public Imagen() {
+		super();
+	}   
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {

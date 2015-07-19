@@ -15,6 +15,7 @@ import datas.DataEleccion;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
+import dominio.Imagen;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -28,11 +29,19 @@ public class EleccionHandler implements IEleccionHandler {
 
 		boolean exito = false;
 		Eleccion eleccion = null;
+		Imagen imagen = null;
 		boolean paso1, paso2, paso3;
 
 		switch (data.getTipoEleccion()) {
 			case Nacional:
 				eleccion = new EleccionNacional(data.getNombre(), data.getDescripcion(), data.getFecha());
+				
+				imagen = new Imagen();
+				imagen.setName(data.getLogo().getName());
+				imagen.setFile(data.getLogo().getFile());
+				imagen.setTipo(data.getLogo().getTipo());
+				eleccion.setImagen(imagen);
+				
 				paso1 = eleccion.asignarPartidos(data.getDataPartidos());
 				paso2 = eleccion.asignarListas(data.getDataListas());
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
@@ -45,6 +54,13 @@ public class EleccionHandler implements IEleccionHandler {
 			
 			case Departamental:
 				eleccion = new EleccionDepartamental(data.getNombre(), data.getDescripcion(), data.getFecha());
+				
+				imagen = new Imagen();
+				imagen.setName(data.getLogo().getName());
+				imagen.setFile(data.getLogo().getFile());
+				imagen.setTipo(data.getLogo().getTipo());
+				eleccion.setImagen(imagen);
+				
 				paso1 = eleccion.asignarPartidos(data.getDataPartidos());
 				paso2 = eleccion.asignarListas(data.getDataListas());
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());

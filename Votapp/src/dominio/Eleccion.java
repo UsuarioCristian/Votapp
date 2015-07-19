@@ -9,9 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import datas.DataCandidato;
 import datas.DataLista;
@@ -33,6 +35,10 @@ public abstract class Eleccion {
 	protected Date fecha;
 	protected String nombre;
 	protected String descripcion;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="idEleccion") // Es unidireccional
+	protected Imagen imagen;
 	
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Partido> partidos;
@@ -119,6 +125,14 @@ public abstract class Eleccion {
 
 	public void setDepartamentos(Set<Departamento> departamentos) {
 		this.departamentos = departamentos;
+	}	
+
+	public Imagen getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Imagen imagen) {
+		this.imagen = imagen;
 	}
 
 	public abstract boolean asignarPartidos(List<DataPartido> dataPartidos);
