@@ -12,6 +12,7 @@ import negocio.interfaces.IEleccionHandler;
 import persistencia.interfaces.IEleccionDAO;
 import utiles.TipoEleccion;
 import datas.DataEleccion;
+import datas.DataImagen;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
@@ -148,7 +149,11 @@ public class EleccionHandler implements IEleccionHandler {
 				default:
 					break;
 			}
-			
+			DataImagen logo = new DataImagen();
+			logo.setFile(eleccion.getImagen().getFile());
+			logo.setName(eleccion.getImagen().getName());
+			logo.setTipo(eleccion.getImagen().getTipo());
+			dataEleccion.setLogo(logo);
 			dataElecciones.add(dataEleccion);
 		}
 		

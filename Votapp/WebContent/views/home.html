@@ -1,7 +1,7 @@
 <div id="content-elecciones" class="container">
 	<div class="row">
 	       <div class="col-lg-4" ng-repeat="eleccion in elecciones" >
-	         <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+	         <img class="img-circle" src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
 	         <h2>{{eleccion.nombre}}</h2>
 	         <p>{{eleccion.descripcion}}</p>
 	         <p><a class="btn btn-default" ng-click="showEleccion(eleccion.id)" role="button">Ver más »</a></p>
