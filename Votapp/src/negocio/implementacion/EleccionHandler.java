@@ -16,6 +16,7 @@ import datas.DataImagen;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
+import dominio.EleccionOtro;
 import dominio.Imagen;
 
 @Stateless
@@ -71,6 +72,24 @@ public class EleccionHandler implements IEleccionHandler {
 				else
 					System.out.println("ERROR...paso1= "+paso1+" paso2= "+paso2+ " paso3= "+paso3);
 			break;
+			
+			case Otra:
+				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha());
+				
+				imagen = new Imagen();
+				imagen.setName(data.getLogo().getName());
+				imagen.setFile(data.getLogo().getFile());
+				imagen.setTipo(data.getLogo().getTipo());
+				eleccion.setImagen(imagen);
+				
+				paso2 = eleccion.asignarListas(data.getDataListas());
+				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				
+				if(paso2 && paso3)
+					exito = eleccionDAO.crearEleccion(eleccion);
+				else
+					System.out.println("ERROR...paso2= "+paso2+ " paso3= "+paso3);
+			break;
 
 			default:
 				break;
@@ -113,7 +132,7 @@ public class EleccionHandler implements IEleccionHandler {
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
 					break;
 				case "dominio.EleccionOtro":
-					dataEleccion.setTipoEleccion(TipoEleccion.Otro);
+					dataEleccion.setTipoEleccion(TipoEleccion.Otra);
 					break;
 				default:
 					break;
@@ -144,7 +163,7 @@ public class EleccionHandler implements IEleccionHandler {
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
 					break;
 				case "dominio.EleccionOtro":
-					dataEleccion.setTipoEleccion(TipoEleccion.Otro);
+					dataEleccion.setTipoEleccion(TipoEleccion.Otra);
 					break;
 				default:
 					break;
