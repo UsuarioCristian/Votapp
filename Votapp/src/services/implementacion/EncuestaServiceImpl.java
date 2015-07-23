@@ -1,5 +1,7 @@
 package services.implementacion;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
@@ -24,6 +26,14 @@ public class EncuestaServiceImpl implements EncuestaService {
 			return Response.status(200).build();
 		return null;
 		
+	}
+
+	@Override
+	public Response getEncuestasByIdConsultora(int id) {
+		
+		List<DataEncuesta> dataEncuestas = encuestaHdlr.getEncuestaByIdConsultora(id);
+		
+		return Response.ok(dataEncuestas).build();
 	}
 
 }

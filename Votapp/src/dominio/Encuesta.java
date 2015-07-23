@@ -1,7 +1,15 @@
 package dominio;
 
 import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.persistence.*;
+
+@NamedQueries({
+	@NamedQuery(name = "Encuesta.getEncuestasByIdConsultora",
+			query = "SELECT e FROM Encuesta e WHERE e.consultora.id = :idConsultora")
+})
 
 @Entity
 public class Encuesta implements Serializable {
@@ -25,9 +33,17 @@ public class Encuesta implements Serializable {
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Eleccion eleccion;
+	
+	@ManyToMany(cascade = CascadeType.MERGE)
+	private Set<Candidato> candidatos;
+	
+	@ManyToMany(cascade = CascadeType.MERGE)
+	private Set<Partido> partidos;
 
 	public Encuesta() {
 		super();
+		this.candidatos = new LinkedHashSet<Candidato>();
+		this.partidos = new LinkedHashSet<Partido>();
 	}   
 	public int getId() {
 		return this.id;
@@ -115,6 +131,22 @@ public class Encuesta implements Serializable {
 
 	public void setNombreDepartamento(String nombreDepartamento) {
 		this.nombreDepartamento = nombreDepartamento;
+	}
+
+	public Set<Candidato> getCandidatos() {
+		return candidatos;
+	}
+
+	public void setCandidatos(Set<Candidato> candidatos) {
+		this.candidatos = candidatos;
+	}
+
+	public Set<Partido> getPartidos() {
+		return partidos;
+	}
+
+	public void setPartidos(Set<Partido> partidos) {
+		this.partidos = partidos;
 	}
 
 }

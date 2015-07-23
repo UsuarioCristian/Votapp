@@ -20,9 +20,13 @@ public class DataEncuesta implements Serializable {
 	private boolean preguntarSexo;
 	private boolean preguntarNivelEstudio;
 	private List<DataDepartamento> listaEncuestaDeptos;
+	private List<DataCandidato> dataCandidatos;
+	private List<DataPartido> dataPartidos;
 	
 	public DataEncuesta(){
 		this.listaEncuestaDeptos = new ArrayList<DataDepartamento>();
+		this.dataCandidatos = new ArrayList<DataCandidato>();
+		this.dataPartidos = new ArrayList<DataPartido>();
 	}
 
 	public int getId() {
@@ -111,6 +115,22 @@ public class DataEncuesta implements Serializable {
 
 	public void setListaEncuestaDeptos(List<DataDepartamento> listaEncuestaDeptos) {
 		this.listaEncuestaDeptos = listaEncuestaDeptos;
+	}
+
+	public List<DataCandidato> getDataCandidatos() {
+		return dataCandidatos;
+	}
+
+	public void setDataCandidatos(List<DataCandidato> dataCandidatos) {
+		this.dataCandidatos = dataCandidatos;
+	}
+
+	public List<DataPartido> getDataPartidos() {
+		return dataPartidos;
+	}
+
+	public void setDataPartidos(List<DataPartido> dataPartidos) {
+		this.dataPartidos = dataPartidos;
 	};
 
 }

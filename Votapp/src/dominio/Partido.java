@@ -32,12 +32,16 @@ public class Partido implements Serializable {
 	
 	@ManyToMany(mappedBy = "partidos")
 	private Set<Departamento> departamentos;
+	
+	@ManyToMany(mappedBy = "partidos")
+	private Set<Encuesta> encuestas;
 
 	public Partido() {
 		super();
 		this.fuenteDatos = new LinkedHashSet<FuenteDatos>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.departamentos = new LinkedHashSet<Departamento>();
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}   
 	public int getId() {
 		return this.id;
@@ -109,6 +113,14 @@ public class Partido implements Serializable {
 
 	public void setDepartamentos(Set<Departamento> departamentos) {
 		this.departamentos = departamentos;
+	}
+
+	public Set<Encuesta> getEncuestas() {
+		return encuestas;
+	}
+
+	public void setEncuestas(Set<Encuesta> encuestas) {
+		this.encuestas = encuestas;
 	}
 
 	@Override

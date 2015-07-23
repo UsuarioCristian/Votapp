@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import persistencia.interfaces.IEleccionDAO;
+import dominio.Departamento;
 import dominio.Eleccion;
 
 @Stateless
@@ -58,6 +59,7 @@ public class EleccionDAO implements IEleccionDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Eleccion> getElecciones() {
 		try {
 			return em.createNamedQuery("Eleccion.getElecciones", Eleccion.class)
@@ -68,4 +70,18 @@ public class EleccionDAO implements IEleccionDAO {
 		}		
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Departamento> getDeptosByEleccionID(int id) {
+		try {
+			return em.createNamedQuery("Eleccion.getDeptosByEleccionID", Departamento.class)
+					.setParameter("idEleccion", id)
+					.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}	
+	}
+
+	
 }

@@ -100,6 +100,10 @@ public class UsuarioHandler implements IUsuarioHandler {
 				map.put("Admin", false);
 				map.put("Encuestador", true);
 				
+				Encuestador encuestador = (Encuestador) usuario;
+				
+				map.put("idConsultora", encuestador.getConsultora().getId());
+				
 				String token = securityService.crearToken(map);
 
 				return token;

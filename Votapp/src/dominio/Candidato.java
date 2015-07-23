@@ -31,11 +31,15 @@ public class Candidato implements Serializable {
 	
 	@ManyToOne
 	private Eleccion eleccion;
+	
+	@ManyToMany(mappedBy = "candidatos")
+	private Set<Encuesta> encuestas;
 
 	public Candidato() {
 		super();
 		this.fuenteDatos = new LinkedHashSet<FuenteDatos>();
 		this.listas = new LinkedHashSet<Lista>();
+		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 
 	public int getId() {
@@ -92,6 +96,14 @@ public class Candidato implements Serializable {
 
 	public void setEleccion(Eleccion eleccion) {
 		this.eleccion = eleccion;
+	}
+
+	public Set<Encuesta> getEncuestas() {
+		return encuestas;
+	}
+
+	public void setEncuestas(Set<Encuesta> encuestas) {
+		this.encuestas = encuestas;
 	}
 
 }
