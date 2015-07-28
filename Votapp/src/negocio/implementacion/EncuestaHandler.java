@@ -16,11 +16,13 @@ import persistencia.interfaces.ICandidatoDAO;
 import persistencia.interfaces.IConsultoraDAO;
 import persistencia.interfaces.IEleccionDAO;
 import persistencia.interfaces.IEncuestaDAO;
+import persistencia.interfaces.IListaDAO;
 import persistencia.interfaces.IPartidoDAO;
 import utiles.TipoCargo;
 import datas.DataCandidato;
 import datas.DataDepartamento;
 import datas.DataEncuesta;
+import datas.DataLista;
 import datas.DataPartido;
 import dominio.Candidato;
 import dominio.Departamento;
@@ -46,6 +48,8 @@ public class EncuestaHandler implements IEncuestaHandler {
 	ICandidatoDAO candidatoDAO;
 	@EJB
 	IPartidoDAO partidoDAO;
+	@EJB
+	IListaDAO listaDAO;
 	
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -196,9 +200,14 @@ public class EncuestaHandler implements IEncuestaHandler {
 				//Aca se podria cambiar el nombre para que no sea necesario cambiarlo en la vista
 				if(encuesta.getEleccion().getClass() == EleccionDepartamental.class)
 					dataEncuesta.setNombre(encuesta.getNombre()+" de "+encuesta.getNombreDepartamento());
-				else
+				else{
 					dataEncuesta.setNombre(encuesta.getNombre());
-				
+					if(encuesta.getEleccion().getClass() == EleccionNacional.class){
+						/*Buscar las listas que tengan cierto idPartido, ya q los candidatos estan en todas las listas (xq es nacional)*/
+						
+						
+					}
+				}
 				/*Ahora hay q obtener la lista de candidatos (o de partidos) dependiendo
 				 *  si es una eleccion nacional o departamental*/ 
 				/*Correccion: no es necesario conocer si es una eleccion nacional o no, ya que obtengo los candidatos y
@@ -212,7 +221,15 @@ public class EncuestaHandler implements IEncuestaHandler {
 						DataCandidato data = new DataCandidato();
 						data.setCargo(candidato.getCargo());
 						data.setNombre(candidato.getNombre());
-						//data.setNombrePartido("El nombre del partido solo se obtiene x la lista");
+						
+						//data.setNombrePartido("El nombre del partido solo se obtiene x la lista"); 
+						/*ver funcion asignarListas()........ */
+						
+						data.setId(candidato.getId());
+						
+						if(encuesta.isPreguntarLista())
+							asignarListas(encuesta, data);
+						
 						dataEncuesta.getDataCandidatos().add(data);
 					}							
 					
@@ -224,7 +241,12 @@ public class EncuestaHandler implements IEncuestaHandler {
 						DataPartido data = new DataPartido();
 						data.setNombre(partido.getNombre());
 						data.setPresidente(partido.getPresidente());
+						data.setId(partido.getId());						
 						/*...*/
+						
+						if(encuesta.isPreguntarLista())
+							asignarListas(encuesta, data);
+						
 						dataEncuesta.getDataPartidos().add(data);
 					}
 				}
@@ -237,6 +259,45 @@ public class EncuestaHandler implements IEncuestaHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+		
+		
+	}
+
+	private void asignarListas(Encuesta encuesta, DataCandidato data) {
+		
+		List<Lista> listas = listaDAO.getListasByIdCandidato(data.getId());
+		String nombrePartido = null;
+		if(encuesta.getEleccion().getClass() == EleccionNacional.class){
+			nombrePartido = listas.get(0).getPartido().getNombre();
+			data.setNombrePartido(nombrePartido);
+		}
+		
+		for (Lista lista : listas) {
+			DataLista dataLista = new DataLista();
+			dataLista.setNombrePartido(nombrePartido);
+			dataLista.setNumero(lista.getNumero());
+			dataLista.setId(lista.getId());
+			
+			data.getDataListas().add(dataLista);
+		}
+		
+		
+	}
+
+	private void asignarListas(Encuesta encuesta, DataPartido data) {
+		
+		List<Lista> listas = listaDAO.getListasByIdPartido(data.getId());
+		String nombrePartido = data.getNombre();
+		//Crear dataLista
+		for (Lista lista : listas) {
+			DataLista dataLista = new DataLista();
+			dataLista.setNombrePartido(data.getNombre());
+			dataLista.setNumero(lista.getNumero());
+			dataLista.setId(lista.getId());
+			dataLista.setNombrePartido(nombrePartido);
+			
+			data.getListas().add(dataLista);
 		}
 		
 		

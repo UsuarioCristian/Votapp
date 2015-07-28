@@ -15,10 +15,13 @@ public class DataPartido implements Serializable {
 	private Date fechaFundacion;
 	private List<DataFuenteDatos> dataFuenteDatos;
 	private List<DataDepartamento> dataDeptos;
+	private int id;
+	private List<DataLista> listas;
 	
 	public DataPartido() {
 		this.dataFuenteDatos = new ArrayList<DataFuenteDatos>();
 		this.dataDeptos = new ArrayList<DataDepartamento>();
+		this.listas = new ArrayList<DataLista>();
 	}
 
 	public String getNombre() {
@@ -67,6 +70,22 @@ public class DataPartido implements Serializable {
 
 	public void setDataDeptos(List<DataDepartamento> dataDeptos) {
 		this.dataDeptos = dataDeptos;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public List<DataLista> getListas() {
+		return listas;
+	}
+
+	public void setListas(List<DataLista> listas) {
+		this.listas = listas;
 	}
 
 }

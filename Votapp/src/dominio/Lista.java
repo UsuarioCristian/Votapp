@@ -6,6 +6,13 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+@NamedQueries({
+	@NamedQuery(name = "Lista.getListasByIdPartido",
+			query = "SELECT l FROM Lista l WHERE l.partido.id = :idPartido"),
+	@NamedQuery(name = "Lista.getListasByIdCandidato",
+			query = "SELECT l from Lista l INNER JOIN l.candidatos c WHERE c.id = :idCandidato")
+})
+
 @Entity
 public class Lista implements Serializable {
 	   

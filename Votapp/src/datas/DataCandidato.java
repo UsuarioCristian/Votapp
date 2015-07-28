@@ -18,10 +18,11 @@ public class DataCandidato implements Serializable {
 	private List<DataLista> dataListas;
 	private TipoCargo cargo;
 	private Departamento departamento; //Solo si es eleccion departamental
-	
+	private int id;
 
 	public DataCandidato(){
 		this.dataFuenteDatos = new ArrayList<DataFuenteDatos>();
+		this.dataListas = new ArrayList<DataLista>();
 	}
 
 	public String getNombre() {
@@ -80,4 +81,13 @@ public class DataCandidato implements Serializable {
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 }
