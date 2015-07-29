@@ -14,6 +14,8 @@ import javax.persistence.PersistenceContext;
 import persistencia.interfaces.IEleccionDAO;
 import dominio.Departamento;
 import dominio.Eleccion;
+import dominio.FuenteDatos;
+import dominio.Lista;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -81,6 +83,28 @@ public class EleccionDAO implements IEleccionDAO {
 			e.printStackTrace();
 			return null;
 		}	
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public FuenteDatos findFuenteDatosById(int id) {
+		try {
+			return em.find(FuenteDatos.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Lista findListaById(int id) {
+		try {
+			return em.find(Lista.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	

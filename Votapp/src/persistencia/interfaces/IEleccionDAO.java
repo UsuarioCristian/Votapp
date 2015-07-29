@@ -6,6 +6,8 @@ import javax.ejb.Local;
 
 import dominio.Departamento;
 import dominio.Eleccion;
+import dominio.FuenteDatos;
+import dominio.Lista;
 
 @Local
 public interface IEleccionDAO {
@@ -19,5 +21,9 @@ public interface IEleccionDAO {
 	public List<Eleccion> getElecciones();
 	
 	public List<Departamento> getDeptosByEleccionID(int id);
+
+	public FuenteDatos findFuenteDatosById(int id);
+
+	public Lista findListaById(int id);
 	
 }

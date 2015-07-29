@@ -10,12 +10,13 @@ public class DataFuenteDatos implements Serializable {
 	
 	private String url;
 	private TipoFuente tipo;
+	private int id;
 
 	public String getUrl() {
 		return url;
 	}
 
-	public void setURL(String url) {
+	public void setUrl(String url) {
 		this.url = url;
 	}
 	
@@ -25,6 +26,14 @@ public class DataFuenteDatos implements Serializable {
 
 	public void setTipo(TipoFuente tipo) {
 		this.tipo = tipo;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

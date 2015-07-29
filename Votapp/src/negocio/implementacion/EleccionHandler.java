@@ -2,6 +2,7 @@ package negocio.implementacion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -9,15 +10,26 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import negocio.interfaces.IEleccionHandler;
+import persistencia.interfaces.ICandidatoDAO;
 import persistencia.interfaces.IEleccionDAO;
+import persistencia.interfaces.IPartidoDAO;
 import utiles.TipoEleccion;
+import datas.DataCandidato;
+import datas.DataDepartamento;
 import datas.DataEleccion;
+import datas.DataFuenteDatos;
 import datas.DataImagen;
+import datas.DataLista;
+import datas.DataPartido;
+import dominio.Candidato;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
 import dominio.EleccionOtro;
+import dominio.FuenteDatos;
 import dominio.Imagen;
+import dominio.Lista;
+import dominio.Partido;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -25,6 +37,10 @@ public class EleccionHandler implements IEleccionHandler {
 	
 	@EJB
 	IEleccionDAO eleccionDAO;
+	@EJB
+	IPartidoDAO partidoDAO;
+	@EJB
+	ICandidatoDAO candidatoDAO;
 
 	@Override
 	public boolean crearEleccion(DataEleccion data) {
@@ -158,6 +174,12 @@ public class EleccionHandler implements IEleccionHandler {
 			switch (eleccion.getClass().getName()) {
 				case "dominio.EleccionNacional":
 					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);
+					
+					List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
+					dataEleccion.setDataPartidos(partidos);
+					
+					List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
+					dataEleccion.setDataCandidatos(candidatos);
 					break;
 				case "dominio.EleccionDepartamental":
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
@@ -178,5 +200,125 @@ public class EleccionHandler implements IEleccionHandler {
 		
 		return dataElecciones;
 	}
+
+	private List<DataCandidato> getCandidatosFromEleccion(Eleccion eleccion) {
+		List<DataCandidato> listaRetorno = new ArrayList<DataCandidato>();
+		
+		for (Candidato candidatoOnlyId : eleccion.getCandidatos()) {
+			Candidato candidato = candidatoDAO.findCandidatoById(candidatoOnlyId.getId());
+			DataCandidato data = convertToData(candidato);
+			listaRetorno.add(data);
+		}
+		
+		return listaRetorno;
+	}
+
+	private List<DataPartido> getPartidosFromEleccion(Eleccion eleccion) {
+		
+		List<DataPartido> listaRetorno = new ArrayList<DataPartido>();
+		
+		for (Partido partidoOnlyID : eleccion.getPartidos()) {
+			Partido partido = partidoDAO.findPartidoById(partidoOnlyID.getId());
+			DataPartido data = convertToData(partido);
+			listaRetorno.add(data);			
+		}		
+		
+		return listaRetorno;
+	}
+	
+	private DataCandidato convertToData(Candidato candidato) {
+		DataCandidato data = new DataCandidato();
+		data.setId(candidato.getId());
+		data.setCargo(candidato.getCargo());
+		data.setEdad(candidato.getEdad());
+		data.setNombre(candidato.getNombre());
+		
+		
+		Set<FuenteDatos> fuenteDatosOnlyID = candidato.getFuenteDatos();
+		for (FuenteDatos fuenteDatos : fuenteDatosOnlyID) {
+			FuenteDatos fuente = eleccionDAO.findFuenteDatosById(fuenteDatos.getId());
+			DataFuenteDatos dataFuente = convertToData(fuente);
+			data.getDataFuenteDatos().add(dataFuente);
+		}
+		
+		Set<Lista> listasOnlyId = candidato.getListas();
+		for (Lista lista : listasOnlyId) {
+			Lista lista2 = eleccionDAO.findListaById(lista.getId());
+			DataLista dataLista = convertToData(lista2);			
+			data.getDataListas().add(dataLista);
+		}
+		
+		/*Esto se podria modificar.. x ejemplo que candidato guarde a q partido pertenece.. y no buscar por las listas*/
+		//data.setNombrePartido(candidato.g);		
+		if (candidato.getListas().size() > 0){
+			List<Lista> arreglo = new ArrayList<Lista>(candidato.getListas());
+			Partido partido = partidoDAO.findPartidoById(arreglo.get(0).getPartido().getId());
+			data.setIdPartido(partido.getId());
+			data.setNombrePartido(partido.getNombre());
+		}
+		
+		return data;
+		
+	}
+
+	private DataPartido convertToData(Partido partido) {
+		DataPartido data = new DataPartido();
+		data.setId(partido.getId());
+		data.setNombre(partido.getNombre());
+		data.setDescripcion(partido.getDescripcion());
+		data.setFechaFundacion(partido.getFechaFundacion());
+		data.setPresidente(partido.getPresidente());
+		
+		Set<FuenteDatos> fuentesDatosOnlyID = partido.getFuenteDatos();
+		for (FuenteDatos fuenteDatos : fuentesDatosOnlyID) {
+			FuenteDatos fuente = eleccionDAO.findFuenteDatosById(fuenteDatos.getId());
+			DataFuenteDatos dataFuente = convertToData(fuente);
+			data.getDataFuenteDatos().add(dataFuente);
+		}
+		
+		Set<Lista> listasOnlyId = partido.getListas();
+		for (Lista lista : listasOnlyId) {
+			Lista lista2 = eleccionDAO.findListaById(lista.getId());
+			DataLista dataLista = convertToData(lista2);
+			dataLista.setNombrePartido(partido.getNombre());
+			data.getListas().add(dataLista);
+		}
+				
+		return data;
+	}
+
+	private DataLista convertToData(Lista lista) {
+		DataLista data = new DataLista();
+		
+		data.setId(lista.getId());
+		//data.setNombrePartido(lista.ge);
+		data.setNumero(lista.getNumero());
+		data.setIdPartido(lista.getPartido().getId());
+		
+		/*Solo si es eleccion departamental*/
+		if (lista.getDepartamento() != null){
+			DataDepartamento dataDepartamento = new DataDepartamento();
+			dataDepartamento.setNombre(lista.getDepartamento().getNombre());
+			dataDepartamento.setNumHabilitadosVotar(lista.getDepartamento().getNumHabilitadosVotar());
+			dataDepartamento.setNumHabitantes(lista.getDepartamento().getNumHabitantes());
+			dataDepartamento.setId(lista.getDepartamento().getId());
+			data.setDataDepartamento(dataDepartamento);
+		}
+		
+		
+		return data;
+	}
+
+	private DataFuenteDatos convertToData(FuenteDatos fuente) {
+		DataFuenteDatos data = new DataFuenteDatos();
+		data.setTipo(fuente.getTipo());
+		data.setUrl(fuente.getUrl());
+		data.setId(fuente.getId());		
+		
+		return data;
+	}
+	
+	
+	
 
 }

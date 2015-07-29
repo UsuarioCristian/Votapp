@@ -10,6 +10,7 @@ public class DataLista implements Serializable {
 	private String nombrePartido;
 	private DataDepartamento dataDepartamento;
 	private int id;
+	private int idPartido;
 	
 	public DataDepartamento getDataDepartamento() {
 		return dataDepartamento;
@@ -43,6 +44,14 @@ public class DataLista implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public int getIdPartido() {
+		return idPartido;
+	}
+
+	public void setIdPartido(int idPartido) {
+		this.idPartido = idPartido;
 	};
 
 }
