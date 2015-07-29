@@ -10,6 +10,7 @@ import javax.ws.rs.core.Response;
 
 import negocio.interfaces.IEncuestaHandler;
 import datas.DataEncuesta;
+import datas.DataRespuesta;
 import services.interfaces.EncuestaService;
 
 @Stateless
@@ -34,6 +35,14 @@ public class EncuestaServiceImpl implements EncuestaService {
 		List<DataEncuesta> dataEncuestas = encuestaHdlr.getEncuestaByIdConsultora(id);
 		
 		return Response.ok(dataEncuestas).build();
+	}
+
+	@Override
+	public Response crearRespuesta(DataRespuesta dataRespuesta) {
+
+		if(encuestaHdlr.crearRespuesta(dataRespuesta))
+			return Response.status(200).build();
+		return null;
 	}
 
 }

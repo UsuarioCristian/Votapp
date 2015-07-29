@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import datas.DataEncuesta;
+import datas.DataRespuesta;
 
 @RequestScoped
 @Path("/encuesta")
@@ -24,5 +25,10 @@ public interface EncuestaService {
 	@Path("/getEncuestasByIdConsultora/{id}")
 	@Produces({"application/json"})
 	public Response getEncuestasByIdConsultora(@PathParam("id") final int id);
+	
+	@POST
+	@Path("/protected/crearRespuesta")
+	@Consumes("application/json")
+	public Response crearRespuesta(DataRespuesta dataRespuesta);
 	
 }

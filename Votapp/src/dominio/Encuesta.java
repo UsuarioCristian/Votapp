@@ -27,6 +27,7 @@ public class Encuesta implements Serializable {
 	private boolean preguntarNivelEstudio;
 	private int cantidadRespuestas;
 	private String nombreDepartamento;
+	private boolean finalizada;
 	
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Consultora consultora;
@@ -39,11 +40,16 @@ public class Encuesta implements Serializable {
 	
 	@ManyToMany(cascade = CascadeType.MERGE)
 	private Set<Partido> partidos;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "encuesta", orphanRemoval = true)
+	private Set<Respuesta> respuestas;
 
 	public Encuesta() {
 		super();
 		this.candidatos = new LinkedHashSet<Candidato>();
 		this.partidos = new LinkedHashSet<Partido>();
+		this.respuestas = new LinkedHashSet<Respuesta>();
+		this.setFinalizada(false);
 	}   
 	public int getId() {
 		return this.id;
@@ -147,6 +153,22 @@ public class Encuesta implements Serializable {
 
 	public void setPartidos(Set<Partido> partidos) {
 		this.partidos = partidos;
+	}
+
+	public Set<Respuesta> getRespuestas() {
+		return respuestas;
+	}
+
+	public void setRespuestas(Set<Respuesta> respuestas) {
+		this.respuestas = respuestas;
+	}
+
+	public boolean isFinalizada() {
+		return finalizada;
+	}
+
+	public void setFinalizada(boolean finalizada) {
+		this.finalizada = finalizada;
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 
 import persistencia.interfaces.IEncuestaDAO;
 import dominio.Encuesta;
+import dominio.Respuesta;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -41,6 +42,29 @@ public class EncuestaDAO implements IEncuestaDAO {
 					.setParameter("idConsultora", idConsultora)
 					.getResultList();
 		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean crearRespuesta(Respuesta respuesta) {
+		try {
+			em.persist(respuesta);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Encuesta findEncuestaById(int idEncuesta) {
+		try {
+			return em.find(Encuesta.class, idEncuesta);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

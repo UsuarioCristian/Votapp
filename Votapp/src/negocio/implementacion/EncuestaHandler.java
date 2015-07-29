@@ -24,6 +24,7 @@ import datas.DataDepartamento;
 import datas.DataEncuesta;
 import datas.DataLista;
 import datas.DataPartido;
+import datas.DataRespuesta;
 import dominio.Candidato;
 import dominio.Departamento;
 import dominio.Eleccion;
@@ -32,6 +33,7 @@ import dominio.EleccionNacional;
 import dominio.Encuesta;
 import dominio.Lista;
 import dominio.Partido;
+import dominio.Respuesta;
 import negocio.interfaces.IEncuestaHandler;
 
 @Stateless
@@ -301,6 +303,30 @@ public class EncuestaHandler implements IEncuestaHandler {
 		}
 		
 		
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean crearRespuesta(DataRespuesta dataRespuesta) {
+		
+		Respuesta respuesta = new Respuesta();
+		respuesta.setEdad(dataRespuesta.getEdad());
+		respuesta.setEducacion(dataRespuesta.getNivelEstudio());
+		respuesta.setIdCandidato(dataRespuesta.getIdCandidato());
+		respuesta.setIdPartido(dataRespuesta.getIdPartido());
+		respuesta.setSexo(dataRespuesta.getSexo());
+
+		Encuesta encuesta = encuestaDAO.findEncuestaById(dataRespuesta.getIdEncuesta());
+		if (!encuesta.isFinalizada()) {
+			respuesta.setEncuesta(encuesta);
+			encuesta.getRespuestas().add(respuesta);
+			if (encuesta.getRespuestas().size() == encuesta.getCantidadRespuestas())
+				encuesta.setFinalizada(true);
+
+			return encuestaDAO.crearRespuesta(respuesta);
+		} else
+			return false;
+
 	}
 
 }
