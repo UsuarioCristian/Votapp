@@ -314,6 +314,7 @@ public class EncuestaHandler implements IEncuestaHandler {
 		respuesta.setEducacion(dataRespuesta.getNivelEstudio());
 		respuesta.setIdCandidato(dataRespuesta.getIdCandidato());
 		respuesta.setIdPartido(dataRespuesta.getIdPartido());
+		respuesta.setIdLista(dataRespuesta.getIdLista());
 		respuesta.setSexo(dataRespuesta.getSexo());
 
 		Encuesta encuesta = encuestaDAO.findEncuestaById(dataRespuesta.getIdEncuesta());
