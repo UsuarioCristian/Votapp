@@ -4,24 +4,33 @@ angular.module("app.controllers",[])
 .controller("LoginController", ['$scope', 'LoginFactory', function($scope, LoginFactory){
 	
 }])
-.controller("EleccionController", ['$scope', 'EleccionFactory', function($scope, EleccionFactory){
-	$scope.getEleccion = function(eleccionId){
-		EleccionFactory.getEleccion(eleccionId).then(
-				function(response){
-					$scope.consultora.nombre = response.data.nombre;
-					$scope.consultora.descripcion = response.data.descripcion;
-				},
-				
-				function(response){
-					//error messagge
-					console.log(response.data);
-				}
-		)
-	}
+.controller("EleccionController", ['$scope', '$state', 'EleccionFactory', 'store',  function($scope, $state, EleccionFactory, store){
+	
+//	$scope.eleccion = {
+//			nombre: null,
+//			fecha: null,
+//			descripcion: null,
+//			imagen: null,
+//			partidos: null,
+//	}
+//	
+
 	
 	$scope.showEleccion = function(eleccionId){
-		console.log($location.path());
-		$location.path();
+		var encontre = false;
+		var i = 0;
+		while(!encontre){
+			if($scope.elecciones[i].id==eleccionId){
+				encontre=true;
+				store.set("eleccionActual", $scope.elecciones[i]);
+			}
+			else {
+				i++;
+			}
+		
+		}
+		
+		$state.go("eleccion");
 	}
 //	console.log('Promise is now resolved: '+EleccionFactory.getEleccionesActuales())
 	$scope.elecciones = EleccionFactory.getEleccionesActuales();
@@ -29,7 +38,6 @@ angular.module("app.controllers",[])
 	//$scope.elecciones = $scope.getEleccionesActuales();
 }])
 
-.controller('HomeController', ['$scope', function($scope){
-		
-	
+.controller('HomeController', ['$scope', 'store', 'EleccionFactory',  function($scope, store, EleccionFactory){
+	$scope.eleccion = store.get("eleccionActual");
 }])

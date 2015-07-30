@@ -1,4 +1,41 @@
-<div class="col-lg-4" ng-repeat="partido in elecciones.dataPartidos" >
+<div class="row">
+	 <div class="col-xs-6 col-md-4">
+  		<img class="img-responsive" src="resources/img/votapp.png" src="resources/img/votapp.png" alt="">
+  	 </div>
+ 	 <div class="col-xs-12 col-sm-6 col-md-8">
+  		<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1><br><br>
+			<strong>Fecha: {{eleccion.fecha | date}}</strong>
+		<br>	
+		<p>{{eleccion.descripcion}}
+		</p><br>
+		<div class="row" style="margin-left: auto;">
+				<div class="list-group col-xs-5">
+						<strong>Conozca a los candidatos:</strong>
+					<a href="#" class="list-group-item">
+					    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>
+					    <p class="list-group-item-text">Partido Futurista</p>
+					</a>
+					<a href="#" class="list-group-item">
+					    <h4 class="list-group-item-heading">David Colo</h4>
+					    <p class="list-group-item-text">Partido Otro</p>
+					</a>
+				</div>
+				<div class="list-group col-xs-5">
+						<strong>Conozca a los Partidos:</strong>
+					<a href="#" class="list-group-item">
+					    <h4 class="list-group-item-heading">Partido Futurista</h4>
+					</a>
+					<a href="#" class="list-group-item">
+					    <h4 class="list-group-item-heading">Partido Actual</h4>
+		
+					</a>
+				</div>
+		</div>
+  </div>
+
+</div>
+
+<!-- <div class="col-lg-4" ng-repeat="partido in elecciones.dataPartidos" >
 	<div class="col-lg-4" ng-repeat="fuente in partido.dataFuenteDatos" >
 		<div class="fb-page" data-href="https://www.facebook.com/{{fuente.url}}" data-small-header="false" 
 			 data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true">
@@ -7,4 +44,4 @@
 		 	</div>
 		 </div>
 	 </div>
-</div>
+</div> -->

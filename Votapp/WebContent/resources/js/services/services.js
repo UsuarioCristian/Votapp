@@ -30,7 +30,7 @@ value('version', '0.1')
       getEleccionesActuales: function () {
           return elecciones;//.getSomeData();
       },
-      getConsultora:function(idEleccion){
+      getEleccion:function(idEleccion){
     	  return $http.get(ApiEndpointFactory.ApiEndpoint +'/Votapp/services/eleccion/'+idEleccion)
       }
     }
