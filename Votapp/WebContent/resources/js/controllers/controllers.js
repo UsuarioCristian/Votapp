@@ -38,6 +38,31 @@ angular.module("app.controllers",[])
 	//$scope.elecciones = $scope.getEleccionesActuales();
 }])
 
-.controller('HomeController', ['$scope', 'store', 'EleccionFactory',  function($scope, store, EleccionFactory){
-	$scope.eleccion = store.get("eleccionActual");
+.controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', function($scope, EleccionFactory,$stateParams,store){
+	$scope.elecciones = store.get('elecciones');
+	//Buscar la eleccion con el id que viene x url
+	var encontre = false;
+	var i = 0;
+	while(!encontre && i < $scope.elecciones.length){
+		if($scope.elecciones[i].id == $stateParams.eleccionId){
+			encontre = true;
+			$scope.eleccion = $scope.elecciones[i];
+		}else{
+			i++;
+		}
+	}
+	
 }])
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,8 +12,16 @@ angular.module('app', [
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider ) {
 	
 	$urlRouterProvider.otherwise('/');	
-	$stateProvider.state('eleccion', {url: '/eleccion',
-		templateUrl: 'views/eleccion.html', controller: 'HomeController'})
+	$stateProvider.state('eleccion', {
+		url: '/eleccion/{eleccionId}',
+		templateUrl: 'views/eleccion.html',
+		controller: 'HomeController',
+		resolve:{
+	        load:function(EleccionFactory){	          
+	          return EleccionFactory.promise;
+	        }
+	    }		
+	})
 	
 	$stateProvider.state('home', {url:'/', templateUrl: 'views/home.html',  controller: 'EleccionController',
 		    resolve:{

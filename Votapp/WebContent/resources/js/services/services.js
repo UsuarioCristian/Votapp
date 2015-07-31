@@ -18,21 +18,22 @@ value('version', '0.1')
 		
 	}
 }])
-.factory('EleccionFactory', ['$http','ApiEndpointFactory',function($http, ApiEndpointFactory) {
+.factory('EleccionFactory', ['$http','ApiEndpointFactory','store',function($http, ApiEndpointFactory, store) {
 	var elecciones = null;
     var promise = $http.get(ApiEndpointFactory.ApiEndpoint +'/Votapp/services/eleccion/getElecciones')
     .success(function (data) {
     	elecciones = data;
+    	store.set('elecciones', data);
     });
-
+    
     return {
+     
       promise:promise,
+      
       getEleccionesActuales: function () {
           return elecciones;//.getSomeData();
       },
-      getEleccion:function(idEleccion){
-    	  return $http.get(ApiEndpointFactory.ApiEndpoint +'/Votapp/services/eleccion/'+idEleccion)
-      }
+      
     }
 }])
 
