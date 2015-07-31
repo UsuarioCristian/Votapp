@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import datas.DataEmergencia;
 import datas.DataEncuesta;
 import datas.DataRespuesta;
 
@@ -15,4 +16,6 @@ public interface IEncuestaHandler {
 	public List<DataEncuesta> getEncuestaByIdConsultora(int idConsultora);
 
 	public boolean crearRespuesta(DataRespuesta dataRespuesta);
+
+	boolean crearEmergencia(DataEmergencia dataEmergencia);
 }

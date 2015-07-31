@@ -9,6 +9,7 @@ import javax.ejb.TransactionManagementType;
 import javax.ws.rs.core.Response;
 
 import negocio.interfaces.IEncuestaHandler;
+import datas.DataEmergencia;
 import datas.DataEncuesta;
 import datas.DataRespuesta;
 import services.interfaces.EncuestaService;
@@ -41,6 +42,14 @@ public class EncuestaServiceImpl implements EncuestaService {
 	public Response crearRespuesta(DataRespuesta dataRespuesta) {
 
 		if(encuestaHdlr.crearRespuesta(dataRespuesta))
+			return Response.status(200).build();
+		return null;
+	}
+
+	@Override
+	public Response crearEmergencia(DataEmergencia dataEmergencia) {
+		
+		if(encuestaHdlr.crearEmergencia(dataEmergencia))
 			return Response.status(200).build();
 		return null;
 	}

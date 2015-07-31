@@ -9,6 +9,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import datas.DataEmergencia;
 import datas.DataEncuesta;
 import datas.DataRespuesta;
 
@@ -30,5 +31,11 @@ public interface EncuestaService {
 	@Path("/protected/crearRespuesta")
 	@Consumes("application/json")
 	public Response crearRespuesta(DataRespuesta dataRespuesta);
+	
+	@POST
+	@Path("/protected/alertarEmergencia")
+	@Consumes("application/json")
+	public Response crearEmergencia(DataEmergencia dataEmergencia);
+	
 	
 }

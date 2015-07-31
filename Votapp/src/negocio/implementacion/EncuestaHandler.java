@@ -21,6 +21,7 @@ import persistencia.interfaces.IPartidoDAO;
 import utiles.TipoCargo;
 import datas.DataCandidato;
 import datas.DataDepartamento;
+import datas.DataEmergencia;
 import datas.DataEncuesta;
 import datas.DataLista;
 import datas.DataPartido;
@@ -30,6 +31,7 @@ import dominio.Departamento;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
+import dominio.Emergencia;
 import dominio.Encuesta;
 import dominio.Lista;
 import dominio.Partido;
@@ -328,6 +330,13 @@ public class EncuestaHandler implements IEncuestaHandler {
 		} else
 			return false;
 
+	}
+
+	@Override
+	public boolean crearEmergencia(DataEmergencia dataEmergencia) {
+		
+		Emergencia emergencia = new Emergencia();
+		return false;
 	}
 
 }
