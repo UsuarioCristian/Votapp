@@ -27,12 +27,14 @@ import datas.DataLista;
 import datas.DataPartido;
 import datas.DataRespuesta;
 import dominio.Candidato;
+import dominio.Consultora;
 import dominio.Departamento;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
 import dominio.Emergencia;
 import dominio.Encuesta;
+import dominio.Encuestador;
 import dominio.Lista;
 import dominio.Partido;
 import dominio.Respuesta;
@@ -333,10 +335,30 @@ public class EncuestaHandler implements IEncuestaHandler {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean crearEmergencia(DataEmergencia dataEmergencia) {
 		
-		Emergencia emergencia = new Emergencia();
-		return false;
+		try {
+			Emergencia emergencia = new Emergencia();
+			emergencia.setLatitud(dataEmergencia.getLatitud());
+			emergencia.setLongitud(dataEmergencia.getLongitud());
+			
+			Consultora consultora = consultoraDAO.findConsultoraById(dataEmergencia.getIdConsultora());
+			emergencia.setConsultora(consultora);
+			consultora.getEmergencias().add(emergencia);
+			
+			Encuestador encuestador = consultoraDAO.findEncuestadorById(dataEmergencia.getIdEncuestador());
+			emergencia.setEncuestador(encuestador);
+			encuestador.getEmergencias().add(emergencia);
+			
+			return encuestaDAO.crearEmergencia(emergencia);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		
 	}
 
 }

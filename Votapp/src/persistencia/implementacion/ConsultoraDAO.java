@@ -31,6 +31,7 @@ public class ConsultoraDAO implements IConsultoraDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean crearConsultora(Consultora consultora) {
 		try {
 			em.persist(consultora);
@@ -43,6 +44,7 @@ public class ConsultoraDAO implements IConsultoraDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public boolean crearEncuestador(Encuestador encuestador) {
 		try {
 			em.persist(encuestador);
@@ -65,6 +67,17 @@ public class ConsultoraDAO implements IConsultoraDAO {
 			return null;
 		}
 		
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Encuestador findEncuestadorById(int idEncuestador) {
+		try {
+			return em.find(Encuestador.class, idEncuestador);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

@@ -39,6 +39,9 @@ public class Consultora implements Serializable {
 	
 	@OneToMany(mappedBy = "consultora")
 	private Set<Encuesta> encuestas;
+	
+	@OneToMany(mappedBy = "consultora", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Emergencia> emergencias;
 
 	public Consultora(int id, String nombre, Date fechaFundacion, String descripcion, AdminConsultora adminConsultora) {
 		this.id = id;
@@ -48,6 +51,7 @@ public class Consultora implements Serializable {
 		this.adminConsultora = adminConsultora;
 		this.encuestadores = new LinkedHashSet<Encuestador>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
+		this.emergencias = new LinkedHashSet<Emergencia>();
 	}
 	
 	public Consultora(){
@@ -103,6 +107,14 @@ public class Consultora implements Serializable {
 
 	public void setEncuestas(Set<Encuesta> encuestas) {
 		this.encuestas = encuestas;
+	}
+
+	public Set<Emergencia> getEmergencias() {
+		return emergencias;
+	}
+
+	public void setEmergencias(Set<Emergencia> emergencias) {
+		this.emergencias = emergencias;
 	}
 
 	@Override

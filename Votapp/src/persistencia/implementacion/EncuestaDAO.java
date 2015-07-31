@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import persistencia.interfaces.IEncuestaDAO;
+import dominio.Emergencia;
 import dominio.Encuesta;
 import dominio.Respuesta;
 
@@ -66,6 +67,29 @@ public class EncuestaDAO implements IEncuestaDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Emergencia findEmergenciaById(int idEmergencia) {
+		try {
+			return em.find(Emergencia.class, idEmergencia);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean crearEmergencia(Emergencia emergencia) {
+		try {
+			em.persist(emergencia);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 
