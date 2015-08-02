@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+.profile-bio {
+  background: #fff;
+  position: relative;
+  padding: 15px 10px 5px 15px;
+}
+
+.profile-bio span {
+  display: block;
+}
+.profile-bio hr {
+  margin: 12px 0 10px;
+}
