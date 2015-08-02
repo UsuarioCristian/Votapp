@@ -9,17 +9,15 @@
 		<p>{{eleccion.descripcion}}
 		</p><br>
 		<div class="row" style="margin-left: auto;">
-				<div class="list-group col-xs-5">
-						<strong>Conozca a los candidatos:</strong>
+			
+				<div class="list-group col-xs-5" ng-repeat="candi in eleccion.dataCandidatos">
+					<strong>Conozca a los candidatos:</strong>
 					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>
-					    <p class="list-group-item-text">Partido Futurista</p>
-					</a>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">David Colo</h4>
-					    <p class="list-group-item-text">Partido Otro</p>
+					    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
+					    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
 					</a>
 				</div>
+				
 				<div class="list-group col-xs-5">
 						<strong>Conozca a los Partidos:</strong>
 					<a href="#" class="list-group-item">
