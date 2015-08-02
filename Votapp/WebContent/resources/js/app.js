@@ -31,7 +31,10 @@ angular.module('app', [
 		        }
 		      }});
 	//.state('nombreEstado', {camposExtras}) etc etc
-	$stateProvider.state('candidato', {url:'/candidato', templateUrl: 'views/candidato.html',  controller: 'HomeController'});
+	$stateProvider.state('eleccion.candidato', {
+		url:'/candidato/{candidatoId}', 
+		templateUrl: 'views/candidato.html', 
+		});
 }])
 
 .run(['$window', 

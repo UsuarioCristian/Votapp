@@ -6,32 +6,22 @@ angular.module("app.controllers",[])
 }])
 .controller("EleccionController", ['$scope', '$state', 'EleccionFactory', 'store',  function($scope, $state, EleccionFactory, store){
 	
-//	$scope.eleccion = {
-//			nombre: null,
-//			fecha: null,
-//			descripcion: null,
-//			imagen: null,
-//			partidos: null,
+//	$scope.showEleccion = function(eleccionId){
+//		var encontre = false;
+//		var i = 0;
+//		while(!encontre){
+//			if($scope.elecciones[i].id==eleccionId){
+//				encontre=true;
+//				store.set("eleccionActual", $scope.elecciones[i]);
+//			}
+//			else {
+//				i++;
+//			}
+//		
+//		}
+//		
+//		$state.go("eleccion");
 //	}
-//	
-
-	
-	$scope.showEleccion = function(eleccionId){
-		var encontre = false;
-		var i = 0;
-		while(!encontre){
-			if($scope.elecciones[i].id==eleccionId){
-				encontre=true;
-				store.set("eleccionActual", $scope.elecciones[i]);
-			}
-			else {
-				i++;
-			}
-		
-		}
-		
-		$state.go("eleccion");
-	}
 //	console.log('Promise is now resolved: '+EleccionFactory.getEleccionesActuales())
 	$scope.elecciones = EleccionFactory.getEleccionesActuales();
 	

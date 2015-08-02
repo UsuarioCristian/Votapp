@@ -9,23 +9,11 @@
 		<p>{{eleccion.descripcion}}
 		</p><br>
 		<div class="row" style="margin-left: auto;">
-			
-				<div class="list-group col-xs-5" ng-repeat="candi in eleccion.dataCandidatos">
-					<strong>Conozca a los candidatos:</strong>
-					<a href="#" class="list-group-item">
+			<div><strong>Conozca a los candidatos:</strong></div>
+				<div class="list-group col-xs-5">
+					<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="eleccion.candidato({candidatoId: candi.id})" >
 					    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
 					    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
-					</a>
-				</div>
-				
-				<div class="list-group col-xs-5">
-						<strong>Conozca a los Partidos:</strong>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">Partido Futurista</h4>
-					</a>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">Partido Actual</h4>
-		
 					</a>
 				</div>
 		</div>
