@@ -8,16 +8,36 @@
 		<br>	
 		<p>{{eleccion.descripcion}}
 		</p><br>
-		<div class="row" style="margin-left: auto;">
-			<div><strong>Conozca a los candidatos:</strong></div>
-				<div class="list-group col-xs-5">
-					<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="eleccion.candidato({candidatoId: candi.id})" >
-					    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
-					    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
-					</a>
-				</div>
+		
+		<div ng-switch="tipoEleccion">
+			      <div ng-switch-when="Nacional">
+			          	<div class="row" style="margin-left: auto;">
+							<div><strong>Conozca a los candidatos:</strong></div>
+									<div class="list-group col-xs-5">
+										<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({ candidatoId: candi.id, eleccionId: eleccion.id})" >
+										    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
+										    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
+										</a>
+									</div>
+					
+  						</div>
+				  </div>
+				     <div ng-switch-when="Departamental">
+			          	<div class="row" style="margin-left: auto;">
+							<div><strong>Seleccione un departamento:</strong></div>
+									<div class="col-xs-5"> 
+							           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
+							           		<option value="{depto.nombre}" ng-repeat="depto in deptos" ng-click="deptoSeleccionado()">{{depto}}</option>
+							           	</select>
+							           	<p><a class="btn btn-default" ui-sref="departamento({ departamentoNombre: depto})" role="button">Ver Info »</a></p>
+							           <br>
+							      	</div>
+					
+  						</div>
+				  </div>
+			 
 		</div>
-  </div>
+	
 
 </div>
 

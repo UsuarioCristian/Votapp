@@ -31,9 +31,15 @@ angular.module('app', [
 		        }
 		      }});
 	//.state('nombreEstado', {camposExtras}) etc etc
-	$stateProvider.state('eleccion.candidato', {
-		url:'/candidato/{candidatoId}', 
-		templateUrl: 'views/candidato.html', 
+	$stateProvider.state('candidato', {
+		url:'/candidato/{candidatoId}/{eleccionId}', 
+		templateUrl: 'views/candidato.html',
+		controller: 'candidatoController'
+		});
+	
+	$stateProvider.state('departamento', {
+		url:'/departamento/{departamentoNombre}', 
+		templateUrl: 'views/departamento.html', 
 		});
 }])
 
@@ -85,8 +91,7 @@ angular.module('app', [
   // Are you familiar to IIFE ( http://bit.ly/iifewdb ) ?
 
   (function(d){
-    // load the Facebook javascript SDK
-
+    // load the Facebook javascript SDK 
     var js, 
     id = 'facebook-jssdk', 
     ref = d.getElementsByTagName('script')[0];
