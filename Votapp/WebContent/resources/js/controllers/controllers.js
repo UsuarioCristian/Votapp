@@ -39,6 +39,8 @@ angular.module("app.controllers",[])
 }])
 
 .controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', function($scope, EleccionFactory,$stateParams,store){
+	
+	$scope.fuente = { url : 'barackobama'};
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -53,7 +55,20 @@ angular.module("app.controllers",[])
 	}
 	
 }])
-
+.directive('fbVotappPlugin', function () {
+	
+	function link(scope, element, attrs) {
+		
+	}
+	
+	return {
+		scope: {
+	      fuente: '=fuente'
+	    },
+	    templateUrl: 'views/page-plugin.html',
+	    link: link
+	};
+})
 
 
 
