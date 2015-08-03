@@ -1,6 +1,6 @@
 <div class="row">
 	 <div class="col-xs-6 col-md-4">
-  		<img class="img-responsive" src="resources/img/votapp.png" alt="">
+	         <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
   	 </div>
  	 <div class="col-xs-12 col-sm-6 col-md-8">
   		<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1><br><br>
@@ -8,30 +8,36 @@
 		<br>	
 		<p>{{eleccion.descripcion}}
 		</p><br>
-		<div class="row" style="margin-left: auto;">
-				<div class="list-group col-xs-5">
-						<strong>Conozca a los candidatos:</strong>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>
-					    <p class="list-group-item-text">Partido Futurista</p>
-					</a>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">David Colo</h4>
-					    <p class="list-group-item-text">Partido Otro</p>
-					</a>
-				</div>
-				<div class="list-group col-xs-5">
-						<strong>Conozca a los Partidos:</strong>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">Partido Futurista</h4>
-					</a>
-					<a href="#" class="list-group-item">
-					    <h4 class="list-group-item-heading">Partido Actual</h4>
 		
-					</a>
-				</div>
+		<div ng-switch="tipoEleccion">
+			      <div ng-switch-when="Nacional">
+			          	<div class="row" style="margin-left: auto;">
+							<div><strong>Conozca a los candidatos:</strong></div>
+									<div class="list-group col-xs-5">
+										<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({ candidatoId: candi.id, eleccionId: eleccion.id})" >
+										    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
+										    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
+										</a>
+									</div>
+					
+  						</div>
+				  </div>
+				     <div ng-switch-when="Departamental">
+			          	<div class="row" style="margin-left: auto;">
+							<div><strong>Seleccione un departamento:</strong></div>
+									<div class="col-xs-5"> 
+							           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
+							           		<option value="{depto.nombre}" ng-repeat="depto in deptos" ng-click="deptoSeleccionado()">{{depto}}</option>
+							           	</select>
+							           	<p><a class="btn btn-default" ui-sref="departamento({ departamentoNombre: depto})" role="button">Ver Info »</a></p>
+							           <br>
+							      	</div>
+					
+  						</div>
+				  </div>
+			 
 		</div>
-  </div>
+	
 
 </div>
 
