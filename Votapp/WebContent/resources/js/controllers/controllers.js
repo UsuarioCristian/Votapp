@@ -71,7 +71,9 @@ angular.module("app.controllers",[])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	console.log("ACA ENTRO AL CONTROLLER");
 	console.log($stateParams.eleccionId);
-	$scope.fuente = { url : 'Deckdisc'};
+	$scope.fuente = { url : 'github'};
+	$scope.fuente2 = { url : 'github'};
+	$scope.fuente3 = { url : 'GitHub'};
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -100,6 +102,9 @@ angular.module("app.controllers",[])
 			i++;
 		}
 	}
+	
+//	FB.XFBML.parse(document.getElementById('facebook-div'));
+//	twttr.widgets.load(document.getElementById('twitter-div'));
 	
 
 }])
@@ -135,23 +140,8 @@ angular.module("app.controllers",[])
 			i++;
 		}
 	}
-	
 
 }])
-.directive('fbVotappPlugin', function () {
-	
-	function link(scope, element, attrs) {
-		
-	}
-	
-	return {
-		scope: {
-	      fuente: '=fuente'
-	    },
-	    templateUrl: 'views/page-plugin.html',
-	    link: link
-	};
-})
 .directive('youtubeVotapp', function () {
 	
 	function link(scope, element, attrs) {
@@ -180,7 +170,39 @@ angular.module("app.controllers",[])
 	    link: link
 	};
 })
-
+.directive('twitterVotapp', function () {
+	
+	function link(scope, element, attrs) {
+		var url = scope.fuente.url;
+//		'<iframe ng-transclude id="ytplayer" type="text/html" width="100%" height="100%" src="http://www.youtube.com/embed?listType=user_uploads&list='+url+'" frameborder="0"></iframe>');
+		element.append('<a class="twitter-timeline" href="https://twitter.com/'+url+'" data-widget-id="628667478659452928">Tweets por el @'+url+'.</a>');
+		twttr.widgets.load();
+	}
+	
+	return {
+		scope: {
+			fuente: '=fuente'
+	    },
+	    //transclude: true,
+	    //templateUrl: 'views/twitter-plugin.html',
+	    link: link
+	};
+})
+.directive('facebookVotapp', function () {
+	
+	function link(scope, element, attrs) {
+		var url = scope.fuente.url;
+		element.append('<div class="fb-page" data-href="https://www.facebook.com/'+url+'" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/'+url+'"><a ng-href="https://www.facebook.com/'+url+'">Facebook</a></blockquote></div></div>');
+		FB.XFBML.parse();
+	}
+	return {
+		scope: {
+	      fuente: '=fuente'
+	    },
+//	    templateUrl: 'views/page-plugin.html',
+	    link: link
+	};
+})
 
 
 
