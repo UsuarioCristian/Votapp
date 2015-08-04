@@ -188,79 +188,10 @@ public class EncuestaHandler implements IEncuestaHandler {
 		try {
 			/*Obtengo las encuestas de dicha consultora*/
 			List<Encuesta> encuestas = encuestaDAO.getEncuestasByIdConsultora(idConsultora);
-			List<DataEncuesta> dataEncuestasRetorno = new ArrayList<DataEncuesta>();
-			/*Transformo las encuestas en dataEncuestas*/
-			for (Encuesta encuesta : encuestas) {
-				DataEncuesta dataEncuesta = new DataEncuesta();
-				dataEncuesta.setId(encuesta.getId());
-				dataEncuesta.setIdConsultora(idConsultora);
-				dataEncuesta.setIdEleccion(encuesta.getEleccion().getId());
-				dataEncuesta.setCantidadRespuestas(encuesta.getCantidadRespuestas());
-				
-				dataEncuesta.setPorCandidato(encuesta.isPorCandidato());
-				dataEncuesta.setPreguntarEdad(encuesta.isPreguntarEdad());
-				dataEncuesta.setPreguntarLista(encuesta.isPreguntarLista());
-				dataEncuesta.setPreguntarNivelEstudio(encuesta.isPreguntarNivelEstudio());
-				dataEncuesta.setPreguntarSexo(encuesta.isPreguntarSexo());
-				
-				//Aca se podria cambiar el nombre para que no sea necesario cambiarlo en la vista
-				if(encuesta.getEleccion().getClass() == EleccionDepartamental.class)
-					dataEncuesta.setNombre(encuesta.getNombre()+" de "+encuesta.getNombreDepartamento());
-				else{
-					dataEncuesta.setNombre(encuesta.getNombre());
-					if(encuesta.getEleccion().getClass() == EleccionNacional.class){
-						/*Buscar las listas que tengan cierto idPartido, ya q los candidatos estan en todas las listas (xq es nacional)*/
-						
-						
-					}
-				}
-				/*Ahora hay q obtener la lista de candidatos (o de partidos) dependiendo
-				 *  si es una eleccion nacional o departamental*/ 
-				/*Correccion: no es necesario conocer si es una eleccion nacional o no, ya que obtengo los candidatos y
-				 * partidos de la encuesta y no de la eleccion, x ejemplo "encuesta.getCandidatos();" */
-				
-				if(encuesta.isPorCandidato()){
-					//Busco los candidatos de la encuesta 
-					Set<Candidato>candidatosOnlyID = encuesta.getCandidatos();
-					for (Candidato candidatoIter : candidatosOnlyID) {
-						Candidato candidato = candidatoDAO.findCandidatoById(candidatoIter.getId());
-						DataCandidato data = new DataCandidato();
-						data.setCargo(candidato.getCargo());
-						data.setNombre(candidato.getNombre());
-						
-						//data.setNombrePartido("El nombre del partido solo se obtiene x la lista"); 
-						/*ver funcion asignarListas()........ */
-						
-						data.setId(candidato.getId());
-						
-						if(encuesta.isPreguntarLista())
-							asignarListas(encuesta, data);
-						
-						dataEncuesta.getDataCandidatos().add(data);
-					}							
-					
-				}else{
-					//Busco los partidos de la eleccion 
-					Set<Partido>partidosOnlyID = encuesta.getPartidos();
-					for (Partido partidoIter : partidosOnlyID) {
-						Partido partido = partidoDAO.findPartidoById(partidoIter.getId());
-						DataPartido data = new DataPartido();
-						data.setNombre(partido.getNombre());
-						data.setPresidente(partido.getPresidente());
-						data.setId(partido.getId());						
-						/*...*/
-						
-						if(encuesta.isPreguntarLista())
-							asignarListas(encuesta, data);
-						
-						dataEncuesta.getDataPartidos().add(data);
-					}
-				}
-				
-				/*Finalmente agrego el dataEncuesta a la lista de retorno*/
-				dataEncuestasRetorno.add(dataEncuesta);
-			}
 			
+			/*Transformo las encuestas en dataEncuestas*/
+			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas, idConsultora);
+						
 			return dataEncuestasRetorno;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -270,44 +201,8 @@ public class EncuestaHandler implements IEncuestaHandler {
 		
 	}
 
-	private void asignarListas(Encuesta encuesta, DataCandidato data) {
-		
-		List<Lista> listas = listaDAO.getListasByIdCandidato(data.getId());
-		String nombrePartido = null;
-		if(encuesta.getEleccion().getClass() == EleccionNacional.class){
-			nombrePartido = listas.get(0).getPartido().getNombre();
-			data.setNombrePartido(nombrePartido);
-		}
-		
-		for (Lista lista : listas) {
-			DataLista dataLista = new DataLista();
-			dataLista.setNombrePartido(nombrePartido);
-			dataLista.setNumero(lista.getNumero());
-			dataLista.setId(lista.getId());
-			
-			data.getDataListas().add(dataLista);
-		}
-		
-		
-	}
 
-	private void asignarListas(Encuesta encuesta, DataPartido data) {
-		
-		List<Lista> listas = listaDAO.getListasByIdPartido(data.getId());
-		String nombrePartido = data.getNombre();
-		//Crear dataLista
-		for (Lista lista : listas) {
-			DataLista dataLista = new DataLista();
-			dataLista.setNombrePartido(data.getNombre());
-			dataLista.setNumero(lista.getNumero());
-			dataLista.setId(lista.getId());
-			dataLista.setNombrePartido(nombrePartido);
-			
-			data.getListas().add(dataLista);
-		}
-		
-		
-	}
+	
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -359,6 +254,152 @@ public class EncuestaHandler implements IEncuestaHandler {
 		}
 		
 		
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<DataEncuesta> getEncuestasFinalizadasByIdConsultora(int id) {
+		try {
+			/*Obtengo las encuestas de dicha consultora*/
+			List<Encuesta> encuestasAll = encuestaDAO.getEncuestasByIdConsultora(id);
+			
+			/*Quito las que no estan finalizadas*/
+			List<Encuesta> encuestas = new ArrayList<Encuesta>();
+			for (Encuesta encuesta : encuestasAll) {
+				if(encuesta.isFinalizada())
+					encuestas.add(encuesta);
+										
+			}			
+			
+			/*Transformo las encuestas en dataEncuestas*/
+			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas, id);
+						
+			return dataEncuestasRetorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	/*********************************************************/
+	/*********************************************************/
+	/*****************                    ********************/
+	/*****************FUNCIONES AUXILIARES********************/
+	/*****************                    ********************/
+	/*********************************************************/
+	/*********************************************************/
+	private void asignarListas(Encuesta encuesta, DataCandidato data) {
+		
+		List<Lista> listas = listaDAO.getListasByIdCandidato(data.getId());
+		String nombrePartido = null;
+		if(encuesta.getEleccion().getClass() == EleccionNacional.class){
+			nombrePartido = listas.get(0).getPartido().getNombre();
+			data.setNombrePartido(nombrePartido);
+		}
+		
+		for (Lista lista : listas) {
+			DataLista dataLista = new DataLista();
+			dataLista.setNombrePartido(nombrePartido);
+			dataLista.setNumero(lista.getNumero());
+			dataLista.setId(lista.getId());
+			
+			data.getDataListas().add(dataLista);
+		}
+		
+		
+	}
+
+	private void asignarListas(Encuesta encuesta, DataPartido data) {
+		
+		List<Lista> listas = listaDAO.getListasByIdPartido(data.getId());
+		String nombrePartido = data.getNombre();
+		//Crear dataLista
+		for (Lista lista : listas) {
+			DataLista dataLista = new DataLista();
+			dataLista.setNombrePartido(data.getNombre());
+			dataLista.setNumero(lista.getNumero());
+			dataLista.setId(lista.getId());
+			dataLista.setNombrePartido(nombrePartido);
+			
+			data.getListas().add(dataLista);
+		}		
+	}
+	
+	private List<DataEncuesta> createListDataEncuestas(List<Encuesta> encuestas, int idConsultora) {
+		
+		List<DataEncuesta> dataEncuestasRetorno = new ArrayList<DataEncuesta>();
+		for (Encuesta encuesta : encuestas) {
+			DataEncuesta dataEncuesta = new DataEncuesta();
+			dataEncuesta.setId(encuesta.getId());
+			dataEncuesta.setIdConsultora(idConsultora);
+			dataEncuesta.setIdEleccion(encuesta.getEleccion().getId());
+			dataEncuesta.setCantidadRespuestas(encuesta.getCantidadRespuestas());
+			
+			dataEncuesta.setPorCandidato(encuesta.isPorCandidato());
+			dataEncuesta.setPreguntarEdad(encuesta.isPreguntarEdad());
+			dataEncuesta.setPreguntarLista(encuesta.isPreguntarLista());
+			dataEncuesta.setPreguntarNivelEstudio(encuesta.isPreguntarNivelEstudio());
+			dataEncuesta.setPreguntarSexo(encuesta.isPreguntarSexo());
+			
+			//Aca se podria cambiar el nombre para que no sea necesario cambiarlo en la vista
+			if(encuesta.getEleccion().getClass() == EleccionDepartamental.class)
+				dataEncuesta.setNombre(encuesta.getNombre()+" de "+encuesta.getNombreDepartamento());
+			else{
+				dataEncuesta.setNombre(encuesta.getNombre());
+				if(encuesta.getEleccion().getClass() == EleccionNacional.class){
+					/*Buscar las listas que tengan cierto idPartido, ya q los candidatos estan en todas las listas (xq es nacional)*/
+					
+					
+				}
+			}
+			/*Ahora hay q obtener la lista de candidatos (o de partidos) dependiendo
+			 *  si es una eleccion nacional o departamental*/ 
+			/*Correccion: no es necesario conocer si es una eleccion nacional o no, ya que obtengo los candidatos y
+			 * partidos de la encuesta y no de la eleccion, x ejemplo "encuesta.getCandidatos();" */
+			
+			if(encuesta.isPorCandidato()){
+				//Busco los candidatos de la encuesta 
+				Set<Candidato>candidatosOnlyID = encuesta.getCandidatos();
+				for (Candidato candidatoIter : candidatosOnlyID) {
+					Candidato candidato = candidatoDAO.findCandidatoById(candidatoIter.getId());
+					DataCandidato data = new DataCandidato();
+					data.setCargo(candidato.getCargo());
+					data.setNombre(candidato.getNombre());
+					
+					//data.setNombrePartido("El nombre del partido solo se obtiene x la lista"); 
+					/*ver funcion asignarListas()........ */
+					
+					data.setId(candidato.getId());
+					
+					if(encuesta.isPreguntarLista())
+						asignarListas(encuesta, data);
+					
+					dataEncuesta.getDataCandidatos().add(data);
+				}							
+				
+			}else{
+				//Busco los partidos de la eleccion 
+				Set<Partido>partidosOnlyID = encuesta.getPartidos();
+				for (Partido partidoIter : partidosOnlyID) {
+					Partido partido = partidoDAO.findPartidoById(partidoIter.getId());
+					DataPartido data = new DataPartido();
+					data.setNombre(partido.getNombre());
+					data.setPresidente(partido.getPresidente());
+					data.setId(partido.getId());						
+					/*...*/
+					
+					if(encuesta.isPreguntarLista())
+						asignarListas(encuesta, data);
+					
+					dataEncuesta.getDataPartidos().add(data);
+				}
+			}
+			
+			/*Finalmente agrego el dataEncuesta a la lista de retorno*/
+			dataEncuestasRetorno.add(dataEncuesta);
+		}
+		return dataEncuestasRetorno;
 	}
 
 }
