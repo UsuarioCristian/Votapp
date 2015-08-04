@@ -8,7 +8,7 @@ angular.module("app.controllers",[])
 	
 //	$scope.showEleccion = function(eleccionId){
 //		var encontre = false;
-//		var i = 0;
+//		var i = 	0;
 //		while(!encontre){
 //			if($scope.elecciones[i].id==eleccionId){
 //				encontre=true;
@@ -29,6 +29,8 @@ angular.module("app.controllers",[])
 }])
 
 .controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', function($scope, EleccionFactory,$stateParams,store){
+
+	$scope.fuente = { url : 'barackobama'};
 	$scope.deptos = [];
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
@@ -66,8 +68,32 @@ angular.module("app.controllers",[])
 	$scope.deptos.push("Tacuarembo")
 	
 }])
-
-
+.directive('fbVotappPlugin', function () {
+	
+	function link(scope, element, attrs) {
+		
+	}
+	
+	return {
+		scope: {
+	      fuente: '=fuente'
+	    },
+	    templateUrl: 'views/page-plugin.html',
+	    link: link
+	};
+})
+.directive('votappStyle', function () {
+	
+	function link(scope, element, attrs) {
+	}
+	return {
+		scope: {
+	      eleccion: '=eleccion'
+	    },
+	    templateUrl: 'views/styles.html',
+	    link: link
+	};
+})
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	console.log("ACA ENTRO AL CONTROLLER");
 	console.log($stateParams.eleccionId);
