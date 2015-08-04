@@ -32,9 +32,15 @@ angular.module('app', [
 		      }});
 	//.state('nombreEstado', {camposExtras}) etc etc
 	$stateProvider.state('candidato', {
-		url:'/candidato/{candidatoId}/{eleccionId}', 
+		url:'/candidato/{eleccionId}/{candidatoId}', 
 		templateUrl: 'views/candidato.html',
 		controller: 'candidatoController'
+		});
+	
+	$stateProvider.state('partido', {
+		url:'/partido/{eleccionId}/{partidoId}', 
+		templateUrl: 'views/partido.html',
+		controller: 'partidoController'
 		});
 	
 	$stateProvider.state('departamento', {

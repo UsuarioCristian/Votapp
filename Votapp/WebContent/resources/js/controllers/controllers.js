@@ -129,7 +129,39 @@ angular.module("app.controllers",[])
 }])
 
 
+.controller("partidoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
+	console.log("ACA ENTRO AL CONTROLLER");
+	console.log($stateParams.eleccionId);
 
+	$scope.elecciones = store.get('elecciones');
+	//Buscar la eleccion con el id que viene x url
+	var encontre = false;
+	var i = 0;
+	while(!encontre && i < $scope.elecciones.length){
+		if($scope.elecciones[i].id == $stateParams.eleccionId){
+			encontre = true;
+			$scope.eleccion = $scope.elecciones[i];
+			console.log("TAMAÑO DE LA LISTA DE partidos EN LA ELECCION: "+$scope.eleccion.dataPartidos.length)
+
+		}else{
+			i++;
+		}
+	}
+	
+	var encontreParti = false;
+	var i = 0;
+
+	while(!encontreParti && i < $scope.eleccion.dataPartidos.length){
+		if($scope.eleccion.dataPartidos[i].id == $stateParams.partidoId){
+			encontreParti = true;
+			$scope.partido = $scope.eleccion.dataPartidos[i];
+		}else{
+			i++;
+		}
+	}
+	
+
+}])
 
 
 
