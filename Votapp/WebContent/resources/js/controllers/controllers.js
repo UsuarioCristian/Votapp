@@ -30,7 +30,7 @@ angular.module("app.controllers",[])
 
 .controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', function($scope, EleccionFactory,$stateParams,store){
 
-	$scope.fuente = { url : 'barackobama'};
+	$scope.fuente = { url : 'Deckdisc'};
 	$scope.deptos = [];
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
@@ -68,36 +68,10 @@ angular.module("app.controllers",[])
 	$scope.deptos.push("Tacuarembo")
 	
 }])
-.directive('fbVotappPlugin', function () {
-	
-	function link(scope, element, attrs) {
-		
-	}
-	
-	return {
-		scope: {
-	      fuente: '=fuente'
-	    },
-	    templateUrl: 'views/page-plugin.html',
-	    link: link
-	};
-})
-.directive('votappStyle', function () {
-	
-	function link(scope, element, attrs) {
-	}
-	return {
-		scope: {
-	      eleccion: '=eleccion'
-	    },
-	    templateUrl: 'views/styles.html',
-	    link: link
-	};
-})
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	console.log("ACA ENTRO AL CONTROLLER");
 	console.log($stateParams.eleccionId);
-
+	$scope.fuente = { url : 'Deckdisc'};
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -162,6 +136,48 @@ angular.module("app.controllers",[])
 	
 
 }])
+.directive('fbVotappPlugin', function () {
+	
+	function link(scope, element, attrs) {
+		
+	}
+	
+	return {
+		scope: {
+	      fuente: '=fuente'
+	    },
+	    templateUrl: 'views/page-plugin.html',
+	    link: link
+	};
+})
+.directive('youtubeVotapp', function () {
+	
+	function link(scope, element, attrs) {
+		var url = scope.fuente.url;
+		element.append('<iframe ng-transclude id="ytplayer" type="text/html" width="100%" height="100%" src="http://www.youtube.com/embed?listType=user_uploads&list='+url+'" frameborder="0"></iframe>');
+	}
+	
+	return {
+		scope: {
+			fuente: '=fuente'
+	    },
+	    //transclude: true,
+	    //templateUrl: 'views/youtube-plugin.html',
+	    link: link
+	};
+})
+.directive('votappStyle', function () {
+	
+	function link(scope, element, attrs) {
+	}
+	return {
+		scope: {
+	      eleccion: '=eleccion'
+	    },
+	    templateUrl: 'views/styles.html',
+	    link: link
+	};
+})
 
 
 
