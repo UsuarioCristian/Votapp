@@ -80,7 +80,7 @@ angular.module("app.controllers",[])
 		if($scope.elecciones[i].id == $stateParams.eleccionId){
 			encontre = true;
 			$scope.eleccion = $scope.elecciones[i];
-			console.log("TAMAÑO DE LA LISTA DE CANDIDATOS EN LA ELECCION: "+$scope.eleccion.nombre)
+			console.log("TAMAÑO DE LA LISTA DE CANDIDATOS EN LA ELECCION: "+$scope.eleccion.dataCandidatos.length)
 
 		}else{
 			i++;
@@ -94,6 +94,8 @@ angular.module("app.controllers",[])
 		if($scope.eleccion.dataCandidatos[i].id == $stateParams.candidatoId){
 			encontreCandi = true;
 			$scope.candidato = $scope.eleccion.dataCandidatos[i];
+			console.log("CANDIDATO : "+$scope.candidato.nombre)
+
 		}else{
 			i++;
 		}
