@@ -1,8 +1,9 @@
+<style type="text/css" votapp-style eleccion="eleccion"></style>
 <div class="row">
 	 <div class="col-xs-6 col-md-4">
 	         <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
   	 </div>
- 	 <div class="col-xs-12 col-sm-6 col-md-8">
+ 	 <div class="col-xs-12 col-sm-6 col-md-8 eleccion-nombre">
   		<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1><br><br>
 			<strong>Fecha: {{eleccion.fecha | date}}</strong>
 		<br>	

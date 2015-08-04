@@ -37,6 +37,7 @@ public abstract class Eleccion {
 	protected Date fecha;
 	protected String nombre;
 	protected String descripcion;
+	protected String css;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="idEleccion") // Es unidireccional
@@ -87,6 +88,14 @@ public abstract class Eleccion {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public String getCss() {
+		return css;
+	}
+
+	public void setCss(String css) {
+		this.css = css;
 	}
 
 	public Set<Partido> getPartidos() {

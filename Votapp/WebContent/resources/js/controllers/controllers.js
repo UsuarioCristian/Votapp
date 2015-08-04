@@ -82,7 +82,18 @@ angular.module("app.controllers",[])
 	    link: link
 	};
 })
-
+.directive('votappStyle', function () {
+	
+	function link(scope, element, attrs) {
+	}
+	return {
+		scope: {
+	      eleccion: '=eleccion'
+	    },
+	    templateUrl: 'views/styles.html',
+	    link: link
+	};
+})
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	console.log("ACA ENTRO AL CONTROLLER");
 	console.log($stateParams.eleccionId);
