@@ -53,6 +53,7 @@ public class EleccionHandler implements IEleccionHandler {
 		switch (data.getTipoEleccion()) {
 			case Nacional:
 				eleccion = new EleccionNacional(data.getNombre(), data.getDescripcion(), data.getFecha());
+				eleccion.setCss(simplificarCss(data.getCss()));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
@@ -64,6 +65,7 @@ public class EleccionHandler implements IEleccionHandler {
 				paso2 = eleccion.asignarListas(data.getDataListas());
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
 				
+				
 				if(paso1 && paso2 && paso3)
 					exito = eleccionDAO.crearEleccion(eleccion);
 				else
@@ -72,6 +74,7 @@ public class EleccionHandler implements IEleccionHandler {
 			
 			case Departamental:
 				eleccion = new EleccionDepartamental(data.getNombre(), data.getDescripcion(), data.getFecha());
+				eleccion.setCss(simplificarCss(data.getCss()));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
@@ -91,6 +94,7 @@ public class EleccionHandler implements IEleccionHandler {
 			
 			case Otra:
 				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha());
+				eleccion.setCss(simplificarCss(data.getCss()));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
@@ -118,6 +122,17 @@ public class EleccionHandler implements IEleccionHandler {
 		
 		return exito;
 
+	}
+
+	private String simplificarCss(String css) {
+		
+		String[] parts = css.split("/n");
+		String retorno = "";
+		int tam = parts.length;
+		for (int i = 0; i < tam; i++) {
+			retorno += parts[i];
+		}
+		return retorno;
 	}
 
 	@Override
@@ -170,6 +185,7 @@ public class EleccionHandler implements IEleccionHandler {
 			dataEleccion.setNombre(eleccion.getNombre());
 			dataEleccion.setDescripcion(eleccion.getDescripcion());
 			dataEleccion.setFecha(eleccion.getFecha());
+			dataEleccion.setCss(eleccion.getCss());
 			dataEleccion.setId(eleccion.getId());
 			switch (eleccion.getClass().getName()) {
 				case "dominio.EleccionNacional":

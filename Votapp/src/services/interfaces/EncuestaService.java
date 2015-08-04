@@ -37,5 +37,9 @@ public interface EncuestaService {
 	@Consumes("application/json")
 	public Response crearEmergencia(DataEmergencia dataEmergencia);
 	
+	@GET
+	@Path("/protected/getEncuestasFinalizadasByIdConsultora/{id}")
+	@Produces({"application/json"})
+	public Response getEncuestasFinalizadasByIdConsultora(@PathParam("id") final int id);
 	
 }
