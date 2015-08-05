@@ -71,9 +71,14 @@ angular.module("app.controllers",[])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	console.log("ACA ENTRO AL CONTROLLER");
 	console.log($stateParams.eleccionId);
-	$scope.fuente = { url : 'github'};
-	$scope.fuente2 = { url : 'github'};
-	$scope.fuente3 = { url : 'GitHub'};
+	$scope.fuentes = [];
+	var fuente1 = { url : 'suarez16luis', tipoFuente : 'Facebook'}
+	var fuente2 = { url : 'pagina_12', tipoFuente : 'Twitter'}
+	var fuente3 = { url : 'giordi15s', tipoFuente : 'Youtube'}
+	$scope.fuentes.push(fuente1);
+	$scope.fuentes.push(fuente2);
+	$scope.fuentes.push(fuente3);
+	
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
