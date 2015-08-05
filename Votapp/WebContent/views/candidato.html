@@ -15,16 +15,16 @@
     </div>    
 </div>
 
-		<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipoFuente">
-			      <div ng-switch-when="Facebook">
+		<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
+			      <div ng-switch-when="facebook">
 			     	   	<div id="facebook-div" facebook-votapp fuente="fuen"></div>	 
 				  </div>
 				  
-				  <div ng-switch-when="Twitter">
+				  <div ng-switch-when="twitter">
 			       		<div id="twitter-div" twitter-votapp fuente="fuen"></div>
   				  </div>
 				  
-				  <div ng-switch-when="Youtube">
+				  <div ng-switch-when="youtube">
 				  		 <div youtube-votapp fuente="fuen"></div>
 			    	
 				  </div> 
