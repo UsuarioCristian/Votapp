@@ -276,6 +276,13 @@ public class EleccionHandler implements IEleccionHandler {
 			Partido partido = partidoDAO.findPartidoById(arreglo.get(0).getPartido().getId());
 			data.setIdPartido(partido.getId());
 			data.setNombrePartido(partido.getNombre());
+			
+			Lista listaPrimera = eleccionDAO.findListaById(arreglo.get(0).getId());
+			if(listaPrimera.getDepartamento() != null){ /*Solo entra aqui si es una eleccion departamental*/
+				data.setIdDepto(listaPrimera.getDepartamento().getId());
+				data.setNombreDepto(listaPrimera.getDepartamento().getNombre());
+			}
+			
 		}
 		
 		return data;

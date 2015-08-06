@@ -18,6 +18,8 @@ public class DataCandidato implements Serializable {
 	private List<DataLista> dataListas;
 	private TipoCargo cargo;
 	private int id;
+	private int idDepto;
+	private String nombreDepto;
 
 	public DataCandidato(){
 		this.dataFuenteDatos = new ArrayList<DataFuenteDatos>();
@@ -87,6 +89,22 @@ public class DataCandidato implements Serializable {
 
 	public void setIdPartido(int idPartido) {
 		this.idPartido = idPartido;
+	}
+
+	public int getIdDepto() {
+		return idDepto;
+	}
+
+	public void setIdDepto(int idDepto) {
+		this.idDepto = idDepto;
+	}
+
+	public String getNombreDepto() {
+		return nombreDepto;
+	}
+
+	public void setNombreDepto(String nombreDepto) {
+		this.nombreDepto = nombreDepto;
 	}
 
 }
