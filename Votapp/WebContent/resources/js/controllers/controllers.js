@@ -69,11 +69,7 @@ angular.module("app.controllers",[])
 	
 }])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
-	console.log("ACA ENTRO AL CONTROLLER");
-	console.log($stateParams.eleccionId);
-	$scope.fuente = { url : 'github'};
-	$scope.fuente2 = { url : 'github'};
-	$scope.fuente3 = { url : 'GitHub'};
+	
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -82,7 +78,6 @@ angular.module("app.controllers",[])
 		if($scope.elecciones[i].id == $stateParams.eleccionId){
 			encontre = true;
 			$scope.eleccion = $scope.elecciones[i];
-			console.log("TAMAÑO DE LA LISTA DE CANDIDATOS EN LA ELECCION: "+$scope.eleccion.dataCandidatos.length)
 
 		}else{
 			i++;
@@ -96,6 +91,7 @@ angular.module("app.controllers",[])
 		if($scope.eleccion.dataCandidatos[i].id == $stateParams.candidatoId){
 			encontreCandi = true;
 			$scope.candidato = $scope.eleccion.dataCandidatos[i];
+			$scope.fuentes = $scope.candidato.dataFuenteDatos;
 			console.log("CANDIDATO : "+$scope.candidato.nombre)
 
 		}else{
@@ -122,7 +118,7 @@ angular.module("app.controllers",[])
 		if($scope.elecciones[i].id == $stateParams.eleccionId){
 			encontre = true;
 			$scope.eleccion = $scope.elecciones[i];
-			console.log("TAMAÑO DE LA LISTA DE partidos EN LA ELECCION: "+$scope.eleccion.dataPartidos.length)
+		
 
 		}else{
 			i++;
@@ -136,6 +132,7 @@ angular.module("app.controllers",[])
 		if($scope.eleccion.dataPartidos[i].id == $stateParams.partidoId){
 			encontreParti = true;
 			$scope.partido = $scope.eleccion.dataPartidos[i];
+			$scope.fuentes = $scope.partido.dataFuenteDatos;
 		}else{
 			i++;
 		}

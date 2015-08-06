@@ -14,10 +14,17 @@
     </div>    
 </div>
 
-
-		<div class="fb-page" data-href="https://www.facebook.com/barackobama" data-small-header="false" 
-			 data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true">
-			 <div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/barackobama">
-		 		<a href="https://www.facebook.com/barackobama">Facebook</a></blockquote>
-		 	</div>
-		 </div>
+	<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
+			      <div ng-switch-when="facebook">
+			     	   	<div id="facebook-div" facebook-votapp fuente="fuen"></div>	 
+				  </div>
+				  
+				  <div ng-switch-when="twitter">
+			       		<div id="twitter-div" twitter-votapp fuente="fuen"></div>
+  				  </div>
+				  
+				  <div ng-switch-when="youtube">
+				  		 <div youtube-votapp fuente="fuen"></div>
+			    	
+				  </div> 
+		</div>

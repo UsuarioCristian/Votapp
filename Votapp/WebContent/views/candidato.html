@@ -14,6 +14,21 @@
         </div>
     </div>    
 </div>
-		<div id="twitter-div" twitter-votapp fuente="fuente2"></div>
-		 <div youtube-votapp fuente="fuente"></div>
-		 <div id="facebook-div" facebook-votapp fuente="fuente3"></div>
+
+		<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
+			      <div ng-switch-when="facebook">
+			     	   	<div id="facebook-div" facebook-votapp fuente="fuen"></div>	 
+				  </div>
+				  
+				  <div ng-switch-when="twitter">
+			       		<div id="twitter-div" twitter-votapp fuente="fuen"></div>
+  				  </div>
+				  
+				  <div ng-switch-when="youtube">
+				  		 <div youtube-votapp fuente="fuen"></div>
+			    	
+				  </div> 
+		</div>
+		
+		
+	
