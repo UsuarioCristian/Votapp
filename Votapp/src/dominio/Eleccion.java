@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public abstract class Eleccion {
 	@OneToMany(mappedBy = "eleccion")
 	protected Set<Encuesta> encuestas;
 	
-	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	protected Set<Departamento> departamentos;
 
 	public int getId() {
