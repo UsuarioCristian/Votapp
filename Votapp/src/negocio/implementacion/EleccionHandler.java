@@ -22,6 +22,7 @@ import datas.DataImagen;
 import datas.DataLista;
 import datas.DataPartido;
 import dominio.Candidato;
+import dominio.Departamento;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
@@ -187,18 +188,22 @@ public class EleccionHandler implements IEleccionHandler {
 			dataEleccion.setFecha(eleccion.getFecha());
 			dataEleccion.setCss(eleccion.getCss());
 			dataEleccion.setId(eleccion.getId());
+			List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
+			List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
 			switch (eleccion.getClass().getName()) {
 				case "dominio.EleccionNacional":
-					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);
+					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);					
 					
-					List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
 					dataEleccion.setDataPartidos(partidos);
+					dataEleccion.setDataCandidatos(candidatos);					
 					
-					List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
-					dataEleccion.setDataCandidatos(candidatos);
 					break;
 				case "dominio.EleccionDepartamental":
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
+					
+					dataEleccion.setDataPartidos(partidos);
+					dataEleccion.setDataCandidatos(candidatos);
+					
 					break;
 				case "dominio.EleccionOtro":
 					dataEleccion.setTipoEleccion(TipoEleccion.Otra);
@@ -299,6 +304,16 @@ public class EleccionHandler implements IEleccionHandler {
 			dataLista.setNombrePartido(partido.getNombre());
 			data.getListas().add(dataLista);
 		}
+		
+		Set<Departamento> deptos = partido.getDepartamentos(); //recordar FetchType.EAGER
+		for (Departamento departamento : deptos) {
+			DataDepartamento dataDepartamento = new DataDepartamento();
+			dataDepartamento.setId(departamento.getId());
+			dataDepartamento.setNombre(departamento.getNombre());
+			dataDepartamento.setNumHabilitadosVotar(departamento.getNumHabilitadosVotar());
+			dataDepartamento.setNumHabitantes(departamento.getNumHabitantes());
+			data.getDataDeptos().add(dataDepartamento);
+		}
 				
 		return data;
 	}
@@ -315,8 +330,8 @@ public class EleccionHandler implements IEleccionHandler {
 		if (lista.getDepartamento() != null){
 			DataDepartamento dataDepartamento = new DataDepartamento();
 			dataDepartamento.setNombre(lista.getDepartamento().getNombre());
-			dataDepartamento.setNumHabilitadosVotar(lista.getDepartamento().getNumHabilitadosVotar());
-			dataDepartamento.setNumHabitantes(lista.getDepartamento().getNumHabitantes());
+//			dataDepartamento.setNumHabilitadosVotar(lista.getDepartamento().getNumHabilitadosVotar());
+//			dataDepartamento.setNumHabitantes(lista.getDepartamento().getNumHabitantes());
 			dataDepartamento.setId(lista.getDepartamento().getId());
 			data.setDataDepartamento(dataDepartamento);
 		}

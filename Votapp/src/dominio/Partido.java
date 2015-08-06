@@ -30,7 +30,7 @@ public class Partido implements Serializable {
 	@ManyToOne
 	private Eleccion eleccion;
 	
-	@ManyToMany(mappedBy = "partidos")
+	@ManyToMany(mappedBy = "partidos", fetch = FetchType.EAGER)
 	private Set<Departamento> departamentos;
 	
 	@ManyToMany(mappedBy = "partidos")
