@@ -6,9 +6,9 @@
   	<div class="panel-heading">Candidatos:</div>
   		<div class="panel-body">
    			<div class="list-group">
-					<a href="#" class="list-group-item"   ui-sref="candidato({candidatoId: candi.id})" >
-						    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>
-						    <p class="list-group-item-text">Partido Futurista</p>
+					<a href="#" class="list-group-item" ng-repeat="candi in candidatosXPartido"   ui-sref="candidato({candidatoId: candi.id})" >
+						    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
+						    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
 					</a>
 					<a href="#" class="list-group-item"   ui-sref="candidato({candidatoId: candi.id})" >
 						    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>

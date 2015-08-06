@@ -201,7 +201,40 @@ angular.module("app.controllers",[])
 	};
 })
 
+.controller("deptoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
+	console.log("DEPTO CONTROLLERRRRR");
+	$scope.elecciones = store.get('elecciones');
+	//Buscar la eleccion con el id que viene x url
+	var encontre = false;
+	var i = 0;
+	while(!encontre && i < $scope.elecciones.length){
+		if($scope.elecciones[i].id == $stateParams.eleccionId){
+			encontre = true;
+			$scope.eleccion = $scope.elecciones[i];
 
+		}else{
+			i++;
+		}
+	}
+	
+	var encontreDepto = false;
+	$scope.candidatosXPartido = [];
+	var i = 0;
+
+	while(!encontreDepto && i < $scope.eleccion.dataCandidatos.length){
+		if($scope.eleccion.dataCandidatos[i].getNombreDepto == $stateParams.depto){
+			$scope.candidatosXPartido.push($scope.eleccion.dataCandidatos[i]);
+
+		}else{
+			i++;
+		}
+	}
+	
+//	FB.XFBML.parse(document.getElementById('facebook-div'));
+//	twttr.widgets.load(document.getElementById('twitter-div'));
+	
+
+}])
 
 
 

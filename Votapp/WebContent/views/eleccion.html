@@ -39,9 +39,9 @@
 							<div><strong>Seleccione un departamento:</strong></div>
 									<div class="col-xs-5"> 
 							           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
-							           		<option value="{depto.nombre}" ng-repeat="depto in deptos" ng-click="deptoSeleccionado()">{{depto}}</option>
+							           		<option  ng-repeat="depto in deptos" value="{depto}">{{depto}}</option>
 							           	</select>
-							           	<p><a class="btn btn-default" ui-sref="departamento({ departamentoNombre: depto})" role="button">Ver Info »</a></p>
+							           	<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoNombre: deptoSel})" role="button">Ver Info »</a></p>
 							           <br>
 							      	</div>
 					

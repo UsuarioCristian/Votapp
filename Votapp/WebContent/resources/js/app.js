@@ -44,8 +44,9 @@ angular.module('app', [
 		});
 	
 	$stateProvider.state('departamento', {
-		url:'/departamento/{departamentoNombre}', 
-		templateUrl: 'views/departamento.html', 
+		url:'/departamento/{eleccionId}/{departamentoNombre}/', 
+		templateUrl: 'views/departamento.html',
+		controller: 'deptoController'
 		});
 }])
 
