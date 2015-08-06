@@ -190,12 +190,14 @@ public class EleccionHandler implements IEleccionHandler {
 			dataEleccion.setId(eleccion.getId());
 			List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
 			List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
+			List<DataDepartamento> deptos = getDeptosFromEleccion(eleccion);
 			switch (eleccion.getClass().getName()) {
 				case "dominio.EleccionNacional":
 					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);					
 					
 					dataEleccion.setDataPartidos(partidos);
-					dataEleccion.setDataCandidatos(candidatos);					
+					dataEleccion.setDataCandidatos(candidatos);	
+					dataEleccion.setDeptos(deptos);/*Esto aqui no se si tiene sentido... tal vez a futuro*/
 					
 					break;
 				case "dominio.EleccionDepartamental":
@@ -203,6 +205,7 @@ public class EleccionHandler implements IEleccionHandler {
 					
 					dataEleccion.setDataPartidos(partidos);
 					dataEleccion.setDataCandidatos(candidatos);
+					dataEleccion.setDeptos(deptos);
 					
 					break;
 				case "dominio.EleccionOtro":
@@ -220,6 +223,27 @@ public class EleccionHandler implements IEleccionHandler {
 		}
 		
 		return dataElecciones;
+	}
+
+	private List<DataDepartamento> getDeptosFromEleccion(Eleccion eleccion) {
+		List<DataDepartamento> listaRetorno = new ArrayList<DataDepartamento>();
+		
+		for (Departamento depto : eleccion.getDepartamentos()){/*Se cargan fetch eager*/
+			DataDepartamento dataDepartamento = new DataDepartamento();
+			dataDepartamento.setId(depto.getId());
+			dataDepartamento.setNombre(depto.getNombre());
+			dataDepartamento.setNumHabilitadosVotar(depto.getNumHabilitadosVotar());
+			dataDepartamento.setNumHabitantes(depto.getNumHabitantes());
+			
+			for (Partido partido : depto.getPartidos()) {
+				dataDepartamento.getColeccionIdPartidos().add(partido.getId());
+			}
+			
+			listaRetorno.add(dataDepartamento);
+		}
+		
+		
+		return listaRetorno;
 	}
 
 	private List<DataCandidato> getCandidatosFromEleccion(Eleccion eleccion) {
@@ -317,8 +341,8 @@ public class EleccionHandler implements IEleccionHandler {
 			DataDepartamento dataDepartamento = new DataDepartamento();
 			dataDepartamento.setId(departamento.getId());
 			dataDepartamento.setNombre(departamento.getNombre());
-			dataDepartamento.setNumHabilitadosVotar(departamento.getNumHabilitadosVotar());
-			dataDepartamento.setNumHabitantes(departamento.getNumHabitantes());
+//			dataDepartamento.setNumHabilitadosVotar(departamento.getNumHabilitadosVotar());
+//			dataDepartamento.setNumHabitantes(departamento.getNumHabitantes());
 			data.getDataDeptos().add(dataDepartamento);
 		}
 				

@@ -14,9 +14,11 @@ public class DataDepartamento implements Serializable {
 	private int numHabilitadosVotar;
 	private List<DataFuenteDatos> listaFuenteDatos;
 	private int cantidadRespuestas;// para no crear otro data se agrego este campo (se aplica cuando se crea una eleccion departamental)
+	private List<Integer> coleccionIdPartidos;
 	
 	public DataDepartamento(){
 		this.listaFuenteDatos = new ArrayList<DataFuenteDatos>();
+		this.coleccionIdPartidos = new ArrayList<Integer>();
 	}
 
 	public int getId() {
@@ -65,6 +67,14 @@ public class DataDepartamento implements Serializable {
 
 	public void setCantidadRespuestas(int cantidadRespuestas) {
 		this.cantidadRespuestas = cantidadRespuestas;
+	}
+
+	public List<Integer> getColeccionIdPartidos() {
+		return coleccionIdPartidos;
+	}
+
+	public void setColeccionIdPartidos(List<Integer> coleccionIdPartidos) {
+		this.coleccionIdPartidos = coleccionIdPartidos;
 	}
 
 }
