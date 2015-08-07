@@ -16,7 +16,7 @@
 							<div class="col-md-6">
 							<div><strong>Conozca a los candidatos:</strong></div>
 									<div class="list-group">
-										<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({ eleccionId: eleccion.id, candidatoId: candi.id})" >
+										<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
 										    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
 										    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
 										</a>
@@ -38,10 +38,9 @@
 			          	<div class="row" style="margin-left: auto;">
 							<div><strong>Seleccione un departamento:</strong></div>
 									<div class="col-xs-5"> 
-							           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
-							           		<option  ng-repeat="depto in deptos" value="{depto}">{{depto}}</option>
-							           	</select>
-							           	<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoNombre: deptoSel})" role="button">Ver Info »</a></p>
+										<select ng-options="depto.nombre for depto in deptos" ng-model="depto"></select>
+									
+							           <p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: depto.id})" role="button">Ver Info »</a></p>
 							           <br>
 							      	</div>
 					

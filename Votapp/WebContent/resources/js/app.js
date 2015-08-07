@@ -32,19 +32,19 @@ angular.module('app', [
 		      }});
 	//.state('nombreEstado', {camposExtras}) etc etc
 	$stateProvider.state('candidato', {
-		url:'/candidato/{eleccionId}/{candidatoId}', 
+		url:'/eleccion/{eleccionId}/candidato/{candidatoId}', 
 		templateUrl: 'views/candidato.html',
 		controller: 'candidatoController'
 		});
 	
 	$stateProvider.state('partido', {
-		url:'/partido/{eleccionId}/{partidoId}', 
+		url:'/eleccion/{eleccionId}/partido/{partidoId}', 
 		templateUrl: 'views/partido.html',
 		controller: 'partidoController'
 		});
 	
 	$stateProvider.state('departamento', {
-		url:'/departamento/{eleccionId}/{departamentoNombre}/', 
+		url:'/eleccion/{eleccionId}/departamento/{departamentoId}', 
 		templateUrl: 'views/departamento.html',
 		controller: 'deptoController'
 		});

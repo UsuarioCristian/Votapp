@@ -46,30 +46,12 @@ angular.module("app.controllers",[])
 			i++;
 		}
 	}
-	
-	$scope.deptos.push("Artigas")
-	$scope.deptos.push("Cerro Largo")
-	$scope.deptos.push("Durazno")
-	$scope.deptos.push("Florida")
-	$scope.deptos.push("Maldonado")
-	$scope.deptos.push("Paysandu")
-	$scope.deptos.push("Rivera")
-	$scope.deptos.push("Salto")
-	$scope.deptos.push("Soriano")
-	$scope.deptos.push("Treinta y Tres")
-	$scope.deptos.push("Canelones")
-	$scope.deptos.push("Colonia")
-	$scope.deptos.push("Flores")
-	$scope.deptos.push("Lavalleja")
-	$scope.deptos.push("Montevideo")
-	$scope.deptos.push("Rio Negro")
-	$scope.deptos.push("Rocha")
-	$scope.deptos.push("San Jose")
-	$scope.deptos.push("Tacuarembo")
+	$scope.deptos = $scope.eleccion.deptos;
+
 	
 }])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
-	
+	console.log("ENTRO AL CONTROOLLER CANDI");
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -202,7 +184,6 @@ angular.module("app.controllers",[])
 })
 
 .controller("deptoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
-	console.log("DEPTO CONTROLLERRRRR");
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -210,28 +191,60 @@ angular.module("app.controllers",[])
 	while(!encontre && i < $scope.elecciones.length){
 		if($scope.elecciones[i].id == $stateParams.eleccionId){
 			encontre = true;
-			$scope.eleccion = $scope.elecciones[i];
+			$scope.eleccion = $scope.elecciones[i];			
 
 		}else{
 			i++;
 		}
 	}
-	
-	var encontreDepto = false;
-	$scope.candidatosXPartido = [];
-	var i = 0;
-
-	while(!encontreDepto && i < $scope.eleccion.dataCandidatos.length){
-		if($scope.eleccion.dataCandidatos[i].getNombreDepto == $stateParams.depto){
-			$scope.candidatosXPartido.push($scope.eleccion.dataCandidatos[i]);
-
-		}else{
+	encontre = false;
+	i = 0;
+	while (!encontre && i<$scope.eleccion.deptos.length){
+		if($scope.eleccion.deptos[i].id == $stateParams.departamentoId){
+			encontre = true;
+			$scope.deptoSel = $scope.eleccion.deptos[i];
+		}
+		else{
 			i++;
 		}
 	}
 	
-//	FB.XFBML.parse(document.getElementById('facebook-div'));
-//	twttr.widgets.load(document.getElementById('twitter-div'));
+	
+	$scope.candidatosXDepto = [];
+	
+	for (var x=0;x<$scope.eleccion.dataCandidatos.length;x++){
+		if($scope.eleccion.dataCandidatos[x].idDepto == $stateParams.departamentoId){
+			$scope.candidatosXDepto.push($scope.eleccion.dataCandidatos[x]);
+
+		}
+	
+	}
+	
+	$scope.idPartidosXDepto = $scope.deptoSel.coleccionIdPartidos;
+	$scope.partidosXDeptos = [];	
+	for(var x=0;x<$scope.idPartidosXDepto.length;x++){
+		console.log("Length: "+$scope.idPartidosXDepto.length);
+		var encontre = false;
+		var i = 0;
+		while(!encontre && i<$scope.eleccion.dataPartidos.length){
+			console.log("Length 19 "+$scope.eleccion.dataPartidos.length);
+			if($scope.idPartidosXDepto[x] == $scope.eleccion.dataPartidos[i].id){
+				encontre = true;
+				$scope.partidosXDeptos.push($scope.eleccion.dataPartidos[i]);
+				console.log("encontre un partido");
+			}
+			else{
+				i++;
+			}
+			
+		}
+				
+	}
+	
+	
+	
+
+
 	
 
 }])
