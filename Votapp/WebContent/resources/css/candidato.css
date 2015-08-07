@@ -12,3 +12,32 @@
 .profile-bio hr {
   margin: 12px 0 10px;
 }
+.height-social{
+	height: 350px;
+	overflow: scroll;
+} 
+.header-social-votapp{	
+	width: 100%;
+	margin-bottom: 5%;
+}
+.header-social-votapp span{
+	color: #FFFFFF;
+	margin-left: 5%;
+	font-size: 2em;
+	vertical-align: middle;
+}
+.facebook-container{
+	background-color:#3b5998;
+	padding: 2%;
+}
+.twitter-container{
+	background-color:#2e98d0;
+	padding: 2%;
+}
+.youtube-container{
+	background-color:#b31217;
+	padding: 2%;
+}
+.white-votapp{
+	color: #FFFFFF;
+}

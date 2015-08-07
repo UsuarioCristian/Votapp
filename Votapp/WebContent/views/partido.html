@@ -1,4 +1,4 @@
-<div class="profile-bio" ng-controller="HomeController">
+<div class="profile-bio" >
     <div class="row">
         <div class="col-md-5">
         	<img class="img-responsive md-margin-bottom-10" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVlMTdiMGRmNSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWUxN2IwZGY1Ij48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" alt="" class="img-responsive">
@@ -16,15 +16,38 @@
 
 	<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
 			      <div ng-switch-when="facebook">
-			     	   	<div id="facebook-div" facebook-votapp fuente="fuen"></div>	 
+			     	   	<div class="height-social facebook-container col-md-4">
+			     	   	<div class="header-social-votapp">
+			     	   		<i class="white-votapp fa fa-facebook fa-3x">
+			     	   		</i><span>Facebook</span>
+			     	   	</div>
+			     	   	<hr>
+			     	   	<div facebook-votapp fuente="fuen"></div>	 
+			     	   	
+			     	   	</div>
 				  </div>
 				  
 				  <div ng-switch-when="twitter">
-			       		<div id="twitter-div" twitter-votapp fuente="fuen"></div>
+			       		<div class="height-social twitter-container col-md-4">
+			       		<div class="header-social-votapp">
+			       			<i class="white-votapp fa fa-twitter fa-3x">
+			     	   		</i><span>Twitter</span>
+			       		</div>
+			       		<hr>
+			       		<div twitter-votapp fuente="fuen"></div>
+  				  		
+  				  		</div>
   				  </div>
 				  
 				  <div ng-switch-when="youtube">
-				  		 <div youtube-votapp fuente="fuen"></div>
-			    	
+				  		<div class="height-social youtube-container col-md-4">
+				  		<div class="header-social-votapp">
+				  			<i class="white-votapp fa fa-youtube-play fa-3x">
+			     	   		</i><span>YouTube</span>
+				  		</div>
+				  		<hr>
+				  		<div youtube-votapp fuente="fuen"></div>
+			    		
+			    		</div>
 				  </div> 
 		</div>

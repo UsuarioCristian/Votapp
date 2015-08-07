@@ -14,21 +14,43 @@
         </div>
     </div>    
 </div>
-
-		<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
-			      <div ng-switch-when="facebook">
-			     	   	<div id="facebook-div" facebook-votapp fuente="fuen"></div>	 
-				  </div>
-				  
-				  <div ng-switch-when="twitter">
-			       		<div id="twitter-div" twitter-votapp fuente="fuen"></div>
-  				  </div>
-				  
-				  <div ng-switch-when="youtube">
-				  		 <div youtube-votapp fuente="fuen"></div>
-			    	
-				  </div> 
-		</div>
+<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
+      <div ng-switch-when="facebook">
+     	   	<div class="height-social facebook-container col-md-4">
+     	   	<div class="header-social-votapp">
+     	   		<i class="white-votapp fa fa-facebook fa-3x">
+     	   		</i><span>Facebook</span>
+     	   	</div>
+     	   	<hr>
+     	   	<div facebook-votapp fuente="fuen"></div>	 
+     	   	
+     	   	</div>
+	  </div>
+	  
+	  <div ng-switch-when="twitter">
+       		<div class="height-social twitter-container col-md-4">
+       		<div class="header-social-votapp">
+       			<i class="white-votapp fa fa-twitter fa-3x">
+     	   		</i><span>Twitter</span>
+       		</div>
+       		<hr>
+       		<div twitter-votapp fuente="fuen"></div>
+			  		
+			  		</div>
+			  </div>
+	  
+	  <div ng-switch-when="youtube">
+	  		<div class="height-social youtube-container col-md-4">
+	  		<div class="header-social-votapp">
+	  			<i class="white-votapp fa fa-youtube-play fa-3x">
+     	   		</i><span>YouTube</span>
+	  		</div>
+	  		<hr>
+	  		<div youtube-votapp fuente="fuen"></div>
+    		
+    		</div>
+	  </div> 
+</div>
 		
 		
 	

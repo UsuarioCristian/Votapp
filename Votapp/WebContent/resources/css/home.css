@@ -1,5 +1,33 @@
 @CHARSET "UTF-8";
+html{
+	height: 100%;
+}
+.full-size{
+	height: 100%;
+}
 
 .eleccion{
 	
+}
+.container-panel-votapp{
+	margin: 4%;
+}
+.info-eleccion-votapp{
+	text-align: right;
+}
+.eleccion-container{
+	padding: 5%;
+	width: 100%;
+}
+.candidatos-titulo{
+	font-size: 1.8em;
+}
+.candidatos-titulo span{
+	margin-left: 20px;
+}
+.partidos-titulo{
+	font-size: 1.8em;
+}
+.partidos-titulo span{
+	margin-left: 20px;
 }

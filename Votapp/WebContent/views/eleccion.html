@@ -1,65 +1,64 @@
 <style type="text/css" votapp-style eleccion="eleccion"></style>
-<div class="row">
-	 <div class="col-xs-6 col-md-4">
+<div class="row eleccion-container eleccion-nombre">
+	 <div class="col-xs-6 col-md-4 imagen-eleccion">
 	         <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
   	 </div>
- 	 <div class="col-xs-12 col-sm-6 col-md-8 eleccion-nombre">
-  		<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1><br><br>
-			<strong>Fecha: {{eleccion.fecha | date}}</strong>
+ 	<div class="col-md-8 info-eleccion-votapp">
+		<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1>
+		<br><br>
+		<strong>Fecha: {{eleccion.fecha | date}}</strong>
 		<br>	
-		<p>{{eleccion.descripcion}}
-		</p><br>
-		
-		<div ng-switch="tipoEleccion">
-			      <div ng-switch-when="Nacional">
-			          	<div class="row">
-							<div class="col-md-6">
-							<div><strong>Conozca a los candidatos:</strong></div>
-									<div class="list-group">
-										<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({ eleccionId: eleccion.id, candidatoId: candi.id})" >
-										    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
-										    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
-										</a>
-									</div>
-							</div>	
-							<div class="col-md-6">		
-								<div><strong>Conozca a los Partidos:</strong></div>
-									<div class="list-group">
-										<a href="#" class="list-group-item"  ng-repeat="parti in eleccion.dataPartidos" ui-sref="partido({eleccionId: eleccion.id, partidoId: parti.id})" >
-										    <h4 class="list-group-item-heading">{{parti.nombre}}</h4>
-										</a>
-									</div>
-							</div>
-						
+		<p>{{eleccion.descripcion}}</p>
+		<br>
+	</div>
+	<hr>
+	<div ng-switch="tipoEleccion">
+		<div ng-switch-when="Nacional">
+			<div class="row">
+				<div class="panel panel-default col-md-5 container-panel-votapp">
+					<div class="panel-body contenedor-candidatos">
+						<div class="candidatos-titulo">
+							<i class="fa fa-user fa-2x"></i><span>Conozca a los candidatos:</span>
 						</div>
-  						
-				  </div>
-				     <div ng-switch-when="Departamental">
-			          	<div class="row" style="margin-left: auto;">
-							<div><strong>Seleccione un departamento:</strong></div>
-									<div class="col-xs-5"> 
-							           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
-							           		<option value="{depto.nombre}" ng-repeat="depto in deptos" ng-click="deptoSeleccionado()">{{depto}}</option>
-							           	</select>
-							           	<p><a class="btn btn-default" ui-sref="departamento({ departamentoNombre: depto})" role="button">Ver Info »</a></p>
-							           <br>
-							      	</div>
-					
-  						</div>
-				  </div>
-			 
-		</div>
-	
-
+						<hr>
+						<div class="list-group candidatos">
+							<a href="#" class="list-group-item"
+								ng-repeat="candi in eleccion.dataCandidatos"
+								ui-sref="candidato({ eleccionId: eleccion.id, candidatoId: candi.id})">
+								
+								<h4 class="list-group-item-heading">{{candi.nombre}}<small>  {{candi.nombrePartido}}</small></h4>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default col-md-5 container-panel-votapp">
+					<div class="panel-body contenedor-partidos" >
+						<div class="partidos-titulo">
+							<i class="fa fa-users fa-2x"></i><span>Conozca a los partidos:</span>
+						</div>
+						<hr>
+					<div class="list-group">
+						<a href="#" class="list-group-item"
+							ng-repeat="parti in eleccion.dataPartidos"
+							ui-sref="partido({eleccionId: eleccion.id, partidoId: parti.id})">
+							<h4 class="list-group-item-heading">{{parti.nombre}}</h4>
+						</a>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- end when nacional -->
+		<div ng-switch-when="Departamental">
+			<div class="row" style="margin-left: auto;">
+				<div><strong>Seleccione un departamento:</strong></div>
+				<div class="col-xs-5"> 
+		           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
+		           		<option value="{depto.nombre}" ng-repeat="depto in deptos" ng-click="deptoSeleccionado()">{{depto}}</option>
+		           	</select>
+		           	<p><a class="btn btn-default" ui-sref="departamento({ departamentoNombre: depto})" role="button">Ver Info »</a></p>
+		            <br>
+				</div>
+  			</div>
+		</div><!-- end when deptal -->
+	</div><!-- end ng switch tipoEleccion -->
 </div>
-
-<!-- <div class="col-lg-4" ng-repeat="partido in elecciones.dataPartidos" >
-	<div class="col-lg-4" ng-repeat="fuente in partido.dataFuenteDatos" >
-		<div class="fb-page" data-href="https://www.facebook.com/{{fuente.url}}" data-small-header="false" 
-			 data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true">
-			 <div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/{{fuente.url}}">
-		 		<a href="https://www.facebook.com/{{fuente.url}}">Facebook</a></blockquote>
-		 	</div>
-		 </div>
-	 </div>
-</div> -->
