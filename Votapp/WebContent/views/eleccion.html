@@ -22,9 +22,7 @@
 						</div>
 						<hr>
 						<div class="list-group candidatos">
-							<a href="#" class="list-group-item"
-								ng-repeat="candi in eleccion.dataCandidatos"
-								ui-sref="candidato({ eleccionId: eleccion.id, candidatoId: candi.id})">
+							<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
 								
 								<h4 class="list-group-item-heading">{{candi.nombre}}<small>  {{candi.nombrePartido}}</small></h4>
 							</a>
@@ -52,10 +50,8 @@
 			<div class="row" style="margin-left: auto;">
 				<div><strong>Seleccione un departamento:</strong></div>
 				<div class="col-xs-5"> 
-		           	<select  class="form-control"  type="checkbox" ng-model="deptoSel" >
-		           		<option value="{depto.nombre}" ng-repeat="depto in deptos" ng-click="deptoSeleccionado()">{{depto}}</option>
-		           	</select>
-		           	<p><a class="btn btn-default" ui-sref="departamento({ departamentoNombre: depto})" role="button">Ver Info »</a></p>
+		           	<select ng-options="depto.nombre for depto in deptos" ng-model="depto"></select>
+						<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: depto.id})" role="button">Ver Info »</a></p>
 		            <br>
 				</div>
   			</div>
