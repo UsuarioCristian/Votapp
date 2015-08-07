@@ -93,4 +93,16 @@ public class EncuestaDAO implements IEncuestaDAO {
 		}
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Respuesta> getRespuestas(int idEncuesta) {
+		try {
+			return em.createNamedQuery("Encuesta.getRespuestas", Respuesta.class)
+					.setParameter("idEncuesta", idEncuesta)
+					.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 }

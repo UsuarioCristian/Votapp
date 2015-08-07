@@ -22,6 +22,7 @@ import datas.DataImagen;
 import datas.DataLista;
 import datas.DataPartido;
 import dominio.Candidato;
+import dominio.Departamento;
 import dominio.Eleccion;
 import dominio.EleccionDepartamental;
 import dominio.EleccionNacional;
@@ -187,18 +188,25 @@ public class EleccionHandler implements IEleccionHandler {
 			dataEleccion.setFecha(eleccion.getFecha());
 			dataEleccion.setCss(eleccion.getCss());
 			dataEleccion.setId(eleccion.getId());
+			List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
+			List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
+			List<DataDepartamento> deptos = getDeptosFromEleccion(eleccion);
 			switch (eleccion.getClass().getName()) {
 				case "dominio.EleccionNacional":
-					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);
+					dataEleccion.setTipoEleccion(TipoEleccion.Nacional);					
 					
-					List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
 					dataEleccion.setDataPartidos(partidos);
+					dataEleccion.setDataCandidatos(candidatos);	
+					dataEleccion.setDeptos(deptos);/*Esto aqui no se si tiene sentido... tal vez a futuro*/
 					
-					List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
-					dataEleccion.setDataCandidatos(candidatos);
 					break;
 				case "dominio.EleccionDepartamental":
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
+					
+					dataEleccion.setDataPartidos(partidos);
+					dataEleccion.setDataCandidatos(candidatos);
+					dataEleccion.setDeptos(deptos);
+					
 					break;
 				case "dominio.EleccionOtro":
 					dataEleccion.setTipoEleccion(TipoEleccion.Otra);
@@ -215,6 +223,27 @@ public class EleccionHandler implements IEleccionHandler {
 		}
 		
 		return dataElecciones;
+	}
+
+	private List<DataDepartamento> getDeptosFromEleccion(Eleccion eleccion) {
+		List<DataDepartamento> listaRetorno = new ArrayList<DataDepartamento>();
+		
+		for (Departamento depto : eleccion.getDepartamentos()){/*Se cargan fetch eager*/
+			DataDepartamento dataDepartamento = new DataDepartamento();
+			dataDepartamento.setId(depto.getId());
+			dataDepartamento.setNombre(depto.getNombre());
+			dataDepartamento.setNumHabilitadosVotar(depto.getNumHabilitadosVotar());
+			dataDepartamento.setNumHabitantes(depto.getNumHabitantes());
+			
+			for (Partido partido : depto.getPartidos()) {
+				dataDepartamento.getColeccionIdPartidos().add(partido.getId());
+			}
+			
+			listaRetorno.add(dataDepartamento);
+		}
+		
+		
+		return listaRetorno;
 	}
 
 	private List<DataCandidato> getCandidatosFromEleccion(Eleccion eleccion) {
@@ -271,6 +300,13 @@ public class EleccionHandler implements IEleccionHandler {
 			Partido partido = partidoDAO.findPartidoById(arreglo.get(0).getPartido().getId());
 			data.setIdPartido(partido.getId());
 			data.setNombrePartido(partido.getNombre());
+			
+			Lista listaPrimera = eleccionDAO.findListaById(arreglo.get(0).getId());
+			if(listaPrimera.getDepartamento() != null){ /*Solo entra aqui si es una eleccion departamental*/
+				data.setIdDepto(listaPrimera.getDepartamento().getId());
+				data.setNombreDepto(listaPrimera.getDepartamento().getNombre());
+			}
+			
 		}
 		
 		return data;
@@ -299,6 +335,16 @@ public class EleccionHandler implements IEleccionHandler {
 			dataLista.setNombrePartido(partido.getNombre());
 			data.getListas().add(dataLista);
 		}
+		
+		Set<Departamento> deptos = partido.getDepartamentos(); //recordar FetchType.EAGER
+		for (Departamento departamento : deptos) {
+			DataDepartamento dataDepartamento = new DataDepartamento();
+			dataDepartamento.setId(departamento.getId());
+			dataDepartamento.setNombre(departamento.getNombre());
+//			dataDepartamento.setNumHabilitadosVotar(departamento.getNumHabilitadosVotar());
+//			dataDepartamento.setNumHabitantes(departamento.getNumHabitantes());
+			data.getDataDeptos().add(dataDepartamento);
+		}
 				
 		return data;
 	}
@@ -315,8 +361,8 @@ public class EleccionHandler implements IEleccionHandler {
 		if (lista.getDepartamento() != null){
 			DataDepartamento dataDepartamento = new DataDepartamento();
 			dataDepartamento.setNombre(lista.getDepartamento().getNombre());
-			dataDepartamento.setNumHabilitadosVotar(lista.getDepartamento().getNumHabilitadosVotar());
-			dataDepartamento.setNumHabitantes(lista.getDepartamento().getNumHabitantes());
+//			dataDepartamento.setNumHabilitadosVotar(lista.getDepartamento().getNumHabilitadosVotar());
+//			dataDepartamento.setNumHabitantes(lista.getDepartamento().getNumHabitantes());
 			dataDepartamento.setId(lista.getDepartamento().getId());
 			data.setDataDepartamento(dataDepartamento);
 		}

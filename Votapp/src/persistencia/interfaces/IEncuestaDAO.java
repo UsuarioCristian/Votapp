@@ -22,4 +22,6 @@ public interface IEncuestaDAO {
 	public Emergencia findEmergenciaById(int idEmergencia);
 
 	public boolean crearEmergencia(Emergencia emergencia);
+
+	public List<Respuesta> getRespuestas(int idEncuesta);
 }

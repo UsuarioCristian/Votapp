@@ -21,11 +21,13 @@ public class DataEleccion implements Serializable {
 	private TipoEleccion tipoEleccion;
 	private DataImagen logo;
 	private String css;
+	private List<DataDepartamento> deptos;
 	
 	public DataEleccion(){
 		this.dataPartidos = new ArrayList<DataPartido>();
 		this.dataListas = new ArrayList<DataLista>();
 		this.dataCandidatos = new ArrayList<DataCandidato>();
+		this.deptos = new ArrayList<DataDepartamento>();
 	}
 
 	public int getId() {
@@ -106,6 +108,14 @@ public class DataEleccion implements Serializable {
 
 	public void setCss(String css) {
 		this.css = css;
-	}	
+	}
+
+	public List<DataDepartamento> getDeptos() {
+		return deptos;
+	}
+
+	public void setDeptos(List<DataDepartamento> deptos) {
+		this.deptos = deptos;
+	}
 
 }

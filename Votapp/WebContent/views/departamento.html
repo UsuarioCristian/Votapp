@@ -6,13 +6,9 @@
   	<div class="panel-heading">Candidatos:</div>
   		<div class="panel-body">
    			<div class="list-group">
-					<a href="#" class="list-group-item"   ui-sref="candidato({candidatoId: candi.id})" >
-						    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>
-						    <p class="list-group-item-text">Partido Futurista</p>
-					</a>
-					<a href="#" class="list-group-item"   ui-sref="candidato({candidatoId: candi.id})" >
-						    <h4 class="list-group-item-heading">Giordano Stemphelet</h4>
-						    <p class="list-group-item-text">Partido Futurista</p>
+					<a href="#" class="list-group-item" ng-repeat="candi in candidatosXDepto"   ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
+						    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
+						    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
 					</a>
 			</div>
   		</div>
@@ -22,11 +18,10 @@
   	<div class="panel-heading">Partidos:</div>
   		<div class="panel-body">
    			<div class="list-group col-xs-5">
-										<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({candidatoId: candi.id})" >
-										    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
-										    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
-										</a>
-									</div>
+					<a href="#" class="list-group-item"  ng-repeat="partido in partidosXDeptos" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})" >
+					    <h4 class="list-group-item-heading">{{partido.nombre}}</h4>
+					</a>
+			</div>
   		</div>
 	</div>
 	

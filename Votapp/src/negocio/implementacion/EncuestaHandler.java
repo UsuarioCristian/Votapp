@@ -1,8 +1,10 @@
 package negocio.implementacion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -12,6 +14,7 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+import negocio.interfaces.IEncuestaHandler;
 import persistencia.interfaces.ICandidatoDAO;
 import persistencia.interfaces.IConsultoraDAO;
 import persistencia.interfaces.IEleccionDAO;
@@ -26,6 +29,7 @@ import datas.DataEncuesta;
 import datas.DataLista;
 import datas.DataPartido;
 import datas.DataRespuesta;
+import datas.DataResultado;
 import dominio.Candidato;
 import dominio.Consultora;
 import dominio.Departamento;
@@ -38,7 +42,6 @@ import dominio.Encuestador;
 import dominio.Lista;
 import dominio.Partido;
 import dominio.Respuesta;
-import negocio.interfaces.IEncuestaHandler;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -273,15 +276,16 @@ public class EncuestaHandler implements IEncuestaHandler {
 			
 			/*Transformo las encuestas en dataEncuestas*/
 			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas, id);
-						
+			setResultadoEncuesta(dataEncuestasRetorno);			
 			return dataEncuestasRetorno;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-	}
+	}	
 	
 	
+
 	/*********************************************************/
 	/*********************************************************/
 	/*****************                    ********************/
@@ -293,8 +297,10 @@ public class EncuestaHandler implements IEncuestaHandler {
 		
 		List<Lista> listas = listaDAO.getListasByIdCandidato(data.getId());
 		String nombrePartido = null;
+		int idPartido = 0;
 		if(encuesta.getEleccion().getClass() == EleccionNacional.class){
 			nombrePartido = listas.get(0).getPartido().getNombre();
+			idPartido = listas.get(0).getPartido().getId();
 			data.setNombrePartido(nombrePartido);
 		}
 		
@@ -303,6 +309,7 @@ public class EncuestaHandler implements IEncuestaHandler {
 			dataLista.setNombrePartido(nombrePartido);
 			dataLista.setNumero(lista.getNumero());
 			dataLista.setId(lista.getId());
+			dataLista.setIdPartido(idPartido);
 			
 			data.getDataListas().add(dataLista);
 		}
@@ -400,6 +407,248 @@ public class EncuestaHandler implements IEncuestaHandler {
 			dataEncuestasRetorno.add(dataEncuesta);
 		}
 		return dataEncuestasRetorno;
+	}
+	
+	private void setResultadoEncuesta(List<DataEncuesta> dataEncuestasRetorno) {
+
+		for (DataEncuesta dataEncuesta : dataEncuestasRetorno) {
+			
+			DataResultado dataResultado = new DataResultado();
+			dataEncuesta.setResultado(dataResultado);
+			List<Respuesta> respuestas = encuestaDAO.getRespuestas(dataEncuesta.getId());
+			
+			if (dataEncuesta.isPorCandidato()) {
+				for (DataCandidato candidato : dataEncuesta.getDataCandidatos()) {
+					int cantidad = 0;
+					for (Respuesta respuesta : respuestas) {
+						if (respuesta.getIdCandidato() == candidato.getId())
+							cantidad++;
+					}
+					dataResultado.getMapCandidatos().put(candidato.getId(), cantidad);
+					
+					if(dataEncuesta.isPreguntarLista())
+						dataResultado.getMapListas().putAll(setListasResultado(respuestas, candidato.getDataListas()));
+					
+					if(dataEncuesta.isPreguntarNivelEstudio()){
+						setNivelEstudioResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, candidato.getId());
+					}
+					
+					if (dataEncuesta.isPreguntarEdad()){
+						setRangoEdadResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, candidato.getId());
+					}
+					
+					if(dataEncuesta.isPreguntarSexo()){
+						setGeneroResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, candidato.getId());
+					}
+				}
+				
+			} else {/*Es x Partido*/
+				for (DataPartido partido : dataEncuesta.getDataPartidos()) {
+					int cantidad = 0;
+					for (Respuesta respuesta : respuestas) {
+						if(respuesta.getIdPartido() == partido.getId())
+							cantidad++;
+					}
+					dataResultado.getMapPartidos().put(partido.getId(), cantidad);
+					
+					if(dataEncuesta.isPreguntarLista())
+						dataResultado.getMapListas().putAll(setListasResultado(respuestas, partido.getListas()));
+					
+					if(dataEncuesta.isPreguntarNivelEstudio()){
+						setNivelEstudioResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, partido.getId());
+					}
+					
+					if (dataEncuesta.isPreguntarEdad()){
+						setRangoEdadResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, partido.getId());
+					}
+					
+					if(dataEncuesta.isPreguntarSexo()){
+						setGeneroResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, partido.getId());
+					}
+				}
+			}			
+
+		}
+		
+	}
+
+	private void setGeneroResultado(boolean porCandidato, DataResultado dataResultado, List<Respuesta> respuestas, int id) {
+		
+		int cantidadFem = 0;
+		int cantidadMas = 0;
+		int cantidadOtro = 0;
+		
+		if(porCandidato){
+			for (Respuesta respuesta : respuestas) {
+				if(respuesta.getIdCandidato() == id){
+					switch (respuesta.getSexo()) {
+						case Femenino:
+							cantidadFem++;
+							break;
+						case Masculino:
+							cantidadMas++;
+							break;
+						case Otro:
+							cantidadOtro++;
+							break;
+
+						default:
+							break;
+					}
+						
+				}
+			}
+		}else{
+			for (Respuesta respuesta : respuestas) {
+				if(respuesta.getIdPartido() == id){
+					switch (respuesta.getSexo()) {
+						case Femenino:
+							cantidadFem++;
+							break;
+						case Masculino:
+							cantidadMas++;
+							break;
+						case Otro:
+							cantidadOtro++;
+							break;
+
+						default:
+							break;
+					}
+						
+				}
+			}
+		}
+		
+		dataResultado.getMapGeneroFem().put(id, cantidadFem);
+		dataResultado.getMapGeneroMas().put(id, cantidadMas);
+		dataResultado.getMapGeneroOtro().put(id, cantidadOtro);
+		
+	}
+
+	private void setRangoEdadResultado(boolean porCandidato, DataResultado dataResultado, List<Respuesta> respuestas, int idSeleccionado) {
+		
+		int cantidad18a23 = 0;
+		int cantidad24a30 = 0;
+		int cantidad31a50 = 0;
+		int cantidad51omas = 0;
+		
+		if (porCandidato){
+			for (Respuesta respuesta : respuestas) {
+				if(respuesta.getIdCandidato() == idSeleccionado){
+					int edad = respuesta.getEdad();
+					if(edad < 24)
+						cantidad18a23++;
+					else
+						if(edad < 31)
+							cantidad24a30++;
+						else
+							if(edad < 51)
+								cantidad31a50++;
+							else
+								cantidad51omas++;
+				}
+			}
+		}else{
+			
+			for (Respuesta respuesta : respuestas) {
+				if(respuesta.getIdPartido() == idSeleccionado){
+					int edad = respuesta.getEdad();
+					if(edad < 24)
+						cantidad18a23++;
+					else
+						if(edad < 31)
+							cantidad24a30++;
+						else
+							if(edad < 51)
+								cantidad31a50++;
+							else
+								cantidad51omas++;
+				}
+			}			
+		}
+		
+		dataResultado.getMapEdad18a23().put(idSeleccionado, cantidad18a23);
+		dataResultado.getMapEdad24a30().put(idSeleccionado, cantidad24a30);
+		dataResultado.getMapEdad31a50().put(idSeleccionado, cantidad31a50);
+		dataResultado.getMapEdad51omas().put(idSeleccionado, cantidad51omas);		
+	}
+
+	private void setNivelEstudioResultado(boolean porCandidato, DataResultado dataResultado, List<Respuesta> respuestas, int idSeleccionado) {
+		int cantidadPrimaria = 0;
+		int cantidadSecundaria = 0;
+		int cantidadTerciario = 0;
+		int cantidadNoSabe = 0;		
+		
+		if (porCandidato) {
+			for (Respuesta respuesta : respuestas) {
+				
+				if (respuesta.getIdCandidato() == idSeleccionado) {
+					switch (respuesta.getEducacion()) {
+						case Primaria:
+							cantidadPrimaria++;
+							break;
+						case Secundaria:
+							cantidadSecundaria++;
+							break;
+						case Terciaria:
+							cantidadTerciario++;
+							break;
+
+						default:
+							cantidadNoSabe++;
+							break;
+					}
+
+				}				
+
+			}
+		} else { /* es por partido */
+			
+			for (Respuesta respuesta : respuestas) {
+
+				if (respuesta.getIdPartido() == idSeleccionado) {
+					switch (respuesta.getEducacion()) {
+						case Primaria:
+							cantidadPrimaria++;
+							break;
+						case Secundaria:
+							cantidadSecundaria++;
+							break;
+						case Terciaria:
+							cantidadTerciario++;
+							break;
+
+						default:
+							cantidadNoSabe++;
+							break;
+					}
+
+				}
+
+			}
+		}
+		
+		dataResultado.getMapNivelEstudioPrimaria().put(idSeleccionado, cantidadPrimaria);
+		dataResultado.getMapNivelEstudioSecundaria().put(idSeleccionado, cantidadSecundaria);
+		dataResultado.getMapNivelEstudioTerciario().put(idSeleccionado, cantidadTerciario);
+		dataResultado.getMapNivelEstudioNoSabe().put(idSeleccionado, cantidadNoSabe);
+		
+	}
+
+	private Map<Integer,Integer> setListasResultado(List<Respuesta> respuestas, List<DataLista> dataListas) {
+		Map<Integer, Integer> mapResultado = new HashMap<Integer, Integer>();
+		
+		for (DataLista lista : dataListas) {
+			int cantidad = 0;
+			for (Respuesta respuesta : respuestas) {
+				if(respuesta.getIdPartido() == lista.getId())
+					cantidad++;
+			}
+			mapResultado.put(lista.getId(), cantidad);
+		}
+		
+		return mapResultado;
 	}
 
 }

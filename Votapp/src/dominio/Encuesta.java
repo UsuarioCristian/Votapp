@@ -8,7 +8,9 @@ import javax.persistence.*;
 
 @NamedQueries({
 	@NamedQuery(name = "Encuesta.getEncuestasByIdConsultora",
-			query = "SELECT e FROM Encuesta e WHERE e.consultora.id = :idConsultora")
+			query = "SELECT e FROM Encuesta e WHERE e.consultora.id = :idConsultora"),
+	@NamedQuery(name = "Encuesta.getRespuestas",
+			query = "SELECT r FROM Respuesta r WHERE r.encuesta.id = :idEncuesta")
 })
 
 @Entity
