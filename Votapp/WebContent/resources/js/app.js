@@ -7,7 +7,8 @@ angular.module('app', [
   'app.services',
   'angular-storage',
   'app.controllers',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngAnimate'
 ])
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider ) {
 	
