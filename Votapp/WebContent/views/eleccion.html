@@ -56,5 +56,22 @@
 				</div>
   			</div>
 		</div><!-- end when deptal -->
+			<div ng-switch-when="Otra">
+			<div class="row">
+				<div class="panel panel-default col-md-5 container-panel-votapp">
+					<div class="panel-body contenedor-candidatos">
+						<div class="candidatos-titulo">
+							<i class="fa fa-user fa-2x"></i><span>Conozca a los candidatos:</span>
+						</div>
+						<hr>
+						<div class="list-group candidatos">
+							<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
+								<h4 class="list-group-item-heading">{{candi.nombre}}<small>  {{candi.nombrePartido}}</small></h4>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- end when otra -->
 	</div><!-- end ng switch tipoEleccion -->
 </div>
