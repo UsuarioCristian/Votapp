@@ -2,6 +2,6 @@ package utiles;
 
 public enum TipoEleccion {
 
-	Nacional, Departamental, Otra
+	Nacional, Departamental, Otra, Simple
 	
 }

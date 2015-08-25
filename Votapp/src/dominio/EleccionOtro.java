@@ -18,11 +18,14 @@ import javax.persistence.*;
 public class EleccionOtro extends Eleccion implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private boolean simple;
 
 	public EleccionOtro() {
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.simple = false;
 	}
 	
 	public EleccionOtro(String nombre, String descripcion, Date fecha){
@@ -32,6 +35,15 @@ public class EleccionOtro extends Eleccion implements Serializable {
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.simple = false;
+	}
+
+	public boolean isSimple() {
+		return simple;
+	}
+
+	public void setSimple(boolean simple) {
+		this.simple = simple;
 	}
 
 	@Override

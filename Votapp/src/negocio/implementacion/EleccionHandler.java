@@ -209,7 +209,15 @@ public class EleccionHandler implements IEleccionHandler {
 					
 					break;
 				case "dominio.EleccionOtro":
-					dataEleccion.setTipoEleccion(TipoEleccion.Otra);
+					EleccionOtro eleccionOtro = (EleccionOtro) eleccion;
+					if(eleccionOtro.isSimple()){
+						dataEleccion.setTipoEleccion(TipoEleccion.Simple);
+					}else{
+						dataEleccion.setTipoEleccion(TipoEleccion.Otra);
+					}
+					dataEleccion.setDataPartidos(partidos);
+					dataEleccion.setDataCandidatos(candidatos);
+					
 					break;
 				default:
 					break;
@@ -297,9 +305,12 @@ public class EleccionHandler implements IEleccionHandler {
 		//data.setNombrePartido(candidato.g);		
 		if (candidato.getListas().size() > 0){
 			List<Lista> arreglo = new ArrayList<Lista>(candidato.getListas());
-			Partido partido = partidoDAO.findPartidoById(arreglo.get(0).getPartido().getId());
-			data.setIdPartido(partido.getId());
-			data.setNombrePartido(partido.getNombre());
+			if(arreglo.get(0).getPartido() != null){
+				Partido partido = partidoDAO.findPartidoById(arreglo.get(0).getPartido().getId());
+				data.setIdPartido(partido.getId());
+				data.setNombrePartido(partido.getNombre());
+			}
+				
 			
 			Lista listaPrimera = eleccionDAO.findListaById(arreglo.get(0).getId());
 			if(listaPrimera.getDepartamento() != null){ /*Solo entra aqui si es una eleccion departamental*/
@@ -355,7 +366,8 @@ public class EleccionHandler implements IEleccionHandler {
 		data.setId(lista.getId());
 		//data.setNombrePartido(lista.ge);
 		data.setNumero(lista.getNumero());
-		data.setIdPartido(lista.getPartido().getId());
+		if(lista.getPartido() != null)
+			data.setIdPartido(lista.getPartido().getId());
 		
 		/*Solo si es eleccion departamental*/
 		if (lista.getDepartamento() != null){
