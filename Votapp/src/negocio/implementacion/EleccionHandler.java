@@ -181,7 +181,11 @@ public class EleccionHandler implements IEleccionHandler {
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
 					break;
 				case "dominio.EleccionOtro":
-					dataEleccion.setTipoEleccion(TipoEleccion.Otra);
+					EleccionOtro eleccionOtro = (EleccionOtro) eleccion;
+					if(eleccionOtro.isSimple())
+						dataEleccion.setTipoEleccion(TipoEleccion.Simple);
+					else
+						dataEleccion.setTipoEleccion(TipoEleccion.Otra);
 					break;
 				default:
 					break;

@@ -177,10 +177,31 @@ public class EncuestaHandler implements IEncuestaHandler {
 				}
 				
 				return retorno;
+			}else{
+				//eleccion.getClass() == EleccionOtro.class				
+				Encuesta encuesta = new Encuesta();
+				encuesta.setNombre(dataEncuesta.getNombre());
+				encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
+				encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
+				encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
+				encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
+				encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
+				encuesta.setCantidadRespuestas(dataEncuesta.getCantidadRespuestas());
+				
+				encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+				encuesta.setEleccion(eleccion);
+				
+				for (Candidato candidatoJustID : eleccion.getCandidatos()) {
+					Candidato candidato = candidatoDAO.findCandidatoById(candidatoJustID.getId());
+					candidato.getEncuestas().add(encuesta);
+					encuesta.getCandidatos().add(candidato);					
+
+				}
+				
+				return encuestaDAO.crearEncuesta(encuesta);
 			}
 			
 		}
-		return false;//FALTA CONTEMPLAR EL CASO DE 	eleccion.getClass() == EleccionOtro.class	
 		
 	}
 

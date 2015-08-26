@@ -41,7 +41,7 @@ public abstract class Eleccion {
 	protected String css;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="idEleccion") // Es unidireccional
+	@JoinColumn(name="idImagen") // Es unidireccional
 	protected Imagen imagen;
 	
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
