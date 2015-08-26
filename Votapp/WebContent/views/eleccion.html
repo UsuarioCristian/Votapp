@@ -50,7 +50,7 @@
 			<div class="row" style="margin-left: auto;">
 				<div><strong>Seleccione un departamento:</strong></div>
 				<div class="col-xs-5"> 
-		           	<select ng-options="depto.nombre for depto in deptos" ng-model="depto"></select>
+		           	<select ng-options="depto.nombre for depto in deptos| orderBy:'nombre'" ng-model="depto"></select>
 						<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: depto.id})" role="button">Ver Info »</a></p>
 		            <br>
 				</div>
