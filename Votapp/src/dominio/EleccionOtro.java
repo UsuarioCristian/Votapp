@@ -28,14 +28,14 @@ public class EleccionOtro extends Eleccion implements Serializable {
 		this.simple = false;
 	}
 	
-	public EleccionOtro(String nombre, String descripcion, Date fecha){
+	public EleccionOtro(String nombre, String descripcion, Date fecha, boolean simple){
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.fecha = fecha;
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
-		this.simple = false;
+		this.simple = simple;
 	}
 
 	public boolean isSimple() {

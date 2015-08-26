@@ -94,7 +94,7 @@ public class EleccionHandler implements IEleccionHandler {
 			break;
 			
 			case Otra:
-				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha());
+				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha(), false);
 				eleccion.setCss(simplificarCss(data.getCss()));
 				
 				imagen = new Imagen();
@@ -110,6 +110,23 @@ public class EleccionHandler implements IEleccionHandler {
 					exito = eleccionDAO.crearEleccion(eleccion);
 				else
 					System.out.println("ERROR...paso2= "+paso2+ " paso3= "+paso3);
+			break;
+			case Simple:
+				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha(), true);
+				eleccion.setCss(simplificarCss(data.getCss()));
+				
+				imagen = new Imagen();
+				imagen.setName(data.getLogo().getName());
+				imagen.setFile(data.getLogo().getFile());
+				imagen.setTipo(data.getLogo().getTipo());
+				eleccion.setImagen(imagen);
+				
+				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				
+				if(paso3)
+					exito = eleccionDAO.crearEleccion(eleccion);
+				else
+					System.out.println("ERROR... paso3= "+paso3);
 			break;
 
 			default:
