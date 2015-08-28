@@ -16,6 +16,8 @@ public class Partido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String nombre;
+	
+	@Column(length=100000)
 	private String descripcion;
 	private String presidente;
 	private Date fechaFundacion;

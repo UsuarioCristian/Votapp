@@ -11,6 +11,7 @@ public class DataCandidato implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String nombre;
+	private String biografia;
 	private String nombrePartido;
 	private int idPartido;
 	private int edad;
@@ -105,6 +106,14 @@ public class DataCandidato implements Serializable {
 
 	public void setNombreDepto(String nombreDepto) {
 		this.nombreDepto = nombreDepto;
+	}
+	
+	public String getBiografia() {
+		return biografia;
+	}
+
+	public void setBiografia(String biografia) {
+		this.biografia = biografia;
 	}
 
 }

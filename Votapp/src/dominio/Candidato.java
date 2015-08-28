@@ -17,6 +17,10 @@ public class Candidato implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String nombre;
+	
+	@Column(length=100000)
+	private String biografia;
+
 	private int edad;
 	
 	@OneToMany(cascade = CascadeType.ALL)
@@ -104,6 +108,14 @@ public class Candidato implements Serializable {
 
 	public void setEncuestas(Set<Encuesta> encuestas) {
 		this.encuestas = encuestas;
+	}
+	
+	public String getBiografia() {
+		return biografia;
+	}
+
+	public void setBiografia(String biografia) {
+		this.biografia = biografia;
 	}
 
 }

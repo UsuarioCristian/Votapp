@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,8 @@ public abstract class Eleccion {
 	protected int id;
 	protected Date fecha;
 	protected String nombre;
+	
+	@Column(length=100000)
 	protected String descripcion;
 	protected String css;
 	
