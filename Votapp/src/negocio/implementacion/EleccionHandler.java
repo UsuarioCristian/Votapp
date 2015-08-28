@@ -306,6 +306,7 @@ public class EleccionHandler implements IEleccionHandler {
 		data.setCargo(candidato.getCargo());
 		data.setEdad(candidato.getEdad());
 		data.setNombre(candidato.getNombre());
+		data.setBiografia(candidato.getBiografia());
 		
 		
 		Set<FuenteDatos> fuenteDatosOnlyID = candidato.getFuenteDatos();

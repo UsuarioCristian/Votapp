@@ -148,6 +148,7 @@ public class EleccionNacional extends Eleccion implements Serializable {
 				candidato.setNombre(data.getNombre());
 				candidato.setCargo(data.getCargo());
 				candidato.setEdad(data.getEdad());
+				candidato.setBiografia(data.getBiografia());
 
 				this.getCandidatos().add(candidato);
 				candidato.setEleccion(this);
