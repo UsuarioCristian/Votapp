@@ -17,14 +17,9 @@
       <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" >
       
         <ul class="nav navbar-nav">
-        
-          <li ><a href="#second" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Candidatos</a></li>
-         
-          <li  ng-hide="eleccion.tipoEleccion == 'Otra'"><a  href="#third" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Partidos</a></li>        
-       	  
-       	   <li ><a href="#fourth" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Resultado de Encuestas</a></li>
-       	  
-        </ul>
+          <li ><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'second'})" href="#second" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Candidatos</a></li>        
+          
+          <li ><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'third'})" href="#third" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Partidos</a></li>
           
                         
       </div><!-- /.navbar-collapse -->

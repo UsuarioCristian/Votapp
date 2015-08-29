@@ -1,77 +1,66 @@
-<style type="text/css" votapp-style eleccion="eleccion"></style>
-<div class="row eleccion-container eleccion-nombre">
-	 <div class="col-xs-6 col-md-4 imagen-eleccion">
+<div ng-include src="'layout/header.html'"></div>
+
+<div id="first">
+	
+	 <div style="width: 10%;margin: 0 auto;padding-top: 2%;">
 	         <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
   	 </div>
- 	<div class="col-md-8 info-eleccion-votapp">
-		<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1>
-		<br><br>
-		<strong>Fecha: {{eleccion.fecha | date}}</strong>
-		<br>
-		<p>{{eleccion.descripcion}}</p>
-		<br>
+  	 
+  	 <div class="row">
+		<div class="col-md-8 info-eleccion-votapp">
+				<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1>
+				<br><br>
+				<strong>Fecha: {{eleccion.fecha | date}}</strong>
+				<br>
+				<p>{{eleccion.descripcion}}</p>
+				<br>
+		</div>
+	 </div>
+
+</div>		
+	
+
+<div id="second">
+	<div class="centrar">
+		<div class="container">
+			<div class="row" style="padding-top:4em;">
+				<div ng-repeat="candidato in eleccion.dataCandidatos" >
+			       <a ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})">
+			       <div class="col-lg-3 imagen" style="color:black;">
+			       	 
+			       <img  class="img-circle" ng-src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVlMTdiMGRmNSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWUxN2IwZGY1Ij48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" alt="{{eleccion.logo.name}}" width="140" height="140"/>
+			         
+			         <h2>{{candidato.nombre}}</h2>
+			       
+			         <strong>Partido:</strong> {{candidato.nombrePartido}}<br>
+			         <strong>Edad:</strong> {{candidato.edad}}
+			        
+			       </div><!-- /.col-lg-4 -->
+			       </a>
+			 	</div>
+			</div>
+		</div>
 	</div>
-	<hr>
-	<div ng-switch="tipoEleccion">
-		<div ng-switch-when="Nacional">
-			<div class="row">
-				<div class="panel panel-default col-md-5 container-panel-votapp">
-					<div class="panel-body contenedor-candidatos">
-						<div class="candidatos-titulo">
-							<i class="fa fa-user fa-2x"></i><span>Conozca a los candidatos:</span>
-						</div>
-						<hr>
-						<div class="list-group candidatos">
-							<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
-								
-								<h4 class="list-group-item-heading">{{candi.nombre}}<small>  {{candi.nombrePartido}}</small></h4>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="panel panel-default col-md-5 container-panel-votapp">
-					<div class="panel-body contenedor-partidos" >
-						<div class="partidos-titulo">
-							<i class="fa fa-users fa-2x"></i><span>Conozca a los partidos:</span>
-						</div>
-						<hr>
-					<div class="list-group">
-						<a href="#" class="list-group-item"
-							ng-repeat="parti in eleccion.dataPartidos"
-							ui-sref="partido({eleccionId: eleccion.id, partidoId: parti.id})">
-							<h4 class="list-group-item-heading">{{parti.nombre}}</h4>
-						</a>
-					</div>
-					</div>
-				</div>
-			</div>
-		</div><!-- end when nacional -->
-		<div ng-switch-when="Departamental">
-			<div class="row" style="margin-left: auto;">
-				<div><strong>Seleccione un departamento:</strong></div>
-				<div class="col-xs-5"> 
-		           	<select ng-options="depto.nombre for depto in deptos| orderBy:'nombre'" ng-model="depto"></select>
-						<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: depto.id})" role="button">Ver Info »</a></p>
-		            <br>
-				</div>
-  			</div>
-		</div><!-- end when deptal -->
-			<div ng-switch-when="Otra">
-			<div class="row">
-				<div class="panel panel-default col-md-5 container-panel-votapp">
-					<div class="panel-body contenedor-candidatos">
-						<div class="candidatos-titulo">
-							<i class="fa fa-user fa-2x"></i><span>Conozca a los candidatos:</span>
-						</div>
-						<hr>
-						<div class="list-group candidatos">
-							<a href="#" class="list-group-item"  ng-repeat="candi in eleccion.dataCandidatos" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
-								<h4 class="list-group-item-heading">{{candi.nombre}}<small>  {{candi.nombrePartido}}</small></h4>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!-- end when otra -->
-	</div><!-- end ng switch tipoEleccion -->
 </div>
+
+<div id="third"  ng-hide="eleccion.tipoEleccion == 'Otra' || eleccion.tipoEleccion == 'Simple' ">
+	<div class="centrar">
+			<div class="container" style="backgroud-color:green;">
+			 <div class="col-lg-4" ng-repeat="partido in eleccion.dataPartidos" >
+			         <h2>{{partido.nombre}}</h2>
+			         <strong>Fecha funfacion:</strong><p> {{partido.fechaFundacion | date}}</p>
+			         <span><strong>Listas: </strong> <div ng-repeat="lista in partido.listas">{{lista.numero}}</div></span>
+			         <p><a class="btn btn-default" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})">Ver más »</a></p>			       		
+			       </div><!-- /.col-lg-4 -->
+			</div>
+	</div>
+</div>
+
+ <div id="fourth" >
+	<div class="centrar">
+		<div class="container">
+			<h1>CRISTIAN TENES QUE HACER ESTO! jajaja</h1>
+			
+		</div>
+		</div>
+</div> 

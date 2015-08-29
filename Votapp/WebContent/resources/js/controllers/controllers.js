@@ -28,7 +28,7 @@ angular.module("app.controllers",[])
 	//$scope.elecciones = $scope.getEleccionesActuales();
 }])
 
-.controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', function($scope, EleccionFactory,$stateParams,store){
+.controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', '$document', function($scope, EleccionFactory,$stateParams,store, $document){
 
 	$scope.fuente = { url : 'Deckdisc'};
 	$scope.deptos = [];
@@ -48,6 +48,13 @@ angular.module("app.controllers",[])
 	}
 	$scope.deptos = $scope.eleccion.deptos;
 
+	var anchorId = $stateParams.anchor;
+	console.log("esto:"+anchorId);
+	
+	if(anchorId!=null){
+		var someElement = angular.element(document.getElementById(anchorId));
+	    $document.scrollToElementAnimated(someElement);
+	}
 	
 }])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){

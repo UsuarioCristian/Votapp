@@ -8,6 +8,7 @@ angular.module('app', [
   'angular-storage',
   'app.controllers',
   'ui.bootstrap',
+  'duScroll',
   'ngAnimate'
 ])
 .config(['$urlRouterProvider', '$stateProvider', function($urlRouterProvider, $stateProvider ) {
@@ -17,6 +18,7 @@ angular.module('app', [
 		url: '/eleccion/{eleccionId}',
 		templateUrl: 'views/eleccion.html',
 		controller: 'HomeController',
+		params: {anchor: null },
 		resolve:{
 	        load:function(EleccionFactory){	          
 	          return EleccionFactory.promise;
@@ -50,6 +52,7 @@ angular.module('app', [
 		controller: 'deptoController'
 		});
 }])
+.value('duScrollDuration', 800)
 
 .run(['$window', 
   function($window) {
