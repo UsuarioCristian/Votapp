@@ -1,5 +1,7 @@
 package services.implementacion;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.Response.Status;
 
 import negocio.interfaces.IConsultoraHandler;
 import datas.DataConsultora;
+import datas.DataEmergencia;
 import datas.DataUsuario;
 import dominio.Consultora;
 import persistencia.interfaces.IConsultoraDAO;
@@ -56,6 +59,12 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 			return Response.status(200).build();
 		}
 		return null;
+	}
+
+	@Override
+	public Response getAllEmergencias(int id) {
+		List<DataEmergencia> emergencias = consultoraHandler.getAllEmergencias(id);		
+		return Response.ok(emergencias).build(); 
 	}
 
 }

@@ -20,8 +20,8 @@ public class Emergencia implements Serializable {
 	@ManyToOne(cascade = CascadeType.MERGE)
 	private Consultora consultora;
 	
-	private int longitud;
-	private int latitud;
+	private double longitud;
+	private double latitud;
 	
 	public Emergencia() { }
 
@@ -49,19 +49,19 @@ public class Emergencia implements Serializable {
 		this.consultora = consultora;
 	}
 
-	public int getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
 
-	public void setLongitud(int longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 
-	public int getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
 
-	public void setLatitud(int latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
 	

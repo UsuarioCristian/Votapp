@@ -1,8 +1,11 @@
 package persistencia.interfaces;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import dominio.Consultora;
+import dominio.Emergencia;
 import dominio.Encuestador;
 
 @Local
@@ -12,4 +15,5 @@ public interface IConsultoraDAO {
 	public boolean crearEncuestador(Encuestador encuestador);
 	public Consultora getConsultoraByUsername(String username);
 	public Encuestador findEncuestadorById(int idEncuestador);
+	public List<Emergencia> getAllEmergencias(int idConsultora);
 }

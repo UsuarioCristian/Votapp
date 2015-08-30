@@ -31,4 +31,10 @@ public interface ConsultoraService {
 	@Consumes("application/json")
 	public Response crearEncuestador(DataUsuario dataUsuario);
 	
+	@GET
+	@Path("/protected/getAllEmergencias/{id}")
+	@Consumes("application/json")
+	@Produces({"application/json"})
+	public Response getAllEmergencias(@PathParam("id") final int id);
+	
 }

@@ -9,8 +9,8 @@ public class DataEmergencia implements Serializable {
 	private int id;
 	private int idEncuestador;
 	private int idConsultora;	
-	private int latitud;
-	private int longitud;
+	private double latitud;
+	private double longitud;
 	
 	public DataEmergencia() { }
 
@@ -38,19 +38,19 @@ public class DataEmergencia implements Serializable {
 		this.idConsultora = idConsultora;
 	}
 
-	public int getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
 
-	public void setLatitud(int latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
 
-	public int getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
 
-	public void setLongitud(int longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 

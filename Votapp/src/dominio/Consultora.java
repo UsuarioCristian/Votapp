@@ -17,7 +17,9 @@ import javax.persistence.OneToOne;
 
 @NamedQueries({
 	@NamedQuery(name = "Consultora.getConsultoraByUsername", 
-			query = "SELECT c FROM Consultora c WHERE c.adminConsultora.username = :username")
+			query = "SELECT c FROM Consultora c WHERE c.adminConsultora.username = :username"),
+	@NamedQuery(name = "Consultora.getAllEmergencias",
+			query = "SELECT e FROM Emergencia e WHERE e.consultora.id = :idConsultora")
 })
 @Entity
 public class Consultora implements Serializable {

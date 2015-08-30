@@ -1,5 +1,8 @@
 package negocio.implementacion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -11,9 +14,11 @@ import persistencia.interfaces.IConsultoraDAO;
 import persistencia.interfaces.IUsuarioDAO;
 import negocio.interfaces.IConsultoraHandler;
 import datas.DataConsultora;
+import datas.DataEmergencia;
 import datas.DataUsuario;
 import dominio.AdminConsultora;
 import dominio.Consultora;
+import dominio.Emergencia;
 import dominio.Encuestador;
 
 @Stateless
@@ -86,6 +91,26 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		consultora = null;
 		
 		return data;
+	}
+
+
+	@Override
+	public List<DataEmergencia> getAllEmergencias(int idConsultora) {
+	
+		List<Emergencia> emergencias = consultoraDAO.getAllEmergencias(idConsultora);
+		List<DataEmergencia> listaRetorno = new ArrayList<DataEmergencia>();
+		for (Emergencia emergencia : emergencias) {
+			DataEmergencia data = new DataEmergencia();
+			data.setId(emergencia.getId());
+			data.setIdConsultora(idConsultora);
+			data.setIdEncuestador(emergencia.getEncuestador().getId());
+			data.setLatitud(emergencia.getLatitud());
+			data.setLongitud(emergencia.getLongitud());
+			
+			listaRetorno.add(data);
+		}
+		
+		return listaRetorno;
 	}
 
 }
