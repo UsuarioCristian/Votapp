@@ -103,7 +103,11 @@ public class ConsultoraHandler implements IConsultoraHandler {
 			DataEmergencia data = new DataEmergencia();
 			data.setId(emergencia.getId());
 			data.setIdConsultora(idConsultora);
+			
 			data.setIdEncuestador(emergencia.getEncuestador().getId());
+			Encuestador encuestador = consultoraDAO.findEncuestadorById(emergencia.getEncuestador().getId());
+			data.setNombreEncuestador(encuestador.getUsername());			
+			
 			data.setLatitud(emergencia.getLatitud());
 			data.setLongitud(emergencia.getLongitud());
 			

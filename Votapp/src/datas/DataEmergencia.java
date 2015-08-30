@@ -11,6 +11,7 @@ public class DataEmergencia implements Serializable {
 	private int idConsultora;	
 	private double latitud;
 	private double longitud;
+	private String nombreEncuestador;
 	
 	public DataEmergencia() { }
 
@@ -52,6 +53,14 @@ public class DataEmergencia implements Serializable {
 
 	public void setLongitud(double longitud) {
 		this.longitud = longitud;
+	}
+
+	public String getNombreEncuestador() {
+		return nombreEncuestador;
+	}
+
+	public void setNombreEncuestador(String nombreEncuestador) {
+		this.nombreEncuestador = nombreEncuestador;
 	}
 
 }
