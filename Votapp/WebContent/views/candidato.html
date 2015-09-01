@@ -1,19 +1,31 @@
 <div ng-include src="'layout/headerSecundario.html'"></div>
 <style type="text/css" votapp-style eleccion="eleccion"></style>
 <div class="profile-bio"  style="padding-top:4em;">
-    <div class="row">
+    <div class="row" ng-show="eleccion.tipoEleccion != 'Simple'">
         <div class="col-md-5 col-xs-5 col-lg-5">
         	<img class="img-responsive md-margin-bottom-10" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVlMTdiMGRmNSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWUxN2IwZGY1Ij48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" alt="" class="img-responsive">
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7" >
             <h2>{{candidato.nombre}}</h2>
-            <span><strong>Partido: </strong> {{candidato.nombrePartido}}</span>
             <span><strong>Edad: </strong> {{candidato.edad}}</span>
+            <span  ng-hide="eleccion.tipoEleccion == 'Otra'"><strong>Partido: </strong> {{candidato.nombrePartido}}</span>
             <span><strong>Puesto: </strong> {{candidato.cargo}}</span>
-			<span><strong>Listas: </strong> <div ng-repeat="lista in candidato.dataListas">{{lista.numero}}</div></span>            <hr>
+			<strong>Listas: </strong> <span ng-repeat="lista in candidato.dataListas">{{lista.numero}}</span>
             <p>{{candidato.biografia}}</p>
         </div>
-    </div>    
+    </div>
+      <div class="row" ng-show="eleccion.tipoEleccion == 'Simple' && candidato.nombre =='Si'">
+        <div class="col-md-5 col-xs-5 col-lg-5">
+        	<img class="img-responsive md-margin-bottom-10" src="resources/img/Si.png" class="img-responsive">
+        </div>
+    </div> 
+     <div class="row" ng-show="eleccion.tipoEleccion == 'Simple' && candidato.nombre =='No'">
+       <div class="col-xs-6 col-md-4"></div>
+        <div class=".col-xs-6 .col-md-4">
+        	<img class="img-responsive md-margin-bottom-10" src="resources/img/No.png" class="img-responsive">
+        </div>
+          <div class="col-xs-6 col-md-4"></div>
+    </div>      
 </div>
 <div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
       <div ng-switch-when="facebook">

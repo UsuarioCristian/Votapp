@@ -1,17 +1,43 @@
-
+<div ng-include src="'layout/headerSecundario.html'"></div>
 <h1>NOMBRE DEPARTAMENTO</h1>
 <div class="row">
 
    <div class="panel panel-default" style="width: 50%;margin: 2%;">
   	<div class="panel-heading">Candidatos:</div>
-  		<div class="panel-body">
+  	<div class="centrar">
+		<div class="container">
+			<div class="row" style="padding-top:4em;">
+				<div ng-repeat="candidato in eleccion.dataCandidatos" >
+			       <a ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})">
+			       <div class="col-lg-2 imagen candidatoMini">
+				       <img  class="img-circle" ng-src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVlMTdiMGRmNSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWUxN2IwZGY1Ij48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" alt="{{eleccion.logo.name}}" width="140" height="140"/>
+				         
+				         <h2>{{candidato.nombre}}</h2>
+				       
+				         <strong  ng-hide="eleccion.tipoEleccion == 'Otra'">Partido:</strong> {{candidato.nombrePartido}}
+				         <strong>Edad:</strong> {{candidato.edad}}<br>
+				         <strong>Cargo:</strong> {{candidato.cargo}}<br>
+						 <strong>Listas: </strong> <span ng-repeat="lista in candidato.dataListas">{{lista.numero}}
+						 <p><a class="btn btn-default" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a></p>{{lista.numero}}</span>
+			       </div><!-- /.col-lg-2 -->
+			       </a>
+			 	</div>
+			</div>
+		</div>
+	</div>
+  	
+  	
+  	
+  	
+  	
+  		<!-- <div class="panel-body">
    			<div class="list-group">
 					<a href="#" class="list-group-item" ng-repeat="candi in candidatosXDepto"   ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
 						    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
 						    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
 					</a>
 			</div>
-  		</div>
+  		</div> -->
 	</div>
 	
 	 <div class="panel panel-default" style="width: 50%;margin: 2%;">
