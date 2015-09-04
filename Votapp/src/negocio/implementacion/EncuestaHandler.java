@@ -261,6 +261,7 @@ public class EncuestaHandler implements IEncuestaHandler {
 			Emergencia emergencia = new Emergencia();
 			emergencia.setLatitud(dataEmergencia.getLatitud());
 			emergencia.setLongitud(dataEmergencia.getLongitud());
+			emergencia.setNotificada(false);
 			
 			Consultora consultora = consultoraDAO.findConsultoraById(dataEmergencia.getIdConsultora());
 			emergencia.setConsultora(consultora);

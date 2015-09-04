@@ -110,11 +110,24 @@ public class ConsultoraHandler implements IConsultoraHandler {
 			
 			data.setLatitud(emergencia.getLatitud());
 			data.setLongitud(emergencia.getLongitud());
+			data.setNotificada(emergencia.isNotificada());
 			
 			listaRetorno.add(data);
 		}
 		
 		return listaRetorno;
+	}
+
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean notificarEmergencia(DataEmergencia data) {
+		
+		Emergencia emergencia = consultoraDAO.findEmergenciaById(data.getId());
+		emergencia.setNotificada(true);
+		consultoraDAO.actualizarEmergencia(emergencia);
+		
+		return false;
 	}
 
 }

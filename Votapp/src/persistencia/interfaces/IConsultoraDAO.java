@@ -16,4 +16,6 @@ public interface IConsultoraDAO {
 	public Consultora getConsultoraByUsername(String username);
 	public Encuestador findEncuestadorById(int idEncuestador);
 	public List<Emergencia> getAllEmergencias(int idConsultora);
+	public Emergencia findEmergenciaById(int id);
+	public void actualizarEmergencia(Emergencia emergencia);
 }

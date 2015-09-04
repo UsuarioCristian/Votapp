@@ -67,4 +67,13 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 		return Response.ok(emergencias).build(); 
 	}
 
+	@Override
+	public Response notificarEmergencia(DataEmergencia data) {
+		
+		if(consultoraHandler.notificarEmergencia(data)){
+			return Response.status(200).build();
+		}
+		return null;
+	}
+
 }

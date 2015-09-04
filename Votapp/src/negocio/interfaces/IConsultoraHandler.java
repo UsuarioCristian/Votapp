@@ -18,4 +18,6 @@ public interface IConsultoraHandler {
 
 	List<DataEmergencia> getAllEmergencias(int idConsultora);
 
+	public boolean notificarEmergencia(DataEmergencia data);
+
 }

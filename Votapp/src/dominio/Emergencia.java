@@ -22,6 +22,7 @@ public class Emergencia implements Serializable {
 	
 	private double longitud;
 	private double latitud;
+	private boolean notificada;
 	
 	public Emergencia() { }
 
@@ -63,6 +64,14 @@ public class Emergencia implements Serializable {
 
 	public void setLatitud(double latitud) {
 		this.latitud = latitud;
+	}
+
+	public boolean isNotificada() {
+		return notificada;
+	}
+
+	public void setNotificada(boolean notificada) {
+		this.notificada = notificada;
 	}
 	
 }

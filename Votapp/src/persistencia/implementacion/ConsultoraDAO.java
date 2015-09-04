@@ -84,6 +84,7 @@ public class ConsultoraDAO implements IConsultoraDAO {
 	}
 
 	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public List<Emergencia> getAllEmergencias(int idConsultora) {
 		try {
 			return em.createNamedQuery("Consultora.getAllEmergencias", Emergencia.class).
@@ -93,6 +94,28 @@ public class ConsultoraDAO implements IConsultoraDAO {
 			System.out.println("Ocurrio un error en ConsultoraDAO.getAllEmergencias");
 			return null;
 		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Emergencia findEmergenciaById(int id) {
+		try {
+			return em.find(Emergencia.class, id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void actualizarEmergencia(Emergencia emergencia) {
+		try {
+			em.merge(emergencia);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

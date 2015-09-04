@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import datas.DataConsultora;
+import datas.DataEmergencia;
 import datas.DataUsuario;
 
 @RequestScoped
@@ -36,5 +37,10 @@ public interface ConsultoraService {
 	@Consumes("application/json")
 	@Produces({"application/json"})
 	public Response getAllEmergencias(@PathParam("id") final int id);
+	
+	@POST
+	@Path("/protected/notificarEmergencia")
+	@Consumes("application/json")
+	public Response notificarEmergencia(DataEmergencia data);
 	
 }
