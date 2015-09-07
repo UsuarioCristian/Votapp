@@ -17,16 +17,19 @@ angular.module('app', [
 	$stateProvider.state('eleccion', {
 		url: '/eleccion/{eleccionId}',
 		templateUrl: 'views/eleccion.html',
-		controller: 'HomeController',
+		controller: 'EleccionController',
 		params: {anchor: null },
 		resolve:{
 	        load:function(EleccionFactory){	          
 	          return EleccionFactory.promise;
+	        },
+	        encuestas: function(EleccionFactory, $stateParams){
+	        	return EleccionFactory.getEncuestasByIdEleccion($stateParams.eleccionId);
 	        }
 	    }		
 	})
 	
-	$stateProvider.state('home', {url:'/', templateUrl: 'views/home.html',  controller: 'EleccionController',
+	$stateProvider.state('home', {url:'/', templateUrl: 'views/home.html',  controller: 'HomeController',
 		    resolve:{
 		        load:function(EleccionFactory){
 		          // MyServiceData will also be injectable in your controller, if you don't want this you could create a new promise with the $q service

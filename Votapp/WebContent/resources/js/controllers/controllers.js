@@ -4,7 +4,7 @@ angular.module("app.controllers",[])
 .controller("LoginController", ['$scope', 'LoginFactory', function($scope, LoginFactory){
 	
 }])
-.controller("EleccionController", ['$scope', '$state', 'EleccionFactory', 'store',  function($scope, $state, EleccionFactory, store){
+.controller("HomeController", ['$scope', '$state', 'EleccionFactory', 'store',  function($scope, $state, EleccionFactory, store){
 	
 //	$scope.showEleccion = function(eleccionId){
 //		var encontre = false;
@@ -28,7 +28,7 @@ angular.module("app.controllers",[])
 	//$scope.elecciones = $scope.getEleccionesActuales();
 }])
 
-.controller('HomeController', ['$scope', 'EleccionFactory', '$stateParams', 'store', '$document', function($scope, EleccionFactory,$stateParams,store, $document){
+.controller('EleccionController', ['$scope', 'EleccionFactory', '$stateParams', 'store', '$document', 'encuestas', '$timeout', function($scope, EleccionFactory,$stateParams,store, $document,encuestas,$timeout){
 
 	$scope.fuente = { url : 'Deckdisc'};
 	$scope.deptos = [];
@@ -41,7 +41,6 @@ angular.module("app.controllers",[])
 			encontre = true;
 			$scope.eleccion = $scope.elecciones[i];
 			$scope.tipoEleccion = $scope.eleccion.tipoEleccion;
-			console.log("ESTE ES EL TIPO: "+$scope.tipoEleccion);
 		}else{
 			i++;
 		}
@@ -49,16 +48,99 @@ angular.module("app.controllers",[])
 	$scope.deptos = $scope.eleccion.deptos;
 
 	var anchorId = $stateParams.anchor;
-	console.log("esto:"+anchorId);
 	
 	if(anchorId!=null){
 		var someElement = angular.element(document.getElementById(anchorId));
 	    $document.scrollToElementAnimated(someElement);
 	}
 	
+	/***********************************************************************************/
+	/*****************************SECCION GRAFICAS**************************************/
+	/***********************************************************************************/
+	
+	$scope.encuestas = encuestas;
+	
+	/*El $timeout es para que se genere el id en la vista antes del renderTo de higcharts*/
+	$timeout(function(){},500).then(
+		function(){
+			for (var index = 0; index < $scope.encuestas.length; index++) {
+				var data = [];
+				var resultado = $scope.encuestas[index].resultado;
+				if($scope.encuestas[index].porCandidato){
+					var mapCandidatos = resultado.mapCandidatos;
+					var candidatos = $scope.encuestas[index].dataCandidatos;
+					
+					for(var i=0; i < candidatos.length; i++){
+						var candidato = candidatos[i];
+						var cantidad = mapCandidatos[candidato.id];
+						var dato = {
+				                name: candidato.nombre,
+				                y: cantidad
+				            }
+						data.push(dato);
+					}
+				}else{
+					var mapPartidos = resultado.mapPartidos;
+					var partidos = $scope.encuestas[index].dataPartidos;
+					
+					for(var i = 0; i < partidos.length; i++){
+						var partido = partidos[i];
+						var cantidad = mapPartidos[partido.id];
+						var dato = {
+								name: partido.nombre,
+								y: cantidad
+							}
+						data.push(dato);
+					}
+				}	
+				
+				var chartPie = new Highcharts.Chart({
+				    chart: {
+				            plotBackgroundColor: null,
+				            plotBorderWidth: null,
+				            plotShadow: false,
+				            type: 'pie',
+				            renderTo: 'container-'+$scope.encuestas[index].id,
+				        },
+				        title: {
+				            text: 'Resultado encuesta (prueba)'
+				        },
+				        subtitle: {
+				        	text: 'Total encuestados: '+ $scope.encuestas[index].cantidadRespuestas,
+				        },
+				        tooltip: {
+				            pointFormat: '{series.name}: <b>{point.y}</b>'
+				        },
+				        plotOptions: {
+				            pie: {
+				                allowPointSelect: true,
+				                cursor: 'pointer',
+				                dataLabels: {
+				                    enabled: true,
+				                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+				                    style: {
+				                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				                    }
+				                }
+				            }
+				        },
+				        series: [{
+				            name: "Total",
+				            colorByPoint: true,
+				            data : data
+				        }]
+				})
+			}
+		},
+		function(){}		
+	);
+	
+	
+	
+	
 }])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
-	console.log("ENTRO AL CONTROOLLER CANDI");
+	
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;
@@ -81,7 +163,6 @@ angular.module("app.controllers",[])
 			encontreCandi = true;
 			$scope.candidato = $scope.eleccion.dataCandidatos[i];
 			$scope.fuentes = $scope.candidato.dataFuenteDatos;
-			console.log("CANDIDATO : "+$scope.candidato.nombre)
 
 		}else{
 			i++;
@@ -96,9 +177,7 @@ angular.module("app.controllers",[])
 
 
 .controller("partidoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
-	console.log("ACA ENTRO AL CONTROLLER");
-	console.log($stateParams.eleccionId);
-
+		
 	$scope.elecciones = store.get('elecciones');
 	//Buscar la eleccion con el id que viene x url
 	var encontre = false;

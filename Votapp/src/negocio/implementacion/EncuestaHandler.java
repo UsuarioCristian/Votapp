@@ -214,8 +214,8 @@ public class EncuestaHandler implements IEncuestaHandler {
 			List<Encuesta> encuestas = encuestaDAO.getEncuestasByIdConsultora(idConsultora);
 			
 			/*Transformo las encuestas en dataEncuestas*/
-			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas, idConsultora);
-						
+			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas);
+									
 			return dataEncuestasRetorno;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -297,14 +297,38 @@ public class EncuestaHandler implements IEncuestaHandler {
 			}			
 			
 			/*Transformo las encuestas en dataEncuestas*/
-			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas, id);
+			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas);
+			
 			setResultadoEncuesta(dataEncuestasRetorno);			
 			return dataEncuestasRetorno;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-	}	
+	}
+	
+
+	@Override
+	public List<DataEncuesta> getEncuestasByIdEleccion(int id) {
+		try {
+			Eleccion eleccion = eleccionDAO.findEleccionById(id);
+			List<Encuesta> encuestasFinalizadas = new ArrayList<Encuesta>();
+			
+			for (Encuesta encuestaOnlyId : eleccion.getEncuestas()) {
+				Encuesta encuesta = encuestaDAO.findEncuestaById(encuestaOnlyId.getId());
+				if(encuesta.isFinalizada())
+					encuestasFinalizadas.add(encuesta);			
+			}
+			
+			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestasFinalizadas);
+			setResultadoEncuesta(dataEncuestasRetorno);
+			
+			return dataEncuestasRetorno;
+		} catch (Exception e) {
+			return null;
+		}		
+		
+	}
 	
 	
 
@@ -355,15 +379,16 @@ public class EncuestaHandler implements IEncuestaHandler {
 		}		
 	}
 	
-	private List<DataEncuesta> createListDataEncuestas(List<Encuesta> encuestas, int idConsultora) {
+	private List<DataEncuesta> createListDataEncuestas(List<Encuesta> encuestas) {
 		
 		List<DataEncuesta> dataEncuestasRetorno = new ArrayList<DataEncuesta>();
 		for (Encuesta encuesta : encuestas) {
 			DataEncuesta dataEncuesta = new DataEncuesta();
 			dataEncuesta.setId(encuesta.getId());
-			dataEncuesta.setIdConsultora(idConsultora);
 			dataEncuesta.setIdEleccion(encuesta.getEleccion().getId());
 			dataEncuesta.setCantidadRespuestas(encuesta.getCantidadRespuestas());
+
+			dataEncuesta.setIdConsultora(encuesta.getConsultora().getId());
 			
 			dataEncuesta.setPorCandidato(encuesta.isPorCandidato());
 			dataEncuesta.setPreguntarEdad(encuesta.isPreguntarEdad());
@@ -672,5 +697,6 @@ public class EncuestaHandler implements IEncuestaHandler {
 		
 		return mapResultado;
 	}
+
 
 }

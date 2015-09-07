@@ -6,7 +6,7 @@ angular.module('app.services', []).
 value('version', '0.1')
 
 
-.factory('EleccionFactory', ['$http','ApiEndpointFactory','store',function($http, ApiEndpointFactory, store) {
+.factory('EleccionFactory', ['$http','ApiEndpointFactory','store','$q','$rootScope',function($http, ApiEndpointFactory, store,$q,$rootScope) {
 	var elecciones = null;
     var promise = $http.get(ApiEndpointFactory.ApiEndpoint +'/Votapp/services/eleccion/getElecciones')
     .success(function (data) {
@@ -14,13 +14,23 @@ value('version', '0.1')
     	store.set('elecciones', data);
     });
     
-    return {
-     
-      promise:promise,
-      
+    return {     
+      promise:promise,      
       getEleccionesActuales: function () {
           return elecciones;//.getSomeData();
       },
+      getEncuestasByIdEleccion : function(eleccionId){
+    	  var deferred = $q.defer();
+    	  $http.get(ApiEndpointFactory.ApiEndpoint +'/Votapp/services/encuesta/getEncuestasByEleccion/' + eleccionId)
+    	  .success(function(data){
+    		  deferred.resolve(data);
+    		  //$rootScope.$apply();
+    		 
+    	  }).error(function(){
+    		  
+    	  })
+    	  return deferred.promise;
+      }
       
     }
 }])

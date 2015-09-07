@@ -20,4 +20,6 @@ public interface IEncuestaHandler {
 	boolean crearEmergencia(DataEmergencia dataEmergencia);
 
 	public List<DataEncuesta> getEncuestasFinalizadasByIdConsultora(int id);
+
+	public List<DataEncuesta> getEncuestasByIdEleccion(int id);
 }

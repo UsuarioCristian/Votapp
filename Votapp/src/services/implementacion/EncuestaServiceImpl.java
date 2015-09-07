@@ -61,4 +61,10 @@ public class EncuestaServiceImpl implements EncuestaService {
 		return Response.ok(dataEncuestas).build();
 	}
 
+	@Override
+	public Response getEncuestasByIdEleccion(int id) {
+		List<DataEncuesta> dataEncuestas = encuestaHdlr.getEncuestasByIdEleccion(id);
+		return Response.ok(dataEncuestas).build();
+	}
+
 }
