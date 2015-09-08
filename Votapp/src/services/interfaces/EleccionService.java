@@ -34,4 +34,9 @@ public interface EleccionService {
 	@Path("/getElecciones")
 	@Produces({"application/json"})
 	public Response getElecciones();
+	
+	@POST
+	@Path("/protected/borrar/{id}")
+	@Produces({"application/json"})
+	public Response borrarEleccion(@PathParam("id") final int id);
 }

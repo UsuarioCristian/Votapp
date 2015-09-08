@@ -17,5 +17,7 @@ public interface IEleccionHandler {
 	public List<DataEleccion> getEleccionesActuales();
 
 	public List<DataEleccion> getElecciones();
+
+	public boolean borrarEleccion(int id);
 	
 }

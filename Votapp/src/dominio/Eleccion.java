@@ -56,7 +56,7 @@ public abstract class Eleccion {
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Candidato> candidatos;
 	
-	@OneToMany(mappedBy = "eleccion")
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Encuesta> encuestas;
 	
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -25,5 +25,7 @@ public interface IEleccionDAO {
 	public FuenteDatos findFuenteDatosById(int id);
 
 	public Lista findListaById(int id);
+
+	public boolean borrarEleccion(int id);
 	
 }

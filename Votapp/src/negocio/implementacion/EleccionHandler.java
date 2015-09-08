@@ -253,6 +253,16 @@ public class EleccionHandler implements IEleccionHandler {
 		
 		return dataElecciones;
 	}
+	
+	@Override
+	public boolean borrarEleccion(int id) {
+		return eleccionDAO.borrarEleccion(id);
+		
+	}
+	
+	/********************************************************/
+	/****************FUNCIONES AUXILIARES********************/
+	/********************************************************/
 
 	private List<DataDepartamento> getDeptosFromEleccion(Eleccion eleccion) {
 		List<DataDepartamento> listaRetorno = new ArrayList<DataDepartamento>();
@@ -412,9 +422,7 @@ public class EleccionHandler implements IEleccionHandler {
 		data.setId(fuente.getId());		
 		
 		return data;
-	}
-	
-	
+	}	
 	
 
 }

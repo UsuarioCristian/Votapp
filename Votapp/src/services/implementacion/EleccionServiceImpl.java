@@ -51,4 +51,11 @@ public class EleccionServiceImpl implements EleccionService {
 		return Response.ok(elecciones).build();
 	}
 
+	@Override
+	public Response borrarEleccion(int id) {
+		if(eleccionHdlr.borrarEleccion(id))
+			return Response.ok().build();
+		return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+	}
+
 }

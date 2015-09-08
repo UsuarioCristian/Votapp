@@ -107,5 +107,18 @@ public class EleccionDAO implements IEleccionDAO {
 		}
 	}
 
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public boolean borrarEleccion(int id) {
+		try {
+			Eleccion eleccion = this.findEleccionById(id);
+			em.remove(eleccion);			
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	
 }
