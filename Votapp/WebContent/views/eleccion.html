@@ -75,7 +75,7 @@
 	<div class="centrar">
 		<div class="container">
 			<span ng-repeat="encuesta in encuestas">
-				<div ng-attr-id="{{ 'container-' + encuesta.id }}" class="col-xs-6 col-sm-6 col-md-6" style="height:350px;"></div>
+				<div ng-attr-id="{{ 'container-' + encuesta.id }}" class="col-xs-6 col-sm-6 col-md-6" style="height:350px;" ng-click="goToEncuesta(encuesta)"></div>
 				
 			</span>
 			

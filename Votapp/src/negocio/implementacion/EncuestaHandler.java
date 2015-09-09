@@ -23,6 +23,7 @@ import persistencia.interfaces.IListaDAO;
 import persistencia.interfaces.IPartidoDAO;
 import utiles.TipoCargo;
 import datas.DataCandidato;
+import datas.DataConsultora;
 import datas.DataDepartamento;
 import datas.DataEmergencia;
 import datas.DataEncuesta;
@@ -389,6 +390,7 @@ public class EncuestaHandler implements IEncuestaHandler {
 			dataEncuesta.setCantidadRespuestas(encuesta.getCantidadRespuestas());
 
 			dataEncuesta.setIdConsultora(encuesta.getConsultora().getId());
+			dataEncuesta.setDataConsultora(convertToData(encuesta.getConsultora()));
 			
 			dataEncuesta.setPorCandidato(encuesta.isPorCandidato());
 			dataEncuesta.setPreguntarEdad(encuesta.isPreguntarEdad());
@@ -456,6 +458,17 @@ public class EncuestaHandler implements IEncuestaHandler {
 		return dataEncuestasRetorno;
 	}
 	
+	private DataConsultora convertToData(Consultora consultora) {
+		
+		DataConsultora data = new DataConsultora();
+		data.setId(consultora.getId());
+		data.setDescripcion(consultora.getDescripcion());
+		data.setFechaFundacion(consultora.getFechaFundacion());
+		data.setNombre(consultora.getNombre());
+		
+		return data;
+	}
+
 	private void setResultadoEncuesta(List<DataEncuesta> dataEncuestasRetorno) {
 
 		for (DataEncuesta dataEncuesta : dataEncuestasRetorno) {

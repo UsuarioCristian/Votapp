@@ -53,7 +53,15 @@ angular.module('app', [
 		url:'/eleccion/{eleccionId}/departamento/{departamentoId}', 
 		templateUrl: 'views/departamento.html',
 		controller: 'deptoController'
-		});
+		})
+		
+	.state('encuesta',{
+		url: '/eleccion/{eleccionId}/encuesta/',
+		templateUrl: 'views/encuesta.html',
+		controller: 'encuestaController',
+		params: {encuesta: null },
+	})
+		
 }])
 .value('duScrollDuration', 800)
 

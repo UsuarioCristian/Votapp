@@ -30,6 +30,22 @@ value('version', '0.1')
     		  
     	  })
     	  return deferred.promise;
+      },
+      getEleccionFromLocalStorage : function(eleccionId){
+    	      	  
+    	  var elecciones = store.get('elecciones');
+    	  var eleccion;
+    	  var encontre = false;
+    	  var i = 0;
+    	  while(!encontre && i < elecciones.length){
+    		  if(elecciones[i].id === eleccionId){
+    			  encontre = true;
+    			  eleccion = elecciones[i];
+    		  }else{
+    			  i++;
+    		  }
+    	  }
+    	  return eleccion;
       }
       
     }

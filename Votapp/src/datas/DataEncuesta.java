@@ -23,6 +23,7 @@ public class DataEncuesta implements Serializable {
 	private List<DataCandidato> dataCandidatos;
 	private List<DataPartido> dataPartidos;
 	private DataResultado resultado;
+	private DataConsultora dataConsultora;
 	
 	public DataEncuesta(){
 		this.listaEncuestaDeptos = new ArrayList<DataDepartamento>();
@@ -140,6 +141,14 @@ public class DataEncuesta implements Serializable {
 
 	public void setResultado(DataResultado resultado) {
 		this.resultado = resultado;
+	}
+
+	public DataConsultora getDataConsultora() {
+		return dataConsultora;
+	}
+
+	public void setDataConsultora(DataConsultora dataConsultora) {
+		this.dataConsultora = dataConsultora;
 	};
 
 }

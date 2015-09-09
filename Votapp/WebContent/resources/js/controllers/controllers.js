@@ -28,7 +28,7 @@ angular.module("app.controllers",[])
 	//$scope.elecciones = $scope.getEleccionesActuales();
 }])
 
-.controller('EleccionController', ['$scope', 'EleccionFactory', '$stateParams', 'store', '$document', 'encuestas', '$timeout', function($scope, EleccionFactory,$stateParams,store, $document,encuestas,$timeout){
+.controller('EleccionController', ['$scope', 'EleccionFactory', '$stateParams', 'store', '$document', 'encuestas', '$timeout', '$state',function($scope, EleccionFactory,$stateParams,store, $document,encuestas,$timeout,$state){
 
 	$scope.fuente = { url : 'Deckdisc'};
 	$scope.deptos = [];
@@ -132,10 +132,15 @@ angular.module("app.controllers",[])
 				})
 			}
 		},
-		function(){}		
+		function(){
+			/*Error del timeout*/
+			console.log('Error $timeout')
+		}		
 	);
 	
-	
+	$scope.goToEncuesta = function(encuesta){
+		$state.go('encuesta', {encuesta : encuesta, eleccionId : $scope.eleccion.id});
+	}
 	
 	
 }])
@@ -309,15 +314,12 @@ angular.module("app.controllers",[])
 	$scope.idPartidosXDepto = $scope.deptoSel.coleccionIdPartidos;
 	$scope.partidosXDeptos = [];	
 	for(var x=0;x<$scope.idPartidosXDepto.length;x++){
-		console.log("Length: "+$scope.idPartidosXDepto.length);
 		var encontre = false;
 		var i = 0;
 		while(!encontre && i<$scope.eleccion.dataPartidos.length){
-			console.log("Length 19 "+$scope.eleccion.dataPartidos.length);
 			if($scope.idPartidosXDepto[x] == $scope.eleccion.dataPartidos[i].id){
 				encontre = true;
 				$scope.partidosXDeptos.push($scope.eleccion.dataPartidos[i]);
-				console.log("encontre un partido");
 			}
 			else{
 				i++;
@@ -325,14 +327,264 @@ angular.module("app.controllers",[])
 			
 		}
 				
+	}	
+
+}])
+
+.controller('encuestaController', ['$scope', '$stateParams', '$timeout',function($scope,$stateParams,$timeout){
+	
+	$scope.encuesta = $stateParams.encuesta;
+	console.log($scope.encuesta);
+	
+	/*******************************/
+	/*******Seccion Graficas********/
+	/*******************************/
+	
+	$scope.tiposGraficas = [];
+	var graficaPie = {
+			nombre : 'Gráfica de Pie',
+			id : 1
+	}
+	$scope.tiposGraficas.push(graficaPie);
+	
+	if($scope.encuesta.preguntarEdad){
+		var graficaEdad = {
+				nombre : 'Gráfica columna segun edad',
+				id : 2
+		}
+		$scope.tiposGraficas.push(graficaEdad);
 	}
 	
+	$scope.graficaSeleccionada = $scope.tiposGraficas[0];
+		
+	/*********************************************************************/
+	/********************CARGA DE DATOS DEL PIE CHART*********************/
+	/*********************************************************************/
+	/*********************************************************************/
+	var data = [];
+	var resultado = $scope.encuesta.resultado;
+	if($scope.encuesta.porCandidato){
+		var mapCandidatos = resultado.mapCandidatos;
+		var candidatos = $scope.encuesta.dataCandidatos;
+		
+		for(var i=0; i < candidatos.length; i++){
+			var candidato = candidatos[i];
+			var cantidad = mapCandidatos[candidato.id];
+			var dato = {
+	                name: candidato.nombre,
+	                y: cantidad
+	            }
+			data.push(dato);
+		}
+	}else{
+		var mapPartidos = resultado.mapPartidos;
+		var partidos = $scope.encuesta.dataPartidos;
+		
+		for(var i = 0; i < partidos.length; i++){
+			var partido = partidos[i];
+			var cantidad = mapPartidos[partido.id];
+			var dato = {
+					name: partido.nombre,
+					y: cantidad
+				}
+			data.push(dato);
+		}
+	}	
+	/*****Como chartPie es la grafica que aparece por defecto, 
+	 * entonces se debe iniciar aqui (las demas lo hacen con el ng-change $scope.changeChart)**********/
+	
+	$timeout(function(){},1000).then(
+			function(){
+				var chartPie = new Highcharts.Chart({
+				    chart: {
+				            plotBackgroundColor: null,
+				            plotBorderWidth: null,
+				            plotShadow: false,
+				            type: 'pie',
+				            renderTo: 'container',
+				        },
+				        title: {
+				            text: 'Resultado encuesta (prueba)'
+				        },
+				        subtitle: {
+				        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+				        },
+				        tooltip: {
+				            pointFormat: '{series.name}: <b>{point.y}</b>'
+				        },
+				        plotOptions: {
+				            pie: {
+				                allowPointSelect: true,
+				                cursor: 'pointer',
+				                dataLabels: {
+				                    enabled: true,
+				                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+				                    style: {
+				                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+				                    }
+				                }
+				            }
+				        },
+				        series: [{
+				            name: "Total",
+				            colorByPoint: true,
+				            data : data
+				        }]
+				})
+			},
+			function(){}		
+	);
 	
 	
-
-
 	
-
+	/****************************************************************************/
+	/********************CARGA DE DATOS DEL GRAFICA POR EDAD*********************/
+	/****************************************************************************/
+	/****************************************************************************/
+	if($scope.encuesta.preguntarEdad){
+		var serieEdad = [];
+		var de18a23 = resultado.mapEdad18a23;
+		var de24a30 = resultado.mapEdad24a30;
+		var de31a50 = resultado.mapEdad31a50;
+		var de51omas = resultado.mapEdad51omas;
+		
+		if($scope.encuesta.porCandidato){
+			var mapCandidatos = resultado.mapCandidatos;
+			var candidatos = $scope.encuesta.dataCandidatos;		
+			
+			for(var i=0; i < candidatos.length; i++){
+				var candidato = candidatos[i];
+				var cantidad18a23 = de18a23[candidato.id];
+				var cantidad24a30 = de24a30[candidato.id];
+				var cantidad31a50 = de31a50[candidato.id];
+				var cantidadde51omas = de51omas[candidato.id];
+				
+				var valor = {
+		                name: candidato.nombre,
+		                data: [cantidad18a23, cantidad24a30, cantidad31a50, cantidadde51omas]
+		            }
+				serieEdad.push(valor);
+			}
+		}else{
+			var mapPartidos = resultado.mapPartidos;
+			var partidos = $scope.encuesta.dataPartidos;
+			
+			for( var i = 0; i < partidos.length; i++){
+				var partido = partidos[i];
+				var cantidad18a23 = de18a23[partido.id];
+				var cantidad24a30 = de24a30[partido.id];
+				var cantidad31a50 = de31a50[partido.id];
+				var cantidadde51omas = de51omas[partido.id];
+				
+				var valor = {
+		                name: partido.nombre,
+		                data: [cantidad18a23, cantidad24a30, cantidad31a50, cantidadde51omas]
+		            }
+				serieEdad.push(valor);
+			}
+		}	
+		
+		
+	}
+	/******************************************************************************************************************/
+	/******************************************************************************************************************/
+	/************AQUI ES EN DONDE SE CARGAN LOS DATOS ANTERIORES DEPENDIENDO DE QUE GRAFICA SE SELECCIONA**************/
+	/******************************************************************************************************************/
+	/******************************************************************************************************************/
+	
+	$scope.changeChart = function(){
+		if($scope.graficaSeleccionada.id === 1){
+			
+			/*Igualo a null a todas las demas graficas*/
+			chartColumEdad = null;
+			
+			var chartPie = new Highcharts.Chart({
+			    chart: {
+			            plotBackgroundColor: null,
+			            plotBorderWidth: null,
+			            plotShadow: false,
+			            type: 'pie',
+			            renderTo: 'container',
+			        },
+			        title: {
+			            text: 'Resultado encuesta (prueba)'
+			        },
+			        subtitle: {
+			        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+			        },
+			        tooltip: {
+			            pointFormat: '{series.name}: <b>{point.y}</b>'
+			        },
+			        plotOptions: {
+			            pie: {
+			                allowPointSelect: true,
+			                cursor: 'pointer',
+			                dataLabels: {
+			                    enabled: true,
+			                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+			                    style: {
+			                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+			                    }
+			                }
+			            }
+			        },
+			        series: [{
+			            name: "Total",
+			            colorByPoint: true,
+			            data : data
+			        }]
+			})
+		}else
+			if($scope.graficaSeleccionada.id === 2){
+				chartPie = null;
+				
+				var chartColumEdad = new Highcharts.Chart({
+				    chart: {
+				    	type: 'column',
+				    	renderTo: 'container2',
+				    },
+				    title: {
+			            text: 'Votos por edad'
+			        },
+			        subtitle: {
+			        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+			        },
+			        xAxis: {
+			            categories: [
+			                '18 a 23',
+			                '24 a 30',
+			                '31 a 50',
+			                'Mas de 50',
+			               
+			            ],
+			            crosshair: true
+			        },
+			        yAxis: {
+			            min: 0,
+			            title: {
+			                text: 'Cantidad de votos'
+			            }
+			        },
+			        tooltip: {
+			            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+			                '<td style="padding:0"><b> {point.y}</b></td></tr>',
+			            footerFormat: '</table>',
+			            shared: true,
+			            useHTML: true
+			        },
+			        plotOptions: {
+			            column: {
+			                pointPadding: 0.2,
+			                borderWidth: 0
+			            }
+			        },
+			        series: serieEdad
+			        
+				})
+			}
+	}
+	
 }])
 
 
