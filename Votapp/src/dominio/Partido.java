@@ -17,6 +17,10 @@ public class Partido implements Serializable {
 
 	private String nombre;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="idImagen") // Es unidireccional
+	protected Imagen imagen;
+	
 	@Column(length=100000)
 	private String descripcion;
 	private String presidente;
@@ -125,6 +129,12 @@ public class Partido implements Serializable {
 		this.encuestas = encuestas;
 	}
 
+	public Imagen getImagen() {
+		return imagen;
+	}
+	public void setImagen(Imagen imagen) {
+		this.imagen = imagen;
+	}
 	@Override
 	public String toString() {
 		return "Partido[" + id + "]";
