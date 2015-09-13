@@ -24,6 +24,7 @@ public class EleccionOtro extends Eleccion implements Serializable {
 	public EleccionOtro() {
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.listas = new LinkedHashSet<Lista>();
+		this.noticias = new LinkedHashSet<FuenteDatos>();
 		this.candidatos = new LinkedHashSet<Candidato>();
 		this.simple = false;
 	}
@@ -34,6 +35,7 @@ public class EleccionOtro extends Eleccion implements Serializable {
 		this.fecha = fecha;
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.listas = new LinkedHashSet<Lista>();
+		this.noticias = new LinkedHashSet<FuenteDatos>();
 		this.candidatos = new LinkedHashSet<Candidato>();
 		this.simple = simple;
 	}
@@ -62,6 +64,25 @@ public class EleccionOtro extends Eleccion implements Serializable {
 				lista.setNumero(data.getNumero());				
 				lista.setEleccion(this);
 				this.getListas().add(lista);
+			}			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public boolean asignarNoticias(List<DataFuenteDatos> dataNoticias) {
+		
+		try {			
+			FuenteDatos fuente;
+			for (DataFuenteDatos data : dataNoticias) {
+				fuente = new FuenteDatos();
+				fuente.setTipo(data.getTipo());				
+				fuente.setUrl(data.getUrl());
+				fuente.setEleccion(this);
+				this.getNoticias().add(fuente);
 			}			
 			return true;
 		} catch (Exception e) {

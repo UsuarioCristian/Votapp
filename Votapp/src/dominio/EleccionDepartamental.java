@@ -25,6 +25,7 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.noticias = new LinkedHashSet<FuenteDatos>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.departamentos = new LinkedHashSet<Departamento>();
 	}
@@ -35,6 +36,7 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.noticias = new LinkedHashSet<FuenteDatos>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
 		this.departamentos = new LinkedHashSet<Departamento>();
 	}
@@ -168,6 +170,26 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean asignarNoticias(List<DataFuenteDatos> dataNoticias) {
+		
+		try {			
+			FuenteDatos fuente;
+			for (DataFuenteDatos data : dataNoticias) {
+				fuente = new FuenteDatos();
+				fuente.setTipo(data.getTipo());				
+				fuente.setUrl(data.getUrl());
+				fuente.setEleccion(this);
+				this.getNoticias().add(fuente);
+			}			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
+	}
+	
 	@Override
 	public boolean asignarCandidatos(List<DataCandidato> dataCandidatos) {
 		try {

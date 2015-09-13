@@ -21,6 +21,9 @@ public class FuenteDatos implements Serializable {
 	@ManyToOne
 	private Departamento departamento;
 
+	@ManyToOne
+	private Eleccion eleccion;
+	
 	public FuenteDatos() {
 		super();
 	}   
@@ -54,6 +57,14 @@ public class FuenteDatos implements Serializable {
 
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
+	}
+	
+	public Eleccion getEleccion() {
+		return eleccion;
+	}
+
+	public void setEleccion(Eleccion eleccion) {
+		this.eleccion = eleccion;
 	}
 
 }

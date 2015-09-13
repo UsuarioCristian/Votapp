@@ -65,7 +65,7 @@ public class EleccionHandler implements IEleccionHandler {
 				paso1 = eleccion.asignarPartidos(data.getDataPartidos());
 				paso2 = eleccion.asignarListas(data.getDataListas());
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
-				
+				eleccion.asignarNoticias(data.getDataNoticias());
 				
 				if(paso1 && paso2 && paso3)
 					exito = eleccionDAO.crearEleccion(eleccion);
@@ -86,6 +86,7 @@ public class EleccionHandler implements IEleccionHandler {
 				paso1 = eleccion.asignarPartidos(data.getDataPartidos());
 				paso2 = eleccion.asignarListas(data.getDataListas());
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				eleccion.asignarNoticias(data.getDataNoticias());
 				
 				if(paso1 && paso2 && paso3)
 					exito = eleccionDAO.crearEleccion(eleccion);
@@ -105,6 +106,7 @@ public class EleccionHandler implements IEleccionHandler {
 				
 				paso2 = eleccion.asignarListas(data.getDataListas());
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				eleccion.asignarNoticias(data.getDataNoticias());
 				
 				if(paso2 && paso3)
 					exito = eleccionDAO.crearEleccion(eleccion);
@@ -122,6 +124,7 @@ public class EleccionHandler implements IEleccionHandler {
 				eleccion.setImagen(imagen);
 				
 				paso3 = eleccion.asignarCandidatos(data.getDataCandidatos());
+				eleccion.asignarNoticias(data.getDataNoticias());
 				
 				if(paso3)
 					exito = eleccionDAO.crearEleccion(eleccion);
