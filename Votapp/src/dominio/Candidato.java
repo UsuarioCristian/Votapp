@@ -18,6 +18,10 @@ public class Candidato implements Serializable {
 	
 	private String nombre;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="idImagen") // Es unidireccional
+	protected Imagen imagen;
+	
 	@Column(length=100000)
 	private String biografia;
 
@@ -110,6 +114,14 @@ public class Candidato implements Serializable {
 		this.encuestas = encuestas;
 	}
 	
+	public Imagen getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Imagen imagen) {
+		this.imagen = imagen;
+	}
+
 	public String getBiografia() {
 		return biografia;
 	}

@@ -16,6 +16,7 @@ public class DataPartido implements Serializable {
 	private List<DataFuenteDatos> dataFuenteDatos;
 	private List<DataDepartamento> dataDeptos;
 	private int id;
+	private DataImagen imagen;
 	private List<DataLista> listas;
 	
 	public DataPartido() {
@@ -86,6 +87,14 @@ public class DataPartido implements Serializable {
 
 	public void setListas(List<DataLista> listas) {
 		this.listas = listas;
+	}
+
+	public DataImagen getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(DataImagen imagen) {
+		this.imagen = imagen;
 	}
 
 }

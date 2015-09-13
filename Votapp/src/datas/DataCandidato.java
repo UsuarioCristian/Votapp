@@ -20,6 +20,7 @@ public class DataCandidato implements Serializable {
 	private TipoCargo cargo;
 	private int id;
 	private int idDepto;
+	private DataImagen imagen;
 	private String nombreDepto;
 
 	public DataCandidato(){
@@ -98,6 +99,14 @@ public class DataCandidato implements Serializable {
 
 	public void setIdDepto(int idDepto) {
 		this.idDepto = idDepto;
+	}
+
+	public DataImagen getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(DataImagen imagen) {
+		this.imagen = imagen;
 	}
 
 	public String getNombreDepto() {
