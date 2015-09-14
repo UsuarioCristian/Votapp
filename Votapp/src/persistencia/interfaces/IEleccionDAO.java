@@ -22,10 +22,10 @@ public interface IEleccionDAO {
 	
 	public List<Departamento> getDeptosByEleccionID(int id);
 
-	public FuenteDatos findFuenteDatosById(int id);
-
 	public Lista findListaById(int id);
 
 	public boolean borrarEleccion(int id);
+
+	FuenteDatos findFuenteDatosById(int id);
 	
 }

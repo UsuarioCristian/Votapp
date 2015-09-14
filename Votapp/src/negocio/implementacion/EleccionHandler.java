@@ -10,8 +10,10 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import negocio.interfaces.IEleccionHandler;
+import persistencia.implementacion.EleccionDAO;
 import persistencia.interfaces.ICandidatoDAO;
 import persistencia.interfaces.IEleccionDAO;
+import persistencia.interfaces.IFuenteDatosDAO;
 import persistencia.interfaces.IPartidoDAO;
 import utiles.TipoEleccion;
 import datas.DataCandidato;
@@ -42,6 +44,8 @@ public class EleccionHandler implements IEleccionHandler {
 	IPartidoDAO partidoDAO;
 	@EJB
 	ICandidatoDAO candidatoDAO;
+	@EJB
+	IFuenteDatosDAO fuenteDatosDAO;
 
 	@Override
 	public boolean crearEleccion(DataEleccion data) {
@@ -214,6 +218,7 @@ public class EleccionHandler implements IEleccionHandler {
 			dataEleccion.setId(eleccion.getId());
 			List<DataPartido> partidos = getPartidosFromEleccion(eleccion);
 			List<DataCandidato> candidatos = getCandidatosFromEleccion(eleccion);
+			List<DataFuenteDatos> noticias = getNoticiasFromEleccion(eleccion);
 			List<DataDepartamento> deptos = getDeptosFromEleccion(eleccion);
 			switch (eleccion.getClass().getName()) {
 				case "dominio.EleccionNacional":
@@ -222,7 +227,7 @@ public class EleccionHandler implements IEleccionHandler {
 					dataEleccion.setDataPartidos(partidos);
 					dataEleccion.setDataCandidatos(candidatos);	
 					dataEleccion.setDeptos(deptos);/*Esto aqui no se si tiene sentido... tal vez a futuro*/
-					
+					dataEleccion.setDataNoticias(noticias);
 					break;
 				case "dominio.EleccionDepartamental":
 					dataEleccion.setTipoEleccion(TipoEleccion.Departamental);
@@ -230,7 +235,7 @@ public class EleccionHandler implements IEleccionHandler {
 					dataEleccion.setDataPartidos(partidos);
 					dataEleccion.setDataCandidatos(candidatos);
 					dataEleccion.setDeptos(deptos);
-					
+					dataEleccion.setDataNoticias(noticias);
 					break;
 				case "dominio.EleccionOtro":
 					EleccionOtro eleccionOtro = (EleccionOtro) eleccion;
@@ -241,7 +246,7 @@ public class EleccionHandler implements IEleccionHandler {
 					}
 					dataEleccion.setDataPartidos(partidos);
 					dataEleccion.setDataCandidatos(candidatos);
-					
+					dataEleccion.setDataNoticias(noticias);
 					break;
 				default:
 					break;
@@ -294,6 +299,18 @@ public class EleccionHandler implements IEleccionHandler {
 		for (Candidato candidatoOnlyId : eleccion.getCandidatos()) {
 			Candidato candidato = candidatoDAO.findCandidatoById(candidatoOnlyId.getId());
 			DataCandidato data = convertToData(candidato);
+			listaRetorno.add(data);
+		}
+		
+		return listaRetorno;
+	}
+	
+	private List<DataFuenteDatos> getNoticiasFromEleccion(Eleccion eleccion) {
+		List<DataFuenteDatos> listaRetorno = new ArrayList<DataFuenteDatos>();
+		
+		for (FuenteDatos noticiaOnlyId : eleccion.getNoticias()) {
+			FuenteDatos noticia = fuenteDatosDAO.findFuenteDatosById(noticiaOnlyId.getId());
+			DataFuenteDatos data = convertToData(noticia);
 			listaRetorno.add(data);
 		}
 		

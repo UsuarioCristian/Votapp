@@ -41,11 +41,13 @@ angular.module("app.controllers",[])
 			encontre = true;
 			$scope.eleccion = $scope.elecciones[i];
 			$scope.tipoEleccion = $scope.eleccion.tipoEleccion;
+			$scope.noticias = $scope.eleccion.dataNoticias;
 		}else{
 			i++;
 		}
 	}
 	$scope.deptos = $scope.eleccion.deptos;
+
 
 	var anchorId = $stateParams.anchor;
 	

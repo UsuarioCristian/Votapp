@@ -5,6 +5,12 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import utiles.TipoFuente;
+
+@NamedQueries({
+	@NamedQuery(name = "FuenteDatos.getFuentesByIdEleccion",
+			query = "SELECT f from FuenteDatos f WHERE f.eleccion.id = :idEleccion")
+})
+
 @Entity
 public class FuenteDatos implements Serializable {
 	   
