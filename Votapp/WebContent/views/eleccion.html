@@ -4,8 +4,6 @@
 <div ng-include src="'layout/header.html'"></div>
 
 <div id="first">
-
-	
 	 <div style="width: 10%;margin: 0 auto;padding-top: 2%;">
 	         <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
   	 </div>
@@ -82,8 +80,9 @@
 		</div>
 		</div>
 </div> 
+
  <div id="fifth" >
-	<div class="centrar">
+	
 		<div class="container">
 		
 			<div ng-repeat="fuen in noticias" ng-switch="fuen.tipo">
@@ -127,5 +126,5 @@
 	
 			
 		</div>
-		</div>
+		
 </div> 
