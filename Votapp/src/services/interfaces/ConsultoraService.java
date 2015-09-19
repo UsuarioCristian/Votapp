@@ -43,4 +43,10 @@ public interface ConsultoraService {
 	@Consumes("application/json")
 	public Response notificarEmergencia(DataEmergencia data);
 	
+	@GET
+	@Path("/protected/thereANewEmergency/{id}")
+	@Consumes("application/json")
+	@Produces({"application/json"})
+	public Response thereANewEmergency(@PathParam("id") final int id);
+	
 }

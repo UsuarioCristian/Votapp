@@ -23,6 +23,7 @@ public class EleccionNacional extends Eleccion implements Serializable {
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.noticias = new LinkedHashSet<FuenteDatos>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 
@@ -33,6 +34,7 @@ public class EleccionNacional extends Eleccion implements Serializable {
 		this.partidos = new LinkedHashSet<Partido>();
 		this.listas = new LinkedHashSet<Lista>();
 		this.candidatos = new LinkedHashSet<Candidato>();
+		this.noticias = new LinkedHashSet<FuenteDatos>();
 		this.encuestas = new LinkedHashSet<Encuesta>();
 	}
 
@@ -143,6 +145,25 @@ public class EleccionNacional extends Eleccion implements Serializable {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	@Override
+	public boolean asignarNoticias(List<DataFuenteDatos> dataNoticias) {
+		
+		try {			
+			FuenteDatos fuente;
+			for (DataFuenteDatos data : dataNoticias) {
+				fuente = new FuenteDatos();
+				fuente.setTipo(data.getTipo());				
+				fuente.setUrl(data.getUrl());
+				fuente.setEleccion(this);
+				this.getNoticias().add(fuente);
+			}			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
 	}
 
 	@Override

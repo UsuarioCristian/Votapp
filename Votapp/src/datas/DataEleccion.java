@@ -18,6 +18,7 @@ public class DataEleccion implements Serializable {
 	private List<DataPartido> dataPartidos;
 	private List<DataLista> dataListas;
 	private List<DataCandidato> dataCandidatos;
+	private List<DataFuenteDatos> dataNoticias;
 	private TipoEleccion tipoEleccion;
 	private DataImagen logo;
 	private String css;
@@ -116,6 +117,14 @@ public class DataEleccion implements Serializable {
 
 	public void setDeptos(List<DataDepartamento> deptos) {
 		this.deptos = deptos;
+	}
+	
+	public List<DataFuenteDatos> getDataNoticias() {
+		return dataNoticias;
+	}
+
+	public void setDataNoticias(List<DataFuenteDatos> dataNoticias) {
+		this.dataNoticias = dataNoticias;
 	}
 
 }

@@ -76,4 +76,13 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 		return null;
 	}
 
+	@Override
+	public Response thereANewEmergency(int id) {
+		
+		if(consultoraHandler.thereANewEmergency(id))
+			return Response.ok(true).build();
+		else
+			return Response.ok(false).build();
+	}
+
 }

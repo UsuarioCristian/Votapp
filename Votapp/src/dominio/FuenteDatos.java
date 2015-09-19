@@ -5,6 +5,12 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import utiles.TipoFuente;
+
+@NamedQueries({
+	@NamedQuery(name = "FuenteDatos.getFuentesByIdEleccion",
+			query = "SELECT f from FuenteDatos f WHERE f.eleccion.id = :idEleccion")
+})
+
 @Entity
 public class FuenteDatos implements Serializable {
 	   
@@ -21,6 +27,9 @@ public class FuenteDatos implements Serializable {
 	@ManyToOne
 	private Departamento departamento;
 
+	@ManyToOne
+	private Eleccion eleccion;
+	
 	public FuenteDatos() {
 		super();
 	}   
@@ -54,6 +63,14 @@ public class FuenteDatos implements Serializable {
 
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
+	}
+	
+	public Eleccion getEleccion() {
+		return eleccion;
+	}
+
+	public void setEleccion(Eleccion eleccion) {
+		this.eleccion = eleccion;
 	}
 
 }

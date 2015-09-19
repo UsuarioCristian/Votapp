@@ -20,6 +20,7 @@ import javax.persistence.OneToOne;
 import datas.DataCandidato;
 import datas.DataLista;
 import datas.DataPartido;
+import datas.DataFuenteDatos;
 
 @NamedQueries({
 	@NamedQuery (name = "Eleccion.getEleccionesActuales",
@@ -52,6 +53,9 @@ public abstract class Eleccion {
 	
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Lista> listas;
+	
+	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
+	protected Set<FuenteDatos> noticias;
 	
 	@OneToMany(mappedBy = "eleccion", cascade = CascadeType.ALL)
 	protected Set<Candidato> candidatos;
@@ -149,12 +153,22 @@ public abstract class Eleccion {
 	public void setImagen(Imagen imagen) {
 		this.imagen = imagen;
 	}
+	
+	public Set<FuenteDatos> getNoticias() {
+		return noticias;
+	}
+
+	public void setNoticias(Set<FuenteDatos> noticias) {
+		this.noticias = noticias;
+	}
 
 	public abstract boolean asignarPartidos(List<DataPartido> dataPartidos);
 
 	public abstract boolean asignarListas(List<DataLista> dataListas);
 
 	public abstract boolean asignarCandidatos(List<DataCandidato> dataCandidatos);
+	
+	public abstract boolean asignarNoticias(List<DataFuenteDatos> dataNoticias);
 	
 	
 

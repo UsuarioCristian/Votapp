@@ -96,6 +96,8 @@ public class EleccionDAO implements IEleccionDAO {
 		}
 	}
 
+
+
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public Lista findListaById(int id) {
@@ -106,6 +108,7 @@ public class EleccionDAO implements IEleccionDAO {
 			return null;
 		}
 	}
+	
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
