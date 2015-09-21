@@ -20,4 +20,6 @@ public interface IConsultoraHandler {
 
 	public boolean notificarEmergencia(DataEmergencia data);
 
+	public boolean thereANewEmergency(int idConsultora);
+
 }

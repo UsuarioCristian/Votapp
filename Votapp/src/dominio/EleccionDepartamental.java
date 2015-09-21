@@ -82,6 +82,14 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 				partido.setDescripcion(data.getDescripcion());
 				partido.setFechaFundacion(data.getFechaFundacion());
 				partido.setPresidente(data.getPresidente());
+				
+				Imagen imagen = new Imagen();
+				if (data.getImagen()!=null){
+					imagen.setName(data.getImagen().getName());
+					imagen.setFile(data.getImagen().getFile());
+					imagen.setTipo(data.getImagen().getTipo());
+				}
+				partido.setImagen(imagen);
 
 				partido.setEleccion(this);
 				this.getPartidos().add(partido);
@@ -201,6 +209,14 @@ public class EleccionDepartamental extends Eleccion implements Serializable {
 				candidato.setCargo(data.getCargo());
 				candidato.setEdad(data.getEdad());
 				candidato.setBiografia(data.getBiografia());
+				
+				Imagen imagen = new Imagen();
+				if (data.getImagen()!=null){
+					imagen.setName(data.getImagen().getName());
+					imagen.setFile(data.getImagen().getFile());
+					imagen.setTipo(data.getImagen().getTipo());
+				}
+				candidato.setImagen(imagen);
 
 				this.getCandidatos().add(candidato);
 				candidato.setEleccion(this);

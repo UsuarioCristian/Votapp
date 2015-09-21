@@ -130,4 +130,19 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		return false;
 	}
 
+
+	@Override
+	public boolean thereANewEmergency(int idConsultora) {
+		
+		List<Emergencia> emergencias = consultoraDAO.getAllEmergencias(idConsultora);
+		boolean nueva = false;
+		
+		for (Emergencia emergencia : emergencias) {
+			if(!emergencia.isNotificada())
+				nueva = true;
+		}
+		
+		return nueva;
+	}
+
 }
