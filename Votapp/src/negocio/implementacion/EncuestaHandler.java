@@ -236,8 +236,22 @@ public class EncuestaHandler implements IEncuestaHandler {
 		Respuesta respuesta = new Respuesta();
 		respuesta.setEdad(dataRespuesta.getEdad());
 		respuesta.setEducacion(dataRespuesta.getNivelEstudio());
+		
+		/******************************************************************/
+		/*******************ACA SE DETECTAN VOTOS EN BLANCO****************/
+		/******************************************************************/
 		respuesta.setIdCandidato(dataRespuesta.getIdCandidato());
 		respuesta.setIdPartido(dataRespuesta.getIdPartido());
+		
+		if(dataRespuesta.getIdCandidato() == 0 && dataRespuesta.getIdPartido() == 0){
+			/*voto en blanco*/
+		}else{
+			
+		}
+		
+		
+		
+		
 		respuesta.setIdLista(dataRespuesta.getIdLista());
 		respuesta.setSexo(dataRespuesta.getSexo());
 
@@ -702,8 +716,8 @@ public class EncuestaHandler implements IEncuestaHandler {
 		for (DataLista lista : dataListas) {
 			int cantidad = 0;
 			for (Respuesta respuesta : respuestas) {
-				if(respuesta.getIdPartido() == lista.getId())
-					cantidad++;
+				if(respuesta.getIdLista() == lista.getId())
+					cantidad++;				
 			}
 			mapResultado.put(lista.getId(), cantidad);
 		}
