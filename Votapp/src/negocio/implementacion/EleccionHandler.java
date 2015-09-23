@@ -299,6 +299,13 @@ public class EleccionHandler implements IEleccionHandler {
 		for (Candidato candidatoOnlyId : eleccion.getCandidatos()) {
 			Candidato candidato = candidatoDAO.findCandidatoById(candidatoOnlyId.getId());
 			DataCandidato data = convertToData(candidato);
+			
+			DataImagen logo = new DataImagen();
+			logo.setFile(candidato.getImagen().getFile());
+			logo.setName(candidato.getImagen().getName());
+			logo.setTipo(candidato.getImagen().getTipo());
+			data.setImagen(logo);
+			
 			listaRetorno.add(data);
 		}
 		
@@ -324,8 +331,17 @@ public class EleccionHandler implements IEleccionHandler {
 		for (Partido partidoOnlyID : eleccion.getPartidos()) {
 			Partido partido = partidoDAO.findPartidoById(partidoOnlyID.getId());
 			DataPartido data = convertToData(partido);
-			listaRetorno.add(data);			
-		}		
+			
+			DataImagen logo = new DataImagen();
+			logo.setFile(partido.getImagen().getFile());
+			logo.setName(partido.getImagen().getName());
+			logo.setTipo(partido.getImagen().getTipo());
+			data.setImagen(logo);
+			
+			listaRetorno.add(data);	
+		}
+		
+		
 		
 		return listaRetorno;
 	}

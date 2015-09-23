@@ -42,6 +42,7 @@ angular.module("app.controllers",[])
 			$scope.eleccion = $scope.elecciones[i];
 			$scope.tipoEleccion = $scope.eleccion.tipoEleccion;
 			$scope.noticias = $scope.eleccion.dataNoticias;
+			console.log("NOMBRE DEL CANDIDATO: "+$scope.eleccion.dataCandidatos[0].imagen);
 		}else{
 			i++;
 		}
