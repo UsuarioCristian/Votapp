@@ -27,6 +27,8 @@ public class Encuesta implements Serializable {
 	private boolean preguntarEdad;
 	private boolean preguntarSexo;
 	private boolean preguntarNivelEstudio;
+	private boolean preguntarSiTrabaja;
+	private boolean preguntarIngresos;
 	private int cantidadRespuestas;
 	private String nombreDepartamento;
 	private boolean finalizada;
@@ -107,6 +109,22 @@ public class Encuesta implements Serializable {
 
 	public void setPreguntarNivelEstudio(boolean preguntarNivelEstudio) {
 		this.preguntarNivelEstudio = preguntarNivelEstudio;
+	}
+
+	public boolean isPreguntarSiTrabaja() {
+		return preguntarSiTrabaja;
+	}
+
+	public void setPreguntarSiTrabaja(boolean preguntarSiTrabaja) {
+		this.preguntarSiTrabaja = preguntarSiTrabaja;
+	}
+
+	public boolean isPreguntarIngresos() {
+		return preguntarIngresos;
+	}
+
+	public void setPreguntarIngresos(boolean preguntarIngresos) {
+		this.preguntarIngresos = preguntarIngresos;
 	}
 
 	public Consultora getConsultora() {

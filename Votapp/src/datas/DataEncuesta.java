@@ -19,6 +19,8 @@ public class DataEncuesta implements Serializable {
 	private boolean preguntarEdad;
 	private boolean preguntarSexo;
 	private boolean preguntarNivelEstudio;
+	private boolean preguntarSiTrabaja;
+	private boolean preguntarIngresos;
 	private List<DataDepartamento> listaEncuestaDeptos;
 	private List<DataCandidato> dataCandidatos;
 	private List<DataPartido> dataPartidos;
@@ -149,6 +151,22 @@ public class DataEncuesta implements Serializable {
 
 	public void setDataConsultora(DataConsultora dataConsultora) {
 		this.dataConsultora = dataConsultora;
+	}
+
+	public boolean isPreguntarSiTrabaja() {
+		return preguntarSiTrabaja;
+	}
+
+	public void setPreguntarSiTrabaja(boolean preguntarSiTrabaja) {
+		this.preguntarSiTrabaja = preguntarSiTrabaja;
+	}
+
+	public boolean isPreguntarIngresos() {
+		return preguntarIngresos;
+	}
+
+	public void setPreguntarIngresos(boolean preguntarIngresos) {
+		this.preguntarIngresos = preguntarIngresos;
 	};
 
 }

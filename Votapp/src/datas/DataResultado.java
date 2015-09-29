@@ -26,6 +26,13 @@ public class DataResultado implements Serializable {
 	private Map<Integer, Integer> mapGeneroMas;
 	private Map<Integer, Integer> mapGeneroOtro;
 	
+	private Map<Integer, Integer> mapIngresos1;//  x < 10.000
+	private Map<Integer, Integer> mapIngresos2;// 10000 < x < 21.365
+	private Map<Integer, Integer> mapIngresos3;// 21.366 < x < 40.000
+	private Map<Integer, Integer> mapIngresos4;// 40.001 < x
+	
+	private Map<Integer, Integer> mapTrabaja;
+	private Map<Integer, Integer> mapNoTrabaja;
 	
 	public DataResultado() {
 		this.mapCandidatos = new HashMap<Integer, Integer>();
@@ -42,6 +49,12 @@ public class DataResultado implements Serializable {
 		this.mapGeneroFem = new HashMap<Integer, Integer>();
 		this.mapGeneroMas = new HashMap<Integer, Integer>();
 		this.mapGeneroOtro = new HashMap<Integer, Integer>();
+		this.mapIngresos1 = new HashMap<Integer, Integer>();
+		this.mapIngresos2 = new HashMap<Integer, Integer>();
+		this.mapIngresos3 = new HashMap<Integer, Integer>();
+		this.mapIngresos4 = new HashMap<Integer, Integer>();
+		this.mapTrabaja = new HashMap<Integer, Integer>();
+		this.mapNoTrabaja = new HashMap<Integer, Integer>();
 	}
 
 	public Map<Integer, Integer> getMapCandidatos() {
@@ -154,6 +167,54 @@ public class DataResultado implements Serializable {
 
 	public void setMapGeneroOtro(Map<Integer, Integer> mapGeneroOtro) {
 		this.mapGeneroOtro = mapGeneroOtro;
+	}
+
+	public Map<Integer, Integer> getMapIngresos1() {
+		return mapIngresos1;
+	}
+
+	public void setMapIngresos1(Map<Integer, Integer> mapIngresos1) {
+		this.mapIngresos1 = mapIngresos1;
+	}
+
+	public Map<Integer, Integer> getMapIngresos2() {
+		return mapIngresos2;
+	}
+
+	public void setMapIngresos2(Map<Integer, Integer> mapIngresos2) {
+		this.mapIngresos2 = mapIngresos2;
+	}
+
+	public Map<Integer, Integer> getMapIngresos3() {
+		return mapIngresos3;
+	}
+
+	public void setMapIngresos3(Map<Integer, Integer> mapIngresos3) {
+		this.mapIngresos3 = mapIngresos3;
+	}
+
+	public Map<Integer, Integer> getMapIngresos4() {
+		return mapIngresos4;
+	}
+
+	public void setMapIngresos4(Map<Integer, Integer> mapIngresos4) {
+		this.mapIngresos4 = mapIngresos4;
+	}
+
+	public Map<Integer, Integer> getMapTrabaja() {
+		return mapTrabaja;
+	}
+
+	public void setMapTrabaja(Map<Integer, Integer> mapTrabaja) {
+		this.mapTrabaja = mapTrabaja;
+	}
+
+	public Map<Integer, Integer> getMapNoTrabaja() {
+		return mapNoTrabaja;
+	}
+
+	public void setMapNoTrabaja(Map<Integer, Integer> mapNoTrabaja) {
+		this.mapNoTrabaja = mapNoTrabaja;
 	}
 
 }

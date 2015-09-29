@@ -23,6 +23,8 @@ public class Respuesta implements Serializable {
 	private int idPartido;
 	private int idLista;
 	private int edad;
+	private int ingresos;
+	private boolean trabaja;
 	
 	@Enumerated(EnumType.STRING)
 	private RespuestaGenero sexo;
@@ -97,5 +99,21 @@ public class Respuesta implements Serializable {
 	public void setEducacion(RespuestaEducacion educacion) {
 		this.educacion = educacion;
 	}
-   
+
+	public int getIngresos() {
+		return ingresos;
+	}
+
+	public void setIngresos(int ingresos) {
+		this.ingresos = ingresos;
+	}
+
+	public boolean isTrabaja() {
+		return trabaja;
+	}
+
+	public void setTrabaja(boolean trabaja) {
+		this.trabaja = trabaja;
+	}
+
 }

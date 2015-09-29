@@ -69,21 +69,11 @@ public class EncuestaHandler implements IEncuestaHandler {
 		
 		Eleccion eleccion = eleccionDAO.findEleccionById(dataEncuesta.getIdEleccion());
 		
-		if(eleccion.getClass() == EleccionNacional.class){
-			Encuesta encuesta = new Encuesta();
-			encuesta.setNombre(dataEncuesta.getNombre());
-			encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
-			encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
-			encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
-			encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
-			encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
-			encuesta.setCantidadRespuestas(dataEncuesta.getCantidadRespuestas());
-			
-			encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+		if(eleccion.getClass() == EleccionNacional.class){						
+			Encuesta encuesta = dataToModel(dataEncuesta);			
 			encuesta.setEleccion(eleccion);
 			
-			// Asignar los candidatos a la encuesta si es una encuesta es x candidatos, o partidos en caso contrario.
-			
+			// Asignar los candidatos a la encuesta si es una encuesta es x candidatos, o partidos en caso contrario.			
 			if(dataEncuesta.isPorCandidato()){
 				//Busco todos los canidatos de esa encuesta
 				for (Candidato candidatoJustID : eleccion.getCandidatos()) {
@@ -93,12 +83,7 @@ public class EncuestaHandler implements IEncuestaHandler {
 						candidato.getEncuestas().add(encuesta);
 						encuesta.getCandidatos().add(candidato);
 					}					
-					/*no pude usar esto xq tenia q acceder a otro campo del candidato (getCargo)*/
-//					encuesta.getCandidatos().add(candidatoJustID);
-//					candidatoJustID.getEncuestas().add(encuesta);
-				}
-				
-				
+				}				
 			}else{
 				for (Partido partidoJustID : eleccion.getPartidos()) {
 //					Partido partido = partidoDAO.findPartidoById(partidoJustID.getId());
@@ -114,18 +99,9 @@ public class EncuestaHandler implements IEncuestaHandler {
 			if(eleccion.getClass() == EleccionDepartamental.class){
 				boolean retorno = true;
 				for (DataDepartamento data : dataEncuesta.getListaEncuestaDeptos()) {
-					Encuesta encuesta = new Encuesta();
-					encuesta.setNombre(dataEncuesta.getNombre());
-					encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
-					encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
-					encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
-					encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
-					encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
-					
-					encuesta.setCantidadRespuestas(data.getCantidadRespuestas());
-					encuesta.setNombreDepartamento(data.getNombre());
-					
-					encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+					Encuesta encuesta = dataToModel(dataEncuesta);										
+					encuesta.setCantidadRespuestas(data.getCantidadRespuestas()); //Sobrescribe setCantidadRespuestas de dataToModel
+					encuesta.setNombreDepartamento(data.getNombre());					
 					encuesta.setEleccion(eleccion);
 					
 					/*Se debe buscar todos los candidatos (o partidos) por el departamento data.getNombre
@@ -174,22 +150,13 @@ public class EncuestaHandler implements IEncuestaHandler {
 						
 					}
 					
-					retorno = retorno && encuestaDAO.crearEncuesta(encuesta);
+					retorno = retorno && encuestaDAO.crearEncuesta(encuesta); /*Cuidado: se pueden dar de alta algunas encuestas aunque exista un error*/
 				}
 				
 				return retorno;
 			}else{
 				//eleccion.getClass() == EleccionOtro.class				
-				Encuesta encuesta = new Encuesta();
-				encuesta.setNombre(dataEncuesta.getNombre());
-				encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
-				encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
-				encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
-				encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
-				encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
-				encuesta.setCantidadRespuestas(dataEncuesta.getCantidadRespuestas());
-				
-				encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+				Encuesta encuesta = dataToModel(dataEncuesta);				
 				encuesta.setEleccion(eleccion);
 				
 				for (Candidato candidatoJustID : eleccion.getCandidatos()) {
@@ -204,7 +171,7 @@ public class EncuestaHandler implements IEncuestaHandler {
 			
 		}
 		
-	}
+	}	
 
 	@Override
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -225,8 +192,6 @@ public class EncuestaHandler implements IEncuestaHandler {
 		
 		
 	}
-
-
 	
 
 	@Override
@@ -354,6 +319,24 @@ public class EncuestaHandler implements IEncuestaHandler {
 	/*****************                    ********************/
 	/*********************************************************/
 	/*********************************************************/
+	
+	private Encuesta dataToModel(DataEncuesta dataEncuesta) {
+		Encuesta encuesta = new Encuesta();
+		encuesta.setNombre(dataEncuesta.getNombre());
+		encuesta.setPorCandidato(dataEncuesta.isPorCandidato());
+		encuesta.setPreguntarEdad(dataEncuesta.isPreguntarEdad());
+		encuesta.setPreguntarLista(dataEncuesta.isPreguntarLista());
+		encuesta.setPreguntarNivelEstudio(dataEncuesta.isPreguntarNivelEstudio());
+		encuesta.setPreguntarSexo(dataEncuesta.isPreguntarSexo());
+		encuesta.setPreguntarSiTrabaja(dataEncuesta.isPreguntarSiTrabaja());
+		encuesta.setPreguntarIngresos(dataEncuesta.isPreguntarIngresos());
+		
+		encuesta.setCantidadRespuestas(dataEncuesta.getCantidadRespuestas());		
+		encuesta.setConsultora(consultoraDAO.findConsultoraById(dataEncuesta.getIdConsultora()));
+		
+		return encuesta;
+	}	
+	
 	private void asignarListas(Encuesta encuesta, DataCandidato data) {
 		
 		List<Lista> listas = listaDAO.getListasByIdCandidato(data.getId());
@@ -411,6 +394,8 @@ public class EncuestaHandler implements IEncuestaHandler {
 			dataEncuesta.setPreguntarLista(encuesta.isPreguntarLista());
 			dataEncuesta.setPreguntarNivelEstudio(encuesta.isPreguntarNivelEstudio());
 			dataEncuesta.setPreguntarSexo(encuesta.isPreguntarSexo());
+			dataEncuesta.setPreguntarSiTrabaja(encuesta.isPreguntarSiTrabaja());
+			dataEncuesta.setPreguntarIngresos(encuesta.isPreguntarIngresos());
 			
 			//Aca se podria cambiar el nombre para que no sea necesario cambiarlo en la vista
 			if(encuesta.getEleccion().getClass() == EleccionDepartamental.class)
@@ -514,6 +499,11 @@ public class EncuestaHandler implements IEncuestaHandler {
 					if(dataEncuesta.isPreguntarSexo()){
 						setGeneroResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, candidato.getId());
 					}
+					
+					if(dataEncuesta.isPreguntarIngresos())
+						setIngresosResultado(dataEncuesta.isPorCandidato(), dataResultado, respuestas, candidato.getId());
+					if(dataEncuesta.isPreguntarSiTrabaja())
+						setTrabajaResultado(dataEncuesta.isPorCandidato(), dataResultado, respuestas, candidato.getId());
 				}
 				
 			} else {/*Es x Partido*/
@@ -539,10 +529,70 @@ public class EncuestaHandler implements IEncuestaHandler {
 					if(dataEncuesta.isPreguntarSexo()){
 						setGeneroResultado(dataEncuesta.isPorCandidato() , dataResultado, respuestas, partido.getId());
 					}
+					if(dataEncuesta.isPreguntarIngresos())
+						setIngresosResultado(dataEncuesta.isPorCandidato(), dataResultado, respuestas, partido.getId());
+					if(dataEncuesta.isPreguntarSiTrabaja())
+						setTrabajaResultado(dataEncuesta.isPorCandidato(), dataResultado, respuestas, partido.getId());
 				}
 			}			
 
 		}
+		
+	}
+
+	private void setTrabajaResultado(boolean porCandidato, DataResultado dataResultado, List<Respuesta> respuestas, int id) {
+		int cantidadTrabaja = 0;
+		int cantidadNoTrabaja = 0;
+		
+		for (Respuesta respuesta : respuestas) {
+			int idActual = 0;
+			if (porCandidato)
+				idActual = respuesta.getIdCandidato();
+			else
+				idActual = respuesta.getIdPartido();
+			
+			if(idActual == id){
+				if(respuesta.isTrabaja())
+					cantidadTrabaja++;
+				else
+					cantidadNoTrabaja++;
+			}
+		}
+		
+		dataResultado.getMapTrabaja().put(id, cantidadTrabaja);
+		dataResultado.getMapNoTrabaja().put(id, cantidadNoTrabaja);		
+		
+	}
+
+	private void setIngresosResultado(boolean porCandidato, DataResultado dataResultado, List<Respuesta> respuestas, int id) {
+		
+		int cantidadIngresos1 = 0, cantidadIngresos2 = 0, cantidadIngresos3 = 0, cantidadIngresos4 = 0;
+		
+		for (Respuesta respuesta : respuestas) {
+			int idActual = 0;
+			if (porCandidato)
+				idActual = respuesta.getIdCandidato();
+			else
+				idActual = respuesta.getIdPartido();
+			
+			if(idActual == id){
+				int ingresos = respuesta.getIngresos();
+				if(ingresos < 10000)
+					cantidadIngresos1++;
+				else if (ingresos < 21365)
+					cantidadIngresos2++;
+				else if (ingresos < 40000)
+					cantidadIngresos3++;
+				else
+					cantidadIngresos4++;
+			}
+			
+		}
+		
+		dataResultado.getMapIngresos1().put(id, cantidadIngresos1);
+		dataResultado.getMapIngresos2().put(id, cantidadIngresos2);
+		dataResultado.getMapIngresos3().put(id, cantidadIngresos3);
+		dataResultado.getMapIngresos4().put(id, cantidadIngresos4);
 		
 	}
 
@@ -551,46 +601,29 @@ public class EncuestaHandler implements IEncuestaHandler {
 		int cantidadFem = 0;
 		int cantidadMas = 0;
 		int cantidadOtro = 0;
-		
-		if(porCandidato){
-			for (Respuesta respuesta : respuestas) {
-				if(respuesta.getIdCandidato() == id){
-					switch (respuesta.getSexo()) {
-						case Femenino:
-							cantidadFem++;
-							break;
-						case Masculino:
-							cantidadMas++;
-							break;
-						case Otro:
-							cantidadOtro++;
-							break;
 
-						default:
-							break;
-					}
-						
-				}
-			}
-		}else{
-			for (Respuesta respuesta : respuestas) {
-				if(respuesta.getIdPartido() == id){
-					switch (respuesta.getSexo()) {
-						case Femenino:
-							cantidadFem++;
-							break;
-						case Masculino:
-							cantidadMas++;
-							break;
-						case Otro:
-							cantidadOtro++;
-							break;
+		for (Respuesta respuesta : respuestas) {
+			int idActual = 0;
+			if (porCandidato)
+				idActual = respuesta.getIdCandidato();
+			else
+				idActual = respuesta.getIdPartido();
+			if (idActual == id) {
+				switch (respuesta.getSexo()) {
+					case Femenino:
+						cantidadFem++;
+						break;
+					case Masculino:
+						cantidadMas++;
+						break;
+					case Otro:
+						cantidadOtro++;
+						break;
 
-						default:
-							break;
-					}
-						
+					default:
+						break;
 				}
+
 			}
 		}
 		
@@ -606,42 +639,26 @@ public class EncuestaHandler implements IEncuestaHandler {
 		int cantidad24a30 = 0;
 		int cantidad31a50 = 0;
 		int cantidad51omas = 0;
-		
-		if (porCandidato){
-			for (Respuesta respuesta : respuestas) {
-				if(respuesta.getIdCandidato() == idSeleccionado){
-					int edad = respuesta.getEdad();
-					if(edad < 24)
-						cantidad18a23++;
-					else
-						if(edad < 31)
-							cantidad24a30++;
-						else
-							if(edad < 51)
-								cantidad31a50++;
-							else
-								cantidad51omas++;
-				}
+
+		for (Respuesta respuesta : respuestas) {
+			int idActual = 0;
+			if (porCandidato)
+				idActual = respuesta.getIdCandidato();
+			else
+				idActual = respuesta.getIdPartido();
+			if (idActual == idSeleccionado) {
+				int edad = respuesta.getEdad();
+				if (edad < 24)
+					cantidad18a23++;
+				else if (edad < 31)
+					cantidad24a30++;
+				else if (edad < 51)
+					cantidad31a50++;
+				else
+					cantidad51omas++;
 			}
-		}else{
-			
-			for (Respuesta respuesta : respuestas) {
-				if(respuesta.getIdPartido() == idSeleccionado){
-					int edad = respuesta.getEdad();
-					if(edad < 24)
-						cantidad18a23++;
-					else
-						if(edad < 31)
-							cantidad24a30++;
-						else
-							if(edad < 51)
-								cantidad31a50++;
-							else
-								cantidad51omas++;
-				}
-			}			
 		}
-		
+
 		dataResultado.getMapEdad18a23().put(idSeleccionado, cantidad18a23);
 		dataResultado.getMapEdad24a30().put(idSeleccionado, cantidad24a30);
 		dataResultado.getMapEdad31a50().put(idSeleccionado, cantidad31a50);
@@ -653,55 +670,33 @@ public class EncuestaHandler implements IEncuestaHandler {
 		int cantidadSecundaria = 0;
 		int cantidadTerciario = 0;
 		int cantidadNoSabe = 0;		
-		
-		if (porCandidato) {
-			for (Respuesta respuesta : respuestas) {
-				
-				if (respuesta.getIdCandidato() == idSeleccionado) {
-					switch (respuesta.getEducacion()) {
-						case Primaria:
-							cantidadPrimaria++;
-							break;
-						case Secundaria:
-							cantidadSecundaria++;
-							break;
-						case Terciaria:
-							cantidadTerciario++;
-							break;
 
-						default:
-							cantidadNoSabe++;
-							break;
-					}
+		for (Respuesta respuesta : respuestas) {
+			int idActual = 0;
+			if (porCandidato)
+				idActual = respuesta.getIdCandidato();
+			else
+				idActual = respuesta.getIdPartido();
+			if (idActual == idSeleccionado) {
+				switch (respuesta.getEducacion()) {
+					case Primaria:
+						cantidadPrimaria++;
+						break;
+					case Secundaria:
+						cantidadSecundaria++;
+						break;
+					case Terciaria:
+						cantidadTerciario++;
+						break;
 
-				}				
-
-			}
-		} else { /* es por partido */
-			
-			for (Respuesta respuesta : respuestas) {
-
-				if (respuesta.getIdPartido() == idSeleccionado) {
-					switch (respuesta.getEducacion()) {
-						case Primaria:
-							cantidadPrimaria++;
-							break;
-						case Secundaria:
-							cantidadSecundaria++;
-							break;
-						case Terciaria:
-							cantidadTerciario++;
-							break;
-
-						default:
-							cantidadNoSabe++;
-							break;
-					}
-
+					default:
+						cantidadNoSabe++;
+						break;
 				}
 
 			}
-		}
+
+		}		
 		
 		dataResultado.getMapNivelEstudioPrimaria().put(idSeleccionado, cantidadPrimaria);
 		dataResultado.getMapNivelEstudioSecundaria().put(idSeleccionado, cantidadSecundaria);
