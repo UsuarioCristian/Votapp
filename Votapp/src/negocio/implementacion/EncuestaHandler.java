@@ -476,7 +476,11 @@ public class EncuestaHandler implements IEncuestaHandler {
 			dataEncuesta.setResultado(dataResultado);
 			List<Respuesta> respuestas = encuestaDAO.getRespuestas(dataEncuesta.getId());
 			
+			addVotoBlanco(dataEncuesta);
+			addVotoNoSabe(dataEncuesta);
+			
 			if (dataEncuesta.isPorCandidato()) {
+				
 				for (DataCandidato candidato : dataEncuesta.getDataCandidatos()) {
 					int cantidad = 0;
 					for (Respuesta respuesta : respuestas) {
@@ -536,6 +540,38 @@ public class EncuestaHandler implements IEncuestaHandler {
 				}
 			}			
 
+		}
+		
+	}
+
+	private void addVotoNoSabe(DataEncuesta dataEncuesta) {
+		/*Agrega un data que simboliza a un voto "no sabe" (tiene id = -1) */
+		if(dataEncuesta.isPorCandidato()){
+			DataCandidato candidato = new DataCandidato();
+			candidato.setId(-1);
+			candidato.setNombre("No sabe");
+			dataEncuesta.getDataCandidatos().add(candidato);
+		}else{
+			DataPartido partido = new DataPartido();
+			partido.setId(-1);
+			partido.setNombre("No sabe");
+			dataEncuesta.getDataPartidos().add(partido);
+		}
+		
+	}
+
+	private void addVotoBlanco(DataEncuesta dataEncuesta) {
+		/*Agrega un data que simboliza a un voto en blanco (tiene id = 0) */
+		if(dataEncuesta.isPorCandidato()){
+			DataCandidato candidato = new DataCandidato();
+			candidato.setId(0);
+			candidato.setNombre("Voto en Blanco");
+			dataEncuesta.getDataCandidatos().add(candidato);
+		}else{
+			DataPartido partido = new DataPartido();
+			partido.setId(0);
+			partido.setNombre("Voto en Blanco");
+			dataEncuesta.getDataPartidos().add(partido);
 		}
 		
 	}
