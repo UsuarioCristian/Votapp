@@ -14,6 +14,7 @@ public class DataConsultora implements Serializable{
 	
 	private String nombreAdminConsultora;
 	private String passAdminConsultora;
+	private String email;
 	
 	public int getId() {
 		return id;
@@ -52,6 +53,14 @@ public class DataConsultora implements Serializable{
 
 	public void setPassAdminConsultora(String passAdminConsultora) {
 		this.passAdminConsultora = passAdminConsultora;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

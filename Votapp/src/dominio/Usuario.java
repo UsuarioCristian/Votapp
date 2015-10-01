@@ -23,6 +23,7 @@ public class Usuario implements Serializable {
 	protected int id;
 	protected String username;
     protected String password;
+    protected String email;
 
     public int getId() {
 		return id;
@@ -47,6 +48,14 @@ public class Usuario implements Serializable {
     public void setPassword(String lastName) {
         this.password = lastName;
     }
+    
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
     
 	@Override
 	public String toString() {

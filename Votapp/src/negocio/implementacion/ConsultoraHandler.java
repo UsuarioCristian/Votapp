@@ -20,6 +20,7 @@ import dominio.AdminConsultora;
 import dominio.Consultora;
 import dominio.Emergencia;
 import dominio.Encuestador;
+import utiles.EnviarMail;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
@@ -35,11 +36,17 @@ public class ConsultoraHandler implements IConsultoraHandler {
 	public boolean altaConsultora(DataConsultora dataConsultora) {
 		if(usuarioDAO.findUsuario(dataConsultora.getNombre()) == null){
 			Consultora consultora = new Consultora();
+			EnviarMail mail = new EnviarMail();
+			
+			mail.enviarMail(dataConsultora.getEmail(), dataConsultora.getNombreAdminConsultora(), dataConsultora.getPassAdminConsultora());
 			AdminConsultora adminConsultora = new AdminConsultora();
 			
 			consultora.setNombre(dataConsultora.getNombre());
 			consultora.setDescripcion(dataConsultora.getDescripcion());
 			
+			
+			
+			adminConsultora.setEmail(dataConsultora.getEmail());		
 			adminConsultora.setUsername(dataConsultora.getNombreAdminConsultora());
 			adminConsultora.setPassword(dataConsultora.getPassAdminConsultora());
 			adminConsultora.setConsultora(consultora);

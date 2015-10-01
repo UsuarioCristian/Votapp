@@ -9,6 +9,8 @@ public class DataUsuario implements Serializable {
 	private int id;
 	private String username;
 	private String password;
+	private String email;
+	
 	
 	//datos para el usuario Encuestador
 	private int consultoraID;
@@ -48,6 +50,14 @@ public class DataUsuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario[" + this.id + "]";
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }
