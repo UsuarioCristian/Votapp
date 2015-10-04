@@ -21,5 +21,9 @@ public interface IConsultoraHandler {
 	public boolean notificarEmergencia(DataEmergencia data);
 
 	public boolean thereANewEmergency(int idConsultora);
+	
+	public boolean enviarMailConsultora (DataConsultora dataConsultora);
+
+	public void actuaizarCelular(DataUsuario dataUsuario);
 
 }

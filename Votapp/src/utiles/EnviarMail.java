@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EnviarMail {
 
-	public void enviarMail(String mail, String nombre, String pass) {
+	public boolean enviarMail(String mail, String nombre, String pass) {
 		Properties props = new Properties();
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.socketFactory.port", "465");
@@ -30,22 +30,26 @@ public class EnviarMail {
 
 		try {
 
-			Message message = new MimeMessage(session);
+			//Message message = new MimeMessage(session);
+			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("Votapp"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(mail));
 			message.setSubject("¡Bienvenido a VotappConsutltoras!");
-			message.setText("¡Bienvenido a VotappConsultoras!," +
+			message.setText(
+					"¡Bienvenido a VotappConsultoras!,"+
 					"\n\n Aqui tiene sus credenciales para iniciar sesión en la plataforma:"+
 					"\n\n Nombre: "+ nombre + 
-					"\n\n" + "Contraseña:" + pass );
-
+					"\n\n" + "Contraseña:" + pass, "utf-8", "html" );
+			
 			Transport.send(message);
 
-			System.out.println("Done");
+			return true;
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace(); 
+			return false;
+			
 		}
 	
 	}

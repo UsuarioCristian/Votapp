@@ -20,6 +20,7 @@ import dominio.AdminConsultora;
 import dominio.Consultora;
 import dominio.Emergencia;
 import dominio.Encuestador;
+import dominio.Usuario;
 import utiles.EnviarMail;
 
 @Stateless
@@ -36,16 +37,12 @@ public class ConsultoraHandler implements IConsultoraHandler {
 	public boolean altaConsultora(DataConsultora dataConsultora) {
 		if(usuarioDAO.findUsuario(dataConsultora.getNombre()) == null){
 			Consultora consultora = new Consultora();
-			EnviarMail mail = new EnviarMail();
 			
-			mail.enviarMail(dataConsultora.getEmail(), dataConsultora.getNombreAdminConsultora(), dataConsultora.getPassAdminConsultora());
 			AdminConsultora adminConsultora = new AdminConsultora();
 			
 			consultora.setNombre(dataConsultora.getNombre());
 			consultora.setDescripcion(dataConsultora.getDescripcion());
-			
-			
-			
+				
 			adminConsultora.setEmail(dataConsultora.getEmail());		
 			adminConsultora.setUsername(dataConsultora.getNombreAdminConsultora());
 			adminConsultora.setPassword(dataConsultora.getPassAdminConsultora());
@@ -152,4 +149,20 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		return nueva;
 	}
 
+
+	@Override
+	public boolean enviarMailConsultora(DataConsultora dataConsultora) {
+		EnviarMail mail = new EnviarMail();
+		return mail.enviarMail(dataConsultora.getEmail(), dataConsultora.getNombreAdminConsultora(), dataConsultora.getPassAdminConsultora());
+	}
+
+
+	@Override
+	public void actuaizarCelular(DataUsuario dataUsuario) {
+		Usuario user = usuarioDAO.findUsuario(dataUsuario.getUsername());
+		if (user!=null){
+			user.setCelular(dataUsuario.getCelular());
+		}
+		usuarioDAO.actualizarUsuario(user);
+	}
 }

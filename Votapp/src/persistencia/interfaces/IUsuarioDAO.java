@@ -9,5 +9,6 @@ public interface IUsuarioDAO {
 	public Usuario findUsuarioById(int id);
 	public boolean crearUsuario(Usuario user);
 	public Usuario findUsuario(String username);
+	public void actualizarUsuario (Usuario user);
 	
 }

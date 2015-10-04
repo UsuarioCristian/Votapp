@@ -28,9 +28,19 @@ public interface ConsultoraService {
 	public Response crear(DataConsultora dataConsultora);
 	
 	@POST
+	@Path("/protected/enviarMailConsultora")
+	@Consumes("application/json")
+	public Response enviarMailConsultora(DataConsultora dataConsultora);
+	
+	@POST
 	@Path("/protected/crearEncuestador")
 	@Consumes("application/json")
 	public Response crearEncuestador(DataUsuario dataUsuario);
+
+	@POST
+	@Path("/protected/actualizarCelular")
+	@Consumes("application/json")
+	public Response actualizarCelular(DataUsuario dataUsuario);
 	
 	@GET
 	@Path("/protected/getAllEmergencias/{id}")

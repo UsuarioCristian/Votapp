@@ -55,4 +55,17 @@ public class UsuarioDAO implements IUsuarioDAO {
 		return null;
 	}
 
+
+	@Override
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void actualizarUsuario(Usuario user) {
+		try {
+			em.merge(user);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }

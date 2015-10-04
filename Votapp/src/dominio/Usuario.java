@@ -24,6 +24,7 @@ public class Usuario implements Serializable {
 	protected String username;
     protected String password;
     protected String email;
+    protected String celular;
 
     public int getId() {
 		return id;
@@ -57,6 +58,14 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
     
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario[" + this.id + "]";

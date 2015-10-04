@@ -10,6 +10,7 @@ public class DataUsuario implements Serializable {
 	private String username;
 	private String password;
 	private String email;
+	private String celular;
 	
 	
 	//datos para el usuario Encuestador
@@ -52,6 +53,15 @@ public class DataUsuario implements Serializable {
 		return "Usuario[" + this.id + "]";
 	}
 	
+	
+	public String getCelular() {
+		return celular;
+	}
+
+	public void setCelular(String celular) {
+		this.celular = celular;
+	}
+
 	public String getEmail() {
 		return email;
 	}

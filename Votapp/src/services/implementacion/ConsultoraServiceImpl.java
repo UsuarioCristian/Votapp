@@ -85,4 +85,16 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 			return Response.ok(false).build();
 	}
 
+	@Override
+	public Response enviarMailConsultora(DataConsultora dataConsultora) {		
+		consultoraHandler.enviarMailConsultora(dataConsultora);
+		return null;
+	}
+
+	@Override
+	public Response actualizarCelular(DataUsuario dataUsuario) {		
+		consultoraHandler.actuaizarCelular(dataUsuario);
+		return null;
+	}
+	
 }
