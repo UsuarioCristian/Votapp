@@ -16,6 +16,8 @@ public class DataRespuesta implements Serializable {
 	private int edad;
 	private RespuestaGenero sexo;
 	private RespuestaEducacion nivelEstudio;
+	private boolean trabaja;
+	private int ingresos;
 	
 	public DataRespuesta() { }
 	
@@ -81,6 +83,22 @@ public class DataRespuesta implements Serializable {
 
 	public void setNivelEstudio(RespuestaEducacion nivelEstudio) {
 		this.nivelEstudio = nivelEstudio;
+	}
+
+	public boolean isTrabaja() {
+		return trabaja;
+	}
+
+	public void setTrabaja(boolean trabaja) {
+		this.trabaja = trabaja;
+	}
+
+	public int getIngresos() {
+		return ingresos;
+	}
+
+	public void setIngresos(int ingresos) {
+		this.ingresos = ingresos;
 	}
 
 }

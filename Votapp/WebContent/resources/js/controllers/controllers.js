@@ -248,7 +248,19 @@ angular.module("app.controllers",[])
 	function link(scope, element, attrs) {
 		var url = scope.fuente.url;
 //		'<iframe ng-transclude id="ytplayer" type="text/html" width="100%" height="100%" src="http://www.youtube.com/embed?listType=user_uploads&list='+url+'" frameborder="0"></iframe>');
-		element.append('<a class="twitter-timeline" href="https://twitter.com/'+url+'" data-widget-id="628667478659452928">Tweets por el @'+url+'.</a>');
+		element.append('<a class="twitter-timeline" href="https://twitter.com/search?q='+url+'" data-widget-id="651184158891507712">Tweets sobre @'+url+'</a>');
+// <a class="twitter-timeline" href="https://twitter.com/search/'+url+'" data-widget-id="634154028415516673">Tweets por el @'+url+'.</a>
+//		twttr.widgets.load();
+		
+//		twttr.widgets.createTimeline(
+//				  '634154028415516673',
+//				  element,
+//				  {
+//				    width: '450',
+//				    height: '700',
+//				    related: url,
+//				  }
+//				);
 		twttr.widgets.load();
 	}
 	
