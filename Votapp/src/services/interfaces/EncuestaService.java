@@ -48,4 +48,9 @@ public interface EncuestaService {
 	@Produces({"application/json"})
 	public Response getEncuestasByIdEleccion(@PathParam("id") final int id);
 	
+	@GET
+	@Path("/protected/getEncuestasNoFinalizadasByIdConsultora/{id}")
+	@Produces({"application/json"})
+	public Response getEncuestasNoFinalizadasByIdConsultora(@PathParam("id") final int id);
+	
 }

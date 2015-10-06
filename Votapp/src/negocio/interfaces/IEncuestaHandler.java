@@ -22,4 +22,6 @@ public interface IEncuestaHandler {
 	public List<DataEncuesta> getEncuestasFinalizadasByIdConsultora(int id);
 
 	public List<DataEncuesta> getEncuestasByIdEleccion(int id);
+
+	public List<DataEncuesta> getEncuestasNoFinalizadasByIdConsultora(int id);
 }

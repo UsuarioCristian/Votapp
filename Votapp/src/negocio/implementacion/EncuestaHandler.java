@@ -310,6 +310,31 @@ public class EncuestaHandler implements IEncuestaHandler {
 		
 	}
 	
+	@Override
+	public List<DataEncuesta> getEncuestasNoFinalizadasByIdConsultora(int id) {
+		try {
+			/*Obtengo las encuestas de dicha consultora*/
+			List<Encuesta> encuestasAll = encuestaDAO.getEncuestasByIdConsultora(id);
+			
+			/*Quito las que estan finalizadas*/
+			List<Encuesta> encuestas = new ArrayList<Encuesta>();
+			for (Encuesta encuesta : encuestasAll) {
+				if(!encuesta.isFinalizada())
+					encuestas.add(encuesta);
+										
+			}			
+			
+			/*Transformo las encuestas en dataEncuestas*/
+			List<DataEncuesta> dataEncuestasRetorno = createListDataEncuestas(encuestas);
+			
+			setResultadoEncuesta(dataEncuestasRetorno);			
+			return dataEncuestasRetorno;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	
 
 	/*********************************************************/
