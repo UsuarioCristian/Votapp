@@ -24,23 +24,9 @@ import services.interfaces.ConsultoraService;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ConsultoraServiceImpl implements ConsultoraService{
 	
-	@EJB
-	IConsultoraDAO consultoraDAO;
-	
+		
 	@EJB
 	IConsultoraHandler consultoraHandler;
-
-	@Transactional
-	@TransactionAttribute(TransactionAttributeType.REQUIRED)
-	@Override
-	public Response findById(int id) {
-		Consultora consultora = consultoraDAO.findConsultoraById(id);
-		if (consultora==null){
-			return Response.status(Status.NOT_FOUND).build();
-		}
-		
-		return Response.ok(consultora).build();
-	}
 
 	@Override
 	public Response crear(DataConsultora dataConsultora) {
@@ -95,6 +81,14 @@ public class ConsultoraServiceImpl implements ConsultoraService{
 	public Response actualizarCelular(DataUsuario dataUsuario) {		
 		consultoraHandler.actuaizarCelular(dataUsuario);
 		return null;
+	}
+
+	@Override
+	public Response existeUsuario(String username) {
+		if(consultoraHandler.existeUsuario(username))
+			return Response.ok(true).build();
+		else
+			return Response.ok(false).build();
 	}
 	
 }

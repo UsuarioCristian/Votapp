@@ -26,4 +26,6 @@ public interface IConsultoraHandler {
 
 	public void actuaizarCelular(DataUsuario dataUsuario);
 
+	public boolean existeUsuario(String username);
+
 }

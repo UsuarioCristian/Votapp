@@ -16,11 +16,7 @@ import datas.DataUsuario;
 @RequestScoped
 @Path("/consultoras")
 public interface ConsultoraService {
-	
-	@GET
-	@Path("/{id}")
-	@Produces({"application/json"})
-	public Response findById(@PathParam("id") final int id);
+
 	
 	@POST
 	@Path("/protected/crear")
@@ -58,5 +54,11 @@ public interface ConsultoraService {
 	@Consumes("application/json")
 	@Produces({"application/json"})
 	public Response thereANewEmergency(@PathParam("id") final int id);
+	
+	@POST
+	@Path("/protected/existeUsuario")
+	@Consumes("application/json")
+	@Produces({"application/json"})
+	public Response existeUsuario(String username);
 	
 }

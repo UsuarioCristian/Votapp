@@ -165,4 +165,13 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		}
 		usuarioDAO.actualizarUsuario(user);
 	}
+
+
+	@Override
+	public boolean existeUsuario(String username) {
+		Usuario user = usuarioDAO.findUsuario(username);
+		if(user != null)
+			return true;
+		return false;
+	}
 }
