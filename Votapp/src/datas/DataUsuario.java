@@ -11,8 +11,17 @@ public class DataUsuario implements Serializable {
 	private String password;
 	private String email;
 	private String celular;
+	private String nombreEncuestador;
 	
 	
+	public String getNombreEncuestador() {
+		return nombreEncuestador;
+	}
+
+	public void setNombreEncuestador(String nombreEncuestador) {
+		this.nombreEncuestador = nombreEncuestador;
+	}
+
 	//datos para el usuario Encuestador
 	private int consultoraID;
 
