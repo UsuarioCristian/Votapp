@@ -13,6 +13,8 @@ public class Encuestador extends Usuario {
 	
 	private static final long serialVersionUID = 1L;
 	
+	protected String nombreEncuestador;
+	
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	private Consultora consultora;
 	
@@ -38,5 +40,15 @@ public class Encuestador extends Usuario {
 	public void setEmergencias(Set<Emergencia> emergencias) {
 		this.emergencias = emergencias;
 	}
+
+	public String getNombreEncuestador() {
+		return nombreEncuestador;
+	}
+
+	public void setNombreEncuestador(String nombreEncuestador) {
+		this.nombreEncuestador = nombreEncuestador;
+	}
+	
+	 
 	
 }

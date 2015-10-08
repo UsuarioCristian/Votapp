@@ -69,6 +69,7 @@ public class ConsultoraHandler implements IConsultoraHandler {
 			
 			encuestador.setUsername(dataUsuario.getUsername());
 			encuestador.setPassword(dataUsuario.getPassword());
+			encuestador.setNombreEncuestador(dataUsuario.getNombreEncuestador());
 			encuestador.setConsultora(consultora);
 			
 			consultora.getEncuestadores().add(encuestador);
