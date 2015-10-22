@@ -1,23 +1,22 @@
 <style type="text/css" votapp-style eleccion="eleccion"></style>
-<div class="row eleccion-container eleccion-nombre">
+<div class="row eleccion-container">
 
 <div ng-include src="'layout/header.html'"></div>
 
-<div id="first">
-	 <div style="width: 10%;margin: 0 auto;padding-top: 2%;">
-	         <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="140" height="140">
+<div id="first" class="first eleccion-nombre">
+	 <div>
+	     <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}">
   	 </div>
-  	 
-  	 <div class="row" style="opacity: 0.9;color: black;">
-		<div class="col-md-8 info-eleccion-votapp">
+  	 <div class="row info-eleccion-votapp" >
+		<div class="col-md-8 ">
 				<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1>
 				<br><br>
-				<strong style="background-color: white;font-size: x-large;">Fecha: {{eleccion.fecha | date}}</strong>
+				<strong style="background-color: white;">Fecha: {{eleccion.fecha | date}}</strong>
 				<br>
-				<p style="background-color: white;font-size: x-large;">{{eleccion.descripcion}}</p>
+				<p style="background-color: white;">{{eleccion.descripcion}}</p>
 				<br>
-				<div  ng-show="eleccion.tipoEleccion == 'Departamental'" class="row" style="margin-left: auto;">
-				<div style="background-color: white;font-size: x-large;"><strong>Seleccione un departamento:</strong></div>
+				<div  ng-show="eleccion.tipoEleccion == 'Departamental'" class="row">
+				<div style="background-color: white;"><strong>Seleccione un departamento:</strong></div>
 				<div>
 		           	<select ng-options="depto.nombre for depto in deptos| orderBy:'nombre'" ng-model="depto"></select>
 						<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: depto.id})" role="button">Ver Info »</a></p>
@@ -31,7 +30,7 @@
 </div>		
 	
 
-<div id="second" ng-hide="eleccion.tipoEleccion == 'Departamental'">
+<div id="second" class="second" ng-hide="eleccion.tipoEleccion == 'Departamental'">
 
 	<div class="centrar">
 		<div class="container">
@@ -56,7 +55,7 @@
 	</div>
 </div>
 
-<div id="third"  ng-hide="eleccion.tipoEleccion == 'Otra' ||  eleccion.tipoEleccion == 'Departamental' || eleccion.tipoEleccion == 'Simple' ">
+<div id="third" class="third" ng-hide="eleccion.tipoEleccion == 'Otra' ||  eleccion.tipoEleccion == 'Departamental' || eleccion.tipoEleccion == 'Simple' ">
 	<div class="centrar">
 			<div class="container" style="backgroud-color:green;">
 			 <div class="col-lg-4" ng-repeat="partido in eleccion.dataPartidos" >
@@ -69,7 +68,7 @@
 	</div>
 </div>
 
- <div id="fourth" >
+ <div id="fourth" class="fourth" >
 	<div class="centrar">
 		<div class="container">
 			<span ng-repeat="encuesta in encuestas">
@@ -81,50 +80,39 @@
 		</div>
 </div> 
 
- <div id="fifth" >
-	
-		<div class="container">
-		
-			<div ng-repeat="fuen in noticias" ng-switch="fuen.tipo">
-			      <div ng-switch-when="facebook">
-			     	   	<div class="height-social facebook-container col-md-4">
-			     	   	<div class="header-social-votapp">
-			     	   		<i class="white-votapp fa fa-facebook fa-3x">
-			     	   		</i><span>Facebook</span>
-			     	   	</div>
-			     	   	<hr>
-			     	   	<div facebook-votapp fuente="fuen"></div>	 
-			     	   	
-			     	   	</div>
-				  </div>
-				  
-				  <div ng-switch-when="twitter">
-			       		<div class="height-social twitter-container col-md-4">
-			       		<div class="header-social-votapp">
-			       			<i class="white-votapp fa fa-twitter fa-3x">
-			     	   		</i><span>Twitter</span>
-			       		</div>
-			       		<hr>
-			       		<div twitter-votapp fuente="fuen"></div>
-  				  		
-  				  		</div>
-  				  </div>
-				  
-				  <div ng-switch-when="youtube">
-				  		<div class="height-social youtube-container col-md-4">
-				  		<div class="header-social-votapp">
-				  			<i class="white-votapp fa fa-youtube-play fa-3x">
-			     	   		</i><span>YouTube</span>
-				  		</div>
-				  		<hr>
-				  		<div youtube-votapp fuente="fuen"></div>
-			    		
-			    		</div>
-				  </div> 
+<div id="fifth" class="fifth" >
+	<div class="container noticias-votapp">
+		<div ng-repeat="fuen in noticias" ng-switch="fuen.tipo">
+		   	<div ng-switch-when="facebook">
+		  	   	<div class="height-social facebook-container col-md-4">
+		  	   	<div class="header-social-votapp">
+		  	   		<i class="white-votapp fa fa-facebook fa-3x">
+		  	   		</i><span>Facebook</span>
+		  	   	</div>
+		  	   	<hr>
+		  	   	<div facebook-votapp fuente="fuen"></div>	
+		  	   	</div>
+			</div>
+		  	<div ng-switch-when="twitter">
+	       		<div class="height-social twitter-container col-md-4">
+	       		<div class="header-social-votapp">
+	       			<i class="white-votapp fa fa-twitter fa-3x">
+	     	   		</i><span>Twitter</span>
+	       		</div>
+	       		<hr>
+	       		<div twitter-votapp fuente="fuen"></div>
+	  			</div>
+		  	</div>
+		  	<div ng-switch-when="youtube">
+		  		<div class="height-social youtube-container col-md-4">
+		  		<div class="header-social-votapp">
+		  			<i class="white-votapp fa fa-youtube-play fa-3x">
+	     	   		</i><span>YouTube</span>
+		  		</div>
+		  		<hr>
+		  		<div youtube-votapp fuente="fuen"></div>
+   			</div>
+		  </div> 
 		</div>
-		
-	
-			
-		</div>
-		
+	</div>	
 </div> 
