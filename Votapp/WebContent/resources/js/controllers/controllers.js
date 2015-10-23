@@ -373,10 +373,10 @@ angular.module("app.controllers",[])
 	
 	var encontre = false;
 	var i = 0;
-	while(!encontre && i<$scope.partido.dataDeptos.length){
-		if($scope.partido.dataDeptos[i].id == $stateParams.departamentoId){
+	while(!encontre && i<$scope.eleccion.deptos.length){
+		if($scope.eleccion.deptos[i].id == $stateParams.departamentoId){
 			encontre = true;
-			$scope.departamento = $scope.partido.dataDeptos[i];
+			$scope.departamento = $scope.eleccion.deptos[i];
 		}else
 			i++;
 	}
