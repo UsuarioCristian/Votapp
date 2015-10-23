@@ -49,6 +49,12 @@ angular.module('app', [
 		controller: 'partidoController'
 		});
 	
+	$stateProvider.state('partidoXDepto', {
+		url:'/eleccion/{eleccionId}/departamento/{departamentoId}/partido/{partidoId}/', 
+		templateUrl: 'views/partidoXDepto.html',
+		controller: 'partidoXDepto'
+		});
+	
 	$stateProvider.state('departamento', {
 		url:'/eleccion/{eleccionId}/departamento/{departamentoId}', 
 		templateUrl: 'views/departamento.html',

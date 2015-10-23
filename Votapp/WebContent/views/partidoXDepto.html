@@ -1,0 +1,55 @@
+<div ng-include src="'layout/headerSecundario.html'"></div>
+<style type="text/css" votapp-style eleccion="eleccion"></style>
+<div class="profile-bio"  style="padding-top:4em;">
+    <div class="row">
+        <div class="col-md-5">
+        	<img class="img-responsive md-margin-bottom-10"  ng-src="data:image/{{partido.imagen.tipo}};base64,{{partido.imagen.file}}" alt="{{partido.imagen.name}}" class="img-responsive">
+        </div>
+        <div class="col-md-7">
+            <h2>{{partido.nombre}}</h2>
+            <span><strong>Fecha Fundacion: </strong> {{partido.fechaFundacion | date}}</span>
+            <span><strong>Presidente: </strong> {{partido.presidente}}</span>
+            <span><strong>Listas: </strong> <div ng-repeat="lista in partido.listas">{{lista.numero}}</div></span>
+            <hr>
+            <p>{{partido.descripcion}}</p>
+        </div>
+    </div>    
+</div>
+
+	<div ng-repeat="fuen in fuentesNoticias" ng-switch="fuen.tipo">
+			      <div ng-switch-when="facebook">
+			     	   	<div class="height-social facebook-container col-md-4">
+			     	   	<div class="header-social-votapp">
+			     	   		<i class="white-votapp fa fa-facebook fa-3x">
+			     	   		</i><span>Facebook</span>
+			     	   	</div>
+			     	   	<hr>
+			     	   	<div facebook-votapp fuente="fuen"></div>	 
+			     	   	
+			     	   	</div>
+				  </div>
+				  
+				  <div ng-switch-when="twitter">
+			       		<div class="height-social twitter-container col-md-4">
+			       		<div class="header-social-votapp">
+			       			<i class="white-votapp fa fa-twitter fa-3x">
+			     	   		</i><span>Twitter</span>
+			       		</div>
+			       		<hr>
+			       		<div twitter-votapp fuente="fuen"></div>
+  				  		
+  				  		</div>
+  				  </div>
+				  
+				  <div ng-switch-when="youtube">
+				  		<div class="height-social youtube-container col-md-4">
+				  		<div class="header-social-votapp">
+				  			<i class="white-votapp fa fa-youtube-play fa-3x">
+			     	   		</i><span>YouTube</span>
+				  		</div>
+				  		<hr>
+				  		<div youtube-votapp fuente="fuen"></div>
+			    		
+			    		</div>
+				  </div> 
+		</div>
