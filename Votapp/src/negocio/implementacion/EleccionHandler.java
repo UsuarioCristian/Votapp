@@ -281,6 +281,10 @@ public class EleccionHandler implements IEleccionHandler {
 			dataDepartamento.setNombre(depto.getNombre());
 			dataDepartamento.setNumHabilitadosVotar(depto.getNumHabilitadosVotar());
 			dataDepartamento.setNumHabitantes(depto.getNumHabitantes());
+			Set<FuenteDatos> fuentes = depto.getFuenteDatos();			
+			for (FuenteDatos fuenteDatos : fuentes) {
+				dataDepartamento.getListaFuenteDatos().add(convertToData(fuenteDatos));
+			}
 			
 			for (Partido partido : depto.getPartidos()) {
 				dataDepartamento.getColeccionIdPartidos().add(partido.getId());
