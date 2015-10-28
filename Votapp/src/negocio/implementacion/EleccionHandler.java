@@ -54,11 +54,15 @@ public class EleccionHandler implements IEleccionHandler {
 		Eleccion eleccion = null;
 		Imagen imagen = null;
 		boolean paso1, paso2, paso3;
+		String css = data.getCss();
+		if (css == null) {
+			css = "";
+		}
 
 		switch (data.getTipoEleccion()) {
 			case Nacional:
 				eleccion = new EleccionNacional(data.getNombre(), data.getDescripcion(), data.getFecha());
-				eleccion.setCss(simplificarCss(data.getCss()));
+				eleccion.setCss(simplificarCss(css));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
@@ -79,7 +83,7 @@ public class EleccionHandler implements IEleccionHandler {
 			
 			case Departamental:
 				eleccion = new EleccionDepartamental(data.getNombre(), data.getDescripcion(), data.getFecha());
-				eleccion.setCss(simplificarCss(data.getCss()));
+				eleccion.setCss(simplificarCss(css));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
@@ -100,7 +104,7 @@ public class EleccionHandler implements IEleccionHandler {
 			
 			case Otra:
 				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha(), false);
-				eleccion.setCss(simplificarCss(data.getCss()));
+				eleccion.setCss(simplificarCss(css));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
@@ -119,7 +123,7 @@ public class EleccionHandler implements IEleccionHandler {
 			break;
 			case Simple:
 				eleccion = new EleccionOtro(data.getNombre(), data.getDescripcion(), data.getFecha(), true);
-				eleccion.setCss(simplificarCss(data.getCss()));
+				eleccion.setCss(simplificarCss(css));
 				
 				imagen = new Imagen();
 				imagen.setName(data.getLogo().getName());
