@@ -155,7 +155,23 @@ public class ConsultoraHandler implements IConsultoraHandler {
 	@Override
 	public boolean enviarMailConsultora(DataConsultora dataConsultora) {
 		EnviarMail mail = new EnviarMail();
-		return mail.enviarMail(dataConsultora.getEmail(), dataConsultora.getNombreAdminConsultora(), dataConsultora.getPassAdminConsultora());
+		boolean retorno = false;
+		
+		try {
+			retorno = mail.enviarMensajeConAuth("smtp.gmail.com", 587, "votapp15@gmail.com", "giordano1132@gmail.com", "Votapp2015",
+		    		"¡Bienvenido a VotappConsultoras!", 
+		    		"¡Bienvenido a VotappConsultoras!"+"\n"+"\n"+
+		    		"Aqui tiene sus credenciales para iniciar sesión en la plataforma: "+"\n"+"\n"+
+		    		"Nombre: "+ dataConsultora.getNombreAdminConsultora()+ "\n"+
+					"Contraseña:" + dataConsultora.getPassAdminConsultora());
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return retorno;
+		
+
 	}
 
 
