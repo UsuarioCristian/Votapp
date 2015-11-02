@@ -158,7 +158,7 @@ public class ConsultoraHandler implements IConsultoraHandler {
 		boolean retorno = false;
 		
 		try {
-			retorno = mail.enviarMensajeConAuth("smtp.gmail.com", 587, "votapp15@gmail.com", "giordano1132@gmail.com", "Votapp2015",
+			retorno = mail.enviarMensajeConAuth("smtp.gmail.com", 587, "votapp15@gmail.com", dataConsultora.getEmail(), "Votapp2015",
 		    		"¡Bienvenido a VotappConsultoras!", 
 		    		"¡Bienvenido a VotappConsultoras!"+"\n"+"\n"+
 		    		"Aqui tiene sus credenciales para iniciar sesión en la plataforma: "+"\n"+"\n"+
