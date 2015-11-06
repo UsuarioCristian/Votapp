@@ -361,9 +361,10 @@ angular.module("app.controllers",[])
 	$scope.candidatosXDepto = [];
 	
 	for (var x=0;x<$scope.eleccion.dataCandidatos.length;x++){
+		console.log("Esto essssssssssssss: "+$scope.eleccion.dataCandidatos[x].idDepto);
 		if($scope.eleccion.dataCandidatos[x].idDepto == $stateParams.departamentoId){
 			$scope.candidatosXDepto.push($scope.eleccion.dataCandidatos[x]);
-
+			console.log("ALGO: "+$scope.candidatosXDepto.length);
 		}
 	
 	}
@@ -386,6 +387,55 @@ angular.module("app.controllers",[])
 				
 	}	
 
+}])
+
+.controller("partidoXDepto", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
+	$scope.elecciones = store.get('elecciones');
+	//Buscar la eleccion con el id que viene x url
+	var encontre = false;
+	var i = 0;
+	while(!encontre && i < $scope.elecciones.length){
+		if($scope.elecciones[i].id == $stateParams.eleccionId){
+			encontre = true;
+			$scope.eleccion = $scope.elecciones[i];			
+
+		}else{
+			i++;
+		}
+	}
+	var encontre = false;
+	var i = 0;
+	while(!encontre && i<$scope.eleccion.dataPartidos.length){
+		if($stateParams.partidoId == $scope.eleccion.dataPartidos[i].id){
+			encontre = true;
+			$scope.partido = $scope.eleccion.dataPartidos[i];
+		}else
+			i++;
+	}
+	
+	var encontre = false;
+	var i = 0;
+	while(!encontre && i<$scope.eleccion.deptos.length){
+		if($scope.eleccion.deptos[i].id == $stateParams.departamentoId){
+			encontre = true;
+			$scope.departamento = $scope.eleccion.deptos[i];
+		}else
+			i++;
+	}
+	
+	$scope.fuentesNoticias = [];
+	
+	for(var x=0;x<$scope.partido.dataFuenteDatos.length;x++){
+		for(var y=0;y<$scope.departamento.listaFuenteDatos.length;y++){
+				if ($scope.partido.dataFuenteDatos[x].id == $scope.departamento.listaFuenteDatos[y].id){
+					$scope.fuentesNoticias.push($scope.departamento.listaFuenteDatos[y]);
+					
+				}
+		}
+	}
+	
+	console.log($scope.partido.dataFuenteDatos.length);
+	console.log($scope.departamento.listaFuenteDatos.length);
 }])
 
 .controller('encuestaController', ['$scope', '$stateParams', '$timeout',function($scope,$stateParams,$timeout){

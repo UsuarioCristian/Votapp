@@ -7,7 +7,7 @@
   	<div class="centrar">
 		<div class="container">
 			<div class="row" style="padding-top:4em;">
-				<div ng-repeat="candidato in eleccion.dataCandidatos" >
+				<div ng-repeat="candidato in candidatosXDepto" >
 			       <a ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})">
 			       <div class="col-lg-2 imagen candidatoMini">
 				       <img  class="img-circle" ng-src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVlMTdiMGRmNSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWUxN2IwZGY1Ij48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" alt="{{eleccion.logo.name}}" width="140" height="140"/>
@@ -44,7 +44,7 @@
   	<div class="panel-heading">Partidos:</div>
   		<div class="panel-body">
    			<div class="list-group col-xs-5">
-					<a href="#" class="list-group-item"  ng-repeat="partido in partidosXDeptos" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})" >
+					<a href="#" class="list-group-item"  ng-repeat="partido in partidosXDeptos" ui-sref="partidoXDepto({eleccionId: eleccion.id, departamentoId: deptoSel.id, partidoId: partido.id})" >
 					    <h4 class="list-group-item-heading">{{partido.nombre}}</h4>
 					</a>
 			</div>

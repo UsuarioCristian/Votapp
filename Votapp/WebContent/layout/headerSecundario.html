@@ -17,9 +17,9 @@
       <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'" >
       
         <ul class="nav navbar-nav">
-          <li ><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'second'})" href="#second" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Candidatos</a></li>        
+          <li ng-hide="eleccion.tipoEleccion = 'Departamental'"><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'second'})" href="#second" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Candidatos</a></li>        
           
-          <li ng-hide="eleccion.tipoEleccion == 'Otra'" ><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'third'})" href="#third" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Partidos</a></li>
+          <li ng-hide="eleccion.tipoEleccion = 'Departamental' || eleccion.tipoEleccion == 'Otra'"><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'third'})" href="#third" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Partidos</a></li>
           
                         
       </div><!-- /.navbar-collapse -->
