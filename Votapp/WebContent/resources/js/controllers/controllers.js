@@ -58,6 +58,48 @@ angular.module("app.controllers",[])
 	}
 	
 	/***********************************************************************************/
+	/*****************************SECCION PAGINACION************************************/
+	/***********************************************************************************/
+	
+	$scope.viewby = 6;
+	$scope.totalItems = $scope.eleccion.dataCandidatos.length;
+	$scope.currentPage = 1;
+	$scope.itemsPerPage = $scope.viewby;
+	$scope.maxSize = 5; //Number of pager buttons to show
+	
+	$scope.setPage = function (pageNo) {
+	  $scope.currentPage = pageNo;
+	};
+	
+	$scope.pageChanged = function() {
+	  console.log('Page changed to: ' + $scope.currentPage);
+	};
+
+	$scope.setItemsPerPage = function(num) {
+	  $scope.itemsPerPage = num;
+	  $scope.currentPage = 1; //reset to first paghe
+	}
+	
+	/***********************************************************************************/
+	/*****************************SECCION CAROUSEL**************************************/
+	/***********************************************************************************/
+	
+	$scope.myInterval = 5000;
+	  var slides = $scope.slides = [];
+	  $scope.addSlide = function() {
+	    var newWidth = 600 + slides.length + 1;
+	    slides.push({
+	      image: 'http://placekitten.com/' + newWidth + '/300',
+	      text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
+	        ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
+	    });
+	  };
+	  for (var i=0; i<4; i++) {
+	    $scope.addSlide();
+	  }
+	
+	
+	/***********************************************************************************/
 	/*****************************SECCION GRAFICAS**************************************/
 	/***********************************************************************************/
 	

@@ -4,11 +4,11 @@
 <div ng-include src="'layout/header.html'"></div>
 
 <div id="first" class="first eleccion-nombre">
-	 <div>
+	 <div class="col-xs-6 col-md-6">
 	     <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}">
   	 </div>
   	 <div class="row info-eleccion-votapp" >
-		<div class="col-md-8 ">
+		<div class="col-md-6 col-xs-6">
 				<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1>
 				<br><br>
 				<strong style="background-color: white;">Fecha: {{eleccion.fecha | date}}</strong>
@@ -27,31 +27,30 @@
 		</div>
 	 </div>
 </div>
-</div>		
 	
 
 <div id="second" class="second" ng-hide="eleccion.tipoEleccion == 'Departamental'">
-
-	<div class="centrar">
-		<div class="container">
-			<div class="row" style="padding-top:4em;">
-				<div ng-repeat="candidato in eleccion.dataCandidatos" >
-			       <a ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})">
-			       <div class="col-lg-3 imagen candidatoMini">
-				       <img  class="img-circle"  ng-src="data:image/{{candidato.imagen.tipo}};base64,{{candidato.imagen.file}}" alt="{{candidato.imagen.name}}" width="140" height="140"/>
-				         
-				         <h2>{{candidato.nombre}}</h2>
-				       
-				         <strong  ng-hide="eleccion.tipoEleccion == 'Otra'">Partido:</strong> {{candidato.nombrePartido}}
-				         <strong>Edad:</strong> {{candidato.edad}}<br>
-				         <strong>Cargo:</strong> {{candidato.cargo}}<br>
-						 <strong>Listas: </strong> <span ng-repeat="lista in candidato.dataListas">{{lista.numero}}
-						 <p><a class="btn btn-default" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a></p>{{lista.numero}}</span>
-			       </div><!-- /.col-lg-2 -->
-			       </a>
-			 	</div>
+	<div class="container contenedor-candidatos">
+		<div class="col-md-6 contenedor-candidato" ng-repeat="candidato in eleccion.dataCandidatos.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" >
+			<div class="col-xs-4 col-md-4">
+				<img  class="img-thumbnail img-responsive"  ng-src="data:image/{{candidato.imagen.tipo}};base64,{{candidato.imagen.file}}" alt="{{candidato.imagen.name}}"/>
 			</div>
-		</div>
+			<div class="col-xs-8 col-md-8">
+			<h3>{{candidato.nombre}}</h3>
+			<span ng-hide="eleccion.tipoEleccion == 'Otra'">Partido: <strong>{{candidato.nombrePartido}}</strong></span>
+			<span> Cargo: <strong>{{candidato.cargo}}</strong></span>
+			<span> Edad: <strong>{{candidato.edad}}</strong></span>
+			<span> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{candidato.edad}}</strong></span>
+			<!-- <strong  ng-hide="eleccion.tipoEleccion == 'Otra'">Partido:</strong> {{candidato.nombrePartido}} 
+			<strong>Edad:</strong> {{candidato.edad}}<br>
+			<strong>Cargo:</strong> {{candidato.cargo}}<br>
+			<strong>Listas: </strong> <span ng-repeat="lista in candidato.dataListas">{{lista.numero}}<br></span>-->
+ 			<a class="btn btn-default btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
+    		</div>
+	    </div><!-- ng repeat de candidatos -->
+	<div class="paginado-votapp col-md-6 col-md-offset-3">
+		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+	</div>
 	</div>
 </div>
 
@@ -72,10 +71,21 @@
 	<div class="centrar">
 		<div class="container">
 			<span ng-repeat="encuesta in encuestas">
-				<div ng-attr-id="{{ 'container-' + encuesta.id }}" class="col-xs-6 col-sm-6 col-md-6" style="height:350px;" ng-click="goToEncuesta(encuesta)"></div>
-				
+				<div ng-attr-id="{{ 'container-' + encuesta.id }}" class="col-xs-6 col-sm-6 col-md-6" style="height:350px;" ng-click="goToEncuesta(encuesta)"></div>	
 			</span>
-			
+			<!--  SACAR LUEGOOOOOO -->
+						  <div style="height: 305px">
+						    <carousel interval="myInterval">
+						      <slide ng-repeat="slide in slides" active="slide.active">
+						        <img ng-src="{{slide.image}}" style="margin:auto;">
+						        <div class="carousel-caption">
+						          <h4>Slide {{$index}}</h4>
+						          <p>{{slide.text}}</p>
+						        </div>
+						      </slide>
+						    </carousel>
+						  </div>
+			<!--  SACAR LUEGOOOOOO -->
 		</div>
 		</div>
 </div> 

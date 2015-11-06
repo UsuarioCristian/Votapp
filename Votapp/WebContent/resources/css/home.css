@@ -89,16 +89,15 @@ a {
     color: black;
     padding-top: 10%;
 }
+
+.img-votapp-eleccion{
+	/*max-width: 50%;*/
+}
+
 .eleccion-container{
 	/*padding: 5%*/
 	width: 100%;
 	height: inherit;
-}
-.candidatos-titulo{
-	font-size: 1.8em;
-}
-.candidatos-titulo span{
-	margin-left: 20px;
 }
 .partidos-titulo{
 	font-size: 1.8em;
@@ -109,4 +108,38 @@ a {
 .noticias-votapp {
 	height: inherit;
     padding-top: 10%;
+}
+/********************/
+/**** CANDIDATOS ****/
+/********************/
+
+/* contenedor de TODOS los candidatos */
+.contenedor-candidatos{
+	height: inherit;
+	overflow-y: scroll;
+	
+}
+.paginado-votapp{
+	width: inherit;
+}
+/* contenedor de UN candidato */
+.contenedor-candidato{
+	max-height: 150px;
+	margin-top: 1em;
+	/*background-color: white;
+	border: 2px solid #a1a1a1;
+    border-radius: 10px;*/
+    padding-bottom: 10px;
+}
+.contenedor-candidato span{
+	display: block;	
+}
+.contenedor-candidato img{
+	margin-top: 20px;
+}
+.candidatos-titulo{
+	font-size: 1.8em;
+}
+.candidatos-titulo span{
+	margin-left: 20px;
 }
