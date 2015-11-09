@@ -10,9 +10,8 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import persistencia.interfaces.IFuenteDatosDAO;
 import dominio.FuenteDatos;
-import dominio.Lista;
-import persistencia.interfaces.IFuenteDatosDAO;;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)

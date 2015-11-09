@@ -1,6 +1,5 @@
 package utiles;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,7 +10,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import datas.DataEleccion;
 import negocio.interfaces.IEleccionHandler;
 
 @WebListener
