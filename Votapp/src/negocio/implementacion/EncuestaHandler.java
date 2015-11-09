@@ -201,6 +201,8 @@ public class EncuestaHandler implements IEncuestaHandler {
 		Respuesta respuesta = new Respuesta();
 		respuesta.setEdad(dataRespuesta.getEdad());
 		respuesta.setEducacion(dataRespuesta.getNivelEstudio());
+		respuesta.setIngresos(dataRespuesta.getIngresos());
+		respuesta.setTrabaja(dataRespuesta.isTrabaja());
 		
 		/******************************************************************/
 		/*******************ACA SE DETECTAN VOTOS EN BLANCO****************/

@@ -10,7 +10,6 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 import negocio.interfaces.IEleccionHandler;
-import persistencia.implementacion.EleccionDAO;
 import persistencia.interfaces.ICandidatoDAO;
 import persistencia.interfaces.IEleccionDAO;
 import persistencia.interfaces.IFuenteDatosDAO;
