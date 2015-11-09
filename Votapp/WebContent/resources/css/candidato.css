@@ -14,7 +14,7 @@
 }
 .height-social{
 	height: 350px;
-	overflow: scroll;
+	overflow: auto;
 } 
 .header-social-votapp{	
 	width: 100%;
