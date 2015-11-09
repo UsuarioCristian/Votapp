@@ -1,35 +1,37 @@
 <style type="text/css" votapp-style eleccion="eleccion"></style>
-<div class="row eleccion-container">
 
 <div ng-include src="'layout/header.html'"></div>
 
-<div id="first" class="first eleccion-nombre">
-	 <div class="col-xs-6 col-md-6">
-	     <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}">
-  	 </div>
-  	 <div class="row info-eleccion-votapp" >
-		<div class="col-md-6 col-xs-6">
-				<h1><strong class="votapp">{{eleccion.nombre}}</strong></h1>
-				<br><br>
-				<strong style="background-color: white;">Fecha: {{eleccion.fecha | date}}</strong>
+<div id="first" class="first eleccion-first">
+  	 <div class="container info-eleccion-votapp" >
+	 	<div class="col-xs-6 col-md-6 img-votapp-eleccion">
+	    	 <img class="img-responsive" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}">
+  	 	</div>
+	 	<div class="col-md-6 col-xs-6">
+				<h1>{{eleccion.nombre}}</h1>
+				<h3>{{eleccion.fecha | date:'dd-MM-yyyy'}}</h3>
 				<br>
-				<p style="background-color: white;">{{eleccion.descripcion}}</p>
+				<p>{{eleccion.descripcion}}</p>
 				<br>
-				<div  ng-show="eleccion.tipoEleccion == 'Departamental'" class="row">
-				<div style="background-color: white;"><strong>Seleccione un departamento:</strong></div>
+				<!-- 
 				<div>
-		           	<select ng-options="depto.nombre for depto in deptos| orderBy:'nombre'" ng-model="depto"></select>
-						<p><a class="btn btn-default" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: depto.id})" role="button">Ver Info »</a></p>
+		           	<select ng-options="depto.nombre for depto in deptos| orderBy:'nombre'" ng-model="depto"></select> 
+		           	
 		            <br>
-				</div>
-				</div>
-  			</div>
+				</div>-->
+  		</div>
+		<div  ng-show="eleccion.tipoEleccion == 'Departamental'" class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
+			
+			<h4>Escriba su departamento:</h4>
+           	<input type="text" ng-model="selected" typeahead-on-select="updateDpto($item)" typeahead="depto.nombre for depto in deptos | filter:{'nombre':$viewValue} | limitTo:8" class="form-control">
+			<hr>
+			<a class="btn btn-info" ui-sref="departamento({eleccionId: eleccion.id, departamentoId: dpto.id})" role="button">Ver Info »</a>
 		</div>
-	 </div>
+	</div>
 </div>
 	
 
-<div id="second" class="second" ng-hide="eleccion.tipoEleccion == 'Departamental'">
+<div id="second" class="second eleccion-second" ng-hide="eleccion.tipoEleccion == 'Departamental'">
 	<div class="container contenedor-candidatos">
 		<div class="col-md-6 contenedor-candidato" ng-repeat="candidato in eleccion.dataCandidatos.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" >
 			<div class="col-xs-4 col-md-4">
@@ -41,33 +43,30 @@
 			<span> Cargo: <strong>{{candidato.cargo}}</strong></span>
 			<span> Edad: <strong>{{candidato.edad}}</strong></span>
 			<span> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{candidato.edad}}</strong></span>
-			<!-- <strong  ng-hide="eleccion.tipoEleccion == 'Otra'">Partido:</strong> {{candidato.nombrePartido}} 
-			<strong>Edad:</strong> {{candidato.edad}}<br>
-			<strong>Cargo:</strong> {{candidato.cargo}}<br>
-			<strong>Listas: </strong> <span ng-repeat="lista in candidato.dataListas">{{lista.numero}}<br></span>-->
  			<a class="btn btn-default btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
     		</div>
 	    </div><!-- ng repeat de candidatos -->
-	<div class="paginado-votapp col-md-6 col-md-offset-3">
-		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
 	</div>
-	</div>
-</div>
-
-<div id="third" class="third" ng-hide="eleccion.tipoEleccion == 'Otra' ||  eleccion.tipoEleccion == 'Departamental' || eleccion.tipoEleccion == 'Simple' ">
-	<div class="centrar">
-			<div class="container" style="backgroud-color:green;">
-			 <div class="col-lg-4" ng-repeat="partido in eleccion.dataPartidos" >
-			         <h2>{{partido.nombre}}</h2>
-			         <strong>Fecha fundacion:</strong><p> {{partido.fechaFundacion | date}}</p>
-			         <span><strong>Listas: </strong> <div ng-repeat="lista in partido.listas">{{lista.numero}}</div></span>
-			         <p><a class="btn btn-default" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})">Ver más »</a></p>			       		
-			       </div><!-- /.col-lg-4 -->
-			</div>
+	<div class="paginado-votapp">
+		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage" boundary-links="true" first-text="Primera" last-text="Ultima" previous-text="« Anterior" next-text="Siguiente »" ></pagination>
 	</div>
 </div>
 
- <div id="fourth" class="fourth" >
+<div id="third" class="third eleccion-third" ng-hide="eleccion.tipoEleccion == 'Otra' ||  eleccion.tipoEleccion == 'Departamental' || eleccion.tipoEleccion == 'Simple' ">
+	<div class="container contenedor-candidatos">
+		 <div class="col-lg-4" ng-repeat="partido in eleccion.dataPartidos.slice(((currentPagePartidos-1)*itemsPerPagePartidos), ((currentPagePartidos)*itemsPerPagePartidos))" >
+		         <h2>{{partido.nombre}}</h2>
+		         <strong>Fecha fundacion:</strong><p> {{partido.fechaFundacion | date}}</p>
+		         <span><strong>Listas: </strong> <div ng-repeat="lista in partido.listas">{{lista.numero}}</div></span>
+		         <p><a class="btn btn-default" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})">Ver más »</a></p>			       		
+		 </div><!-- /.col-lg-4 -->
+	</div>
+	<div class="paginado-votapp">
+		<pagination total-items="totalItemsPartidos" ng-model="currentPagePartidos" ng-change="pageChangedPartidos()" class="pagination-sm" items-per-page="itemsPerPagePartidos" boundary-links="true" first-text="Primera" last-text="Ultima" previous-text="« Anterior" next-text="Siguiente »" ></pagination>
+	</div>
+</div>
+
+ <div id="fourth" class="fourth eleccion-fourth" ng-hide="eleccion.tipoEleccion == 'Departamental'">
 	<div class="centrar">
 		<div class="container">
 			<span ng-repeat="encuesta in encuestas">
@@ -90,7 +89,7 @@
 		</div>
 </div> 
 
-<div id="fifth" class="fifth" >
+<div id="fifth" class="fifth eleccion-fifth" >
 	<div class="container noticias-votapp">
 		<div ng-repeat="fuen in noticias" ng-switch="fuen.tipo">
 		   	<div ng-switch-when="facebook">

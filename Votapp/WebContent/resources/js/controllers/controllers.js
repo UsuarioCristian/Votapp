@@ -25,6 +25,17 @@ angular.module("app.controllers",[])
 //	console.log('Promise is now resolved: '+EleccionFactory.getEleccionesActuales())
 	$scope.elecciones = EleccionFactory.getEleccionesActuales();
 	
+	var i=0;
+	while(i < $scope.elecciones.length){
+		var len=$scope.elecciones[i].descripcion.length;
+	    if(len>200){
+	    	$scope.elecciones[i].descripcionResumida = $scope.elecciones[i].descripcion.substr(0,200)+'...';
+	    } else {
+	    	$scope.elecciones[i].descripcionResumida = $scope.elecciones[i].descripcion;
+	    }
+		i++;
+	}
+	
 	//$scope.elecciones = $scope.getEleccionesActuales();
 }])
 
@@ -57,6 +68,11 @@ angular.module("app.controllers",[])
 	    $document.scrollToElementAnimated(someElement);
 	}
 	
+	$scope.updateDpto = function (deptoSelected) {
+		
+		$scope.dpto = deptoSelected;
+	};
+	
 	/***********************************************************************************/
 	/*****************************SECCION PAGINACION************************************/
 	/***********************************************************************************/
@@ -72,13 +88,20 @@ angular.module("app.controllers",[])
 	};
 	
 	$scope.pageChanged = function() {
-	  console.log('Page changed to: ' + $scope.currentPage);
+//	  console.log('Page changed to: ' + $scope.currentPage);
 	};
 
 	$scope.setItemsPerPage = function(num) {
 	  $scope.itemsPerPage = num;
 	  $scope.currentPage = 1; //reset to first paghe
 	}
+	
+	$scope.totalItemsPartidos = $scope.eleccion.dataCandidatos.length;
+	$scope.currentPagePartidos = 1;
+	$scope.itemsPerPagePartidos = $scope.viewby; 
+	$scope.pageChangedPartidos = function() {
+//		  console.log('Page changed to: ' + $scope.currentPage);
+		};
 	
 	/***********************************************************************************/
 	/*****************************SECCION CAROUSEL**************************************/
@@ -187,7 +210,7 @@ angular.module("app.controllers",[])
 		$state.go('encuesta', {encuesta : encuesta, eleccionId : $scope.eleccion.id});
 	}
 	
-	
+	$scope.$apply();
 }])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	
@@ -218,6 +241,7 @@ angular.module("app.controllers",[])
 			i++;
 		}
 	}
+	
 	
 //	FB.XFBML.parse(document.getElementById('facebook-div'));
 //	twttr.widgets.load(document.getElementById('twitter-div'));
@@ -289,20 +313,7 @@ angular.module("app.controllers",[])
 	
 	function link(scope, element, attrs) {
 		var url = scope.fuente.url;
-//		'<iframe ng-transclude id="ytplayer" type="text/html" width="100%" height="100%" src="http://www.youtube.com/embed?listType=user_uploads&list='+url+'" frameborder="0"></iframe>');
-		element.append('<a class="twitter-timeline" href="https://twitter.com/search?q='+url+'" data-widget-id="651184158891507712">Tweets sobre @'+url+'</a>');
-// <a class="twitter-timeline" href="https://twitter.com/search/'+url+'" data-widget-id="634154028415516673">Tweets por el @'+url+'.</a>
-//		twttr.widgets.load();
-		
-//		twttr.widgets.createTimeline(
-//				  '634154028415516673',
-//				  element,
-//				  {
-//				    width: '450',
-//				    height: '700',
-//				    related: url,
-//				  }
-//				);
+		element.append('<a class="twitter-timeline" data-widget-id="'+url+'"></a>');
 		twttr.widgets.load();
 	}
 	
@@ -385,7 +396,38 @@ angular.module("app.controllers",[])
 			
 		}
 				
-	}	
+	}
+	
+
+	/***********************************************************************************/
+	/*****************************SECCION PAGINACION************************************/
+	/***********************************************************************************/
+	
+	$scope.viewby = 6;
+	$scope.totalItems = $scope.eleccion.dataCandidatos.length;
+	$scope.currentPage = 1;
+	$scope.itemsPerPage = $scope.viewby;
+	$scope.maxSize = 5; //Number of pager buttons to show
+	
+	$scope.setPage = function (pageNo) {
+	  $scope.currentPage = pageNo;
+	};
+	
+	$scope.pageChanged = function() {
+//	  console.log('Page changed to: ' + $scope.currentPage);
+	};
+
+	$scope.setItemsPerPage = function(num) {
+	  $scope.itemsPerPage = num;
+	  $scope.currentPage = 1; //reset to first paghe
+	}
+	
+	$scope.totalItemsPartidos = $scope.eleccion.dataCandidatos.length;
+	$scope.currentPagePartidos = 1;
+	$scope.itemsPerPagePartidos = $scope.viewby; 
+	$scope.pageChangedPartidos = function() {
+//		  console.log('Page changed to: ' + $scope.currentPage);
+		};
 
 }])
 

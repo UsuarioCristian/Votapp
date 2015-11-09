@@ -2,7 +2,27 @@
 body, html{
 	height: 100%;
 }
-
+.content-elecciones{
+	padding: 10px;
+	background-image: url(/Votapp/resources/img/textures/sprinkles.png);
+	background-color: #758eb3;
+	width: 100%;
+	height: 100%;
+}
+.eleccion-previa{
+	margin-top: 10px;
+}
+.votapp-descripcion{
+	font-size: 1em;
+}
+.votapp-departamentos{
+	margin: 1.2em;
+}
+.container-departamento{
+	margin-top: 5%;
+	padding-left: 5%;
+	padding-right: 5%;
+}
 body{
 	padding: 0 0 0 0;
 }
@@ -82,16 +102,19 @@ a {
 }
 
 .info-eleccion-votapp{
+	background-color: white;
+	height: inherit;
+    border-radius: 10px;
 	text-align: center;
 	margin: 0 auto;
 	width: initial;
-	opacity: 0.9;
-    color: black;
-    padding-top: 10%;
+	background: rgba(255,255,255,0.8);
+    padding: 1em;
 }
 
 .img-votapp-eleccion{
 	/*max-width: 50%;*/
+	
 }
 
 .eleccion-container{
@@ -115,12 +138,14 @@ a {
 
 /* contenedor de TODOS los candidatos */
 .contenedor-candidatos{
-	height: inherit;
+	height: 90%;
 	overflow-y: scroll;
 	
 }
+/* paginado que va debajo del contenedor de candidatos */
 .paginado-votapp{
-	width: inherit;
+	height: 10%;
+	text-align: center;
 }
 /* contenedor de UN candidato */
 .contenedor-candidato{

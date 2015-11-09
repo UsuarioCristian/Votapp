@@ -1,59 +1,44 @@
 <div ng-include src="'layout/headerSecundario.html'"></div>
-<h1>NOMBRE DEPARTAMENTO</h1>
-<div class="row">
-
-   <div class="panel panel-default" style="width: 50%;margin: 2%;">
-  	<div class="panel-heading">Candidatos:</div>
-  	<div class="centrar">
-		<div class="container">
-			<div class="row" style="padding-top:4em;">
-				<div ng-repeat="candidato in candidatosXDepto" >
-			       <a ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})">
-			       <div class="col-lg-2 imagen candidatoMini">
-				       <img  class="img-circle" ng-src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzE0MHgxNDAKQ3JlYXRlZCB3aXRoIEhvbGRlci5qcyAyLjYuMC4KTGVhcm4gbW9yZSBhdCBodHRwOi8vaG9sZGVyanMuY29tCihjKSAyMDEyLTIwMTUgSXZhbiBNYWxvcGluc2t5IC0gaHR0cDovL2ltc2t5LmNvCi0tPjxkZWZzPjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+PCFbQ0RBVEFbI2hvbGRlcl8xNGVlMTdiMGRmNSB0ZXh0IHsgZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQgfSBdXT48L3N0eWxlPjwvZGVmcz48ZyBpZD0iaG9sZGVyXzE0ZWUxN2IwZGY1Ij48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ0LjA0Njg3NSIgeT0iNzQuNSI+MTQweDE0MDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" alt="{{eleccion.logo.name}}" width="140" height="140"/>
-				         
-				         <h2>{{candidato.nombre}}</h2>
-				       
-				         <strong  ng-hide="eleccion.tipoEleccion == 'Otra'">Partido:</strong> {{candidato.nombrePartido}}
-				         <strong>Edad:</strong> {{candidato.edad}}<br>
-				         <strong>Cargo:</strong> {{candidato.cargo}}<br>
-						 <strong>Listas: </strong> <span ng-repeat="lista in candidato.dataListas">{{lista.numero}}
-						 <p><a class="btn btn-default" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a></p>{{lista.numero}}</span>
-			       </div><!-- /.col-lg-2 -->
-			       </a>
-			 	</div>
-			</div>
+<div class="container-departamento">
+	<div class="panel panel-default">
+	  <div class="panel-heading">Candidatos</div>
+	  <div class="panel-body">
+	  	<div class="container contenedor-candidatos">
+			<div class="col-md-6 contenedor-candidato" ng-repeat="candidato in candidatosXDepto.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" >
+				<div class="col-xs-4 col-md-4">
+					<img  class="img-thumbnail img-responsive"  ng-src="data:image/{{candidato.imagen.tipo}};base64,{{candidato.imagen.file}}" alt="{{candidato.imagen.name}}"/>
+				</div>
+				<div class="col-xs-8 col-md-8">
+				<h3>{{candidato.nombre}}</h3>
+				<span ng-hide="eleccion.tipoEleccion == 'Otra'">Partido: <strong>{{candidato.nombrePartido}}</strong></span>
+				<span> Cargo: <strong>{{candidato.cargo}}</strong></span>
+				<span> Edad: <strong>{{candidato.edad}}</strong></span>
+				<span> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{candidato.edad}}</strong></span>
+	 			<a class="btn btn-default btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
+	    		</div>
+		    </div><!-- ng repeat de candidatos -->
 		</div>
-	</div>
-  	
-  	
-  	
-  	
-  	
-  		<!-- <div class="panel-body">
-   			<div class="list-group">
-					<a href="#" class="list-group-item" ng-repeat="candi in candidatosXDepto"   ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candi.id})" >
-						    <h4 class="list-group-item-heading">{{candi.nombre}}</h4>
-						    <p class="list-group-item-text">{{candi.nombrePartido}}</p>
-					</a>
+		<div class="paginado-votapp">
+			<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()" class="pagination-sm" items-per-page="itemsPerPage" boundary-links="true" first-text="Primera" last-text="Ultima" previous-text="« Anterior" next-text="Siguiente »" ></pagination>
+		</div>
+	  </div>
+	</div>	
+	<div class="panel panel-default" >
+	 	<div class="panel-heading">Partidos:</div>
+	 		<div class="panel-body">
+	 			<div class="container contenedor-candidatos">
+			 		<div class="col-lg-4" ng-repeat="partido in partidosXDeptos.slice(((currentPagePartidos-1)*itemsPerPagePartidos), ((currentPagePartidos)*itemsPerPagePartidos))" >
+			         	<a class="btn btn-default" ui-sref="partidoXDepto({eleccionId: eleccion.id, departamentoId: deptoSel.id, partidoId: partido.id})">
+			         		<h4>{{partido.nombre}}</h4>
+			         	</a>		       		
+					</div><!-- /.col-lg-4 -->
+				</div>
+			<div class="paginado-votapp">
+				<pagination total-items="totalItemsPartidos" ng-model="currentPagePartidos" ng-change="pageChangedPartidos()" class="pagination-sm" items-per-page="itemsPerPagePartidos" boundary-links="true" first-text="Primera" last-text="Ultima" previous-text="« Anterior" next-text="Siguiente »" ></pagination>
 			</div>
-  		</div> -->
+	 	</div>
 	</div>
-	
-	 <div class="panel panel-default" style="width: 50%;margin: 2%;">
-  	<div class="panel-heading">Partidos:</div>
-  		<div class="panel-body">
-   			<div class="list-group col-xs-5">
-					<a href="#" class="list-group-item"  ng-repeat="partido in partidosXDeptos" ui-sref="partidoXDepto({eleccionId: eleccion.id, departamentoId: deptoSel.id, partidoId: partido.id})" >
-					    <h4 class="list-group-item-heading">{{partido.nombre}}</h4>
-					</a>
-			</div>
-  		</div>
-	</div>
-	
-	
-</div>
-
+</div> <!-- CONTENEDOR GENERAL -->
 
 
 
