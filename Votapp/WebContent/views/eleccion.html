@@ -20,8 +20,8 @@
 		            <br>
 				</div>-->
   		</div>
-		<div  ng-hide="tipoEleccion != 'Departamental'" class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
-			{{eleccion.tipoEleccion}}
+		<div  ng-show="eleccion.tipoEleccion == 'Departamental'" class="col-md-4 col-xs-4 col-md-offset-4 col-xs-offset-4">
+			
 			<h4>Escriba su departamento:</h4>
            	<input type="text" ng-model="selected" typeahead-on-select="updateDpto($item)" typeahead="depto.nombre for depto in deptos | filter:{'nombre':$viewValue} | limitTo:8" class="form-control">
 			<hr>
@@ -39,10 +39,10 @@
 			</div>
 			<div class="col-xs-8 col-md-8">
 			<h3>{{candidato.nombre}}</h3>
-			<span ng-hide="eleccion.tipoEleccion == 'Otra' || eleccion.tipoEleccion == 'Simple'">Partido: <strong>{{candidato.nombrePartido}}</strong></span>
-			<span ng-hide="eleccion.tipoEleccion == 'Simple'"> Cargo: <strong>{{candidato.cargo}}</strong></span>
-			<span ng-hide="eleccion.tipoEleccion == 'Simple'"> Edad: <strong>{{candidato.edad}}</strong></span>
-			<span ng-hide="eleccion.tipoEleccion == 'Simple'"> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{candidato.edad}}</strong></span>
+			<span ng-hide="eleccion.tipoEleccion == 'Otra'">Partido: <strong>{{candidato.nombrePartido}}</strong></span>
+			<span> Cargo: <strong>{{candidato.cargo}}</strong></span>
+			<span> Edad: <strong>{{candidato.edad}}</strong></span>
+			<span> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{candidato.edad}}</strong></span>
  			<a class="btn btn-default btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
     		</div>
 	    </div><!-- ng repeat de candidatos -->
@@ -69,22 +69,16 @@
  <div id="fourth" class="fourth eleccion-fourth" ng-hide="eleccion.tipoEleccion == 'Departamental'">
 	<div class="centrar">
 		<div class="container">
-			<span ng-repeat="encuesta in encuestas">
-				<div ng-attr-id="{{ 'container-' + encuesta.id }}" class="col-xs-6 col-sm-6 col-md-6" style="height:350px;" ng-click="goToEncuesta(encuesta)"></div>	
-			</span>
-			<!--  SACAR LUEGOOOOOO -->
-						  <div style="height: 305px">
-						    <carousel interval="myInterval">
-						      <slide ng-repeat="slide in slides" active="slide.active">
-						        <img ng-src="{{slide.image}}" style="margin:auto;">
-						        <div class="carousel-caption">
-						          <h4>Slide {{$index}}</h4>
-						          <p>{{slide.text}}</p>
-						        </div>
-						      </slide>
-						    </carousel>
-						  </div>
-			<!--  SACAR LUEGOOOOOO -->
+		    <carousel interval="myInterval">
+		      <slide ng-repeat="encuesta in encuestas">
+		        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta)">
+		        </div>
+		        <div class="carousel-caption">
+          			<h4>{{encuesta.dataConsultora.nombre}}</h4>
+          			<p>{{encuesta.dataConsultora.descripcion}}</p>
+        		</div>
+		      </slide>
+		    </carousel>
 		</div>
 		</div>
 </div> 
