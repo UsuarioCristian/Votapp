@@ -16,7 +16,7 @@
     </div>    
 </div>
 
-	<div ng-repeat="fuen in fuentesNoticias" ng-switch="fuen.tipo">
+	<div ng-repeat="fuen in fuentesNoticias | orderBy:'tipo'" ng-switch="fuen.tipo">
 			      <div ng-switch-when="facebook">
 			     	   	<div class="height-social facebook-container col-md-4">
 			     	   	<div class="header-social-votapp">
