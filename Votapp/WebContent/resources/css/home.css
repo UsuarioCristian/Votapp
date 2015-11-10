@@ -139,7 +139,7 @@ a {
 /* contenedor de TODOS los candidatos */
 .contenedor-candidatos{
 	height: 90%;
-	overflow-y: scroll;
+	overflow-y: auto;
 	
 }
 /* paginado que va debajo del contenedor de candidatos */
