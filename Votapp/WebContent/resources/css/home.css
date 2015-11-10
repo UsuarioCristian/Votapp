@@ -9,6 +9,19 @@ body, html{
 	width: 100%;
 	height: 100%;
 }
+/******Carousel*/
+.carousel-votapp{
+	height: 100%;
+}
+.slide-votapp{
+	width: 100%;
+	height: 100%;
+}
+/*****************/
+.imagen-para-nav{
+	width: 30px;
+	height: 30px;	
+}
 .eleccion-previa{
 	margin-top: 10px;
 }
