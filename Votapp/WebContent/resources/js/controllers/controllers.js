@@ -115,7 +115,7 @@ angular.module("app.controllers",[])
 	/***********************************************************************************/
 	
 	$scope.encuestas = encuestas;
-	
+	$scope.graficas= [];
 	/*El $timeout es para que se genere el id en la vista antes del renderTo de higcharts*/
 	$timeout(function(){},500).then(
 		function(){
@@ -186,6 +186,8 @@ angular.module("app.controllers",[])
 				            data : data
 				        }]
 				})
+				
+				$scope.graficas[index] = chartPie;
 			}
 		},
 		function(){
@@ -198,7 +200,17 @@ angular.module("app.controllers",[])
 		$state.go('encuesta', {encuesta : encuesta, eleccionId : $scope.eleccion.id});
 	}
 	
-	$scope.$apply();
+	
+	$scope.onSlideChanged = function (nextSlide, direction) {
+	    console.log('onSlideChanged:', direction, nextSlide);
+	    $timeout(function(){
+	    for (var index = 0; index < $scope.graficas.length; index++) {
+	    	
+	    			$scope.graficas[index].reflow();	
+	    		}
+		},0);
+	};
+	
 }])
 .controller("candidatoController", ['$scope', '$state', 'EleccionFactory', 'store', '$stateParams',  function($scope, $state, EleccionFactory, store, $stateParams){
 	
@@ -467,7 +479,6 @@ angular.module("app.controllers",[])
 	console.log($scope.partido.dataFuenteDatos.length);
 	console.log($scope.departamento.listaFuenteDatos.length);
 }])
-
 .controller('encuestaController', ['$scope', '$stateParams', '$timeout',function($scope,$stateParams,$timeout){
 	
 	$scope.encuesta = $stateParams.encuesta;
@@ -526,7 +537,8 @@ angular.module("app.controllers",[])
 				}
 			data.push(dato);
 		}
-	}	
+	}
+	
 	/*****Como chartPie es la grafica que aparece por defecto, 
 	 * entonces se debe iniciar aqui (las demas lo hacen con el ng-change $scope.changeChart)**********/
 	
@@ -670,7 +682,8 @@ angular.module("app.controllers",[])
 			            colorByPoint: true,
 			            data : data
 			        }]
-			})
+			});
+			chartPie.reflow();
 		}else
 			if($scope.graficaSeleccionada.id === 2){
 				chartPie = null;
@@ -718,11 +731,30 @@ angular.module("app.controllers",[])
 			        },
 			        series: serieEdad
 			        
-				})
+				});
+				chartColumEdad.reflow();
 			}
 	}
 	
 }])
+.directive('onCarouselChange', function ($parse) {
+  return {
+    require: 'carousel',
+    link: function (scope, element, attrs, carouselCtrl) {
+      var fn = $parse(attrs.onCarouselChange);
+      var origSelect = carouselCtrl.select;
+      carouselCtrl.select = function (nextSlide, direction) {
+        if (nextSlide !== this.currentSlide) {
+          fn(scope, {
+            nextSlide: nextSlide,
+            direction: direction,
+          });
+        }
+        return origSelect.apply(this, arguments);
+      };
+    }
+  };
+})
 
 
 

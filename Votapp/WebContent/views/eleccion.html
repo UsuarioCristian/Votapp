@@ -67,21 +67,21 @@
 </div>
 
  <div id="fourth" class="fourth eleccion-fourth" ng-hide="eleccion.tipoEleccion == 'Departamental'">
-	<div class="centrar">
 		<div class="container">
-		    <carousel interval="myInterval">
-		      <slide ng-repeat="encuesta in encuestas">
-		        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta)">
-		        </div>
-		        <div class="carousel-caption">
-          			<h4>{{encuesta.dataConsultora.nombre}}</h4>
-          			<p>{{encuesta.dataConsultora.descripcion}}</p>
-        		</div>
+		    <carousel interval="myInterval" class="carousel-votapp" on-carousel-change="onSlideChanged(nextSlide, direction)">
+		      <slide ng-repeat="encuesta in encuestas" >
+		      		<div class="slide-votapp text-center">
+				        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta)">
+				        </div>
+				        <div class="carousel-caption">
+		          			<h4>{{encuesta.dataConsultora.nombre}}</h4>
+		          			<p>{{encuesta.dataConsultora.descripcion}}</p>
+		        		</div>
+	        		</div>
 		      </slide>
 		    </carousel>
 		</div>
 		</div>
-</div> 
 
 <div id="fifth" class="fifth eleccion-fifth" >
 	<div class="container noticias-votapp">
