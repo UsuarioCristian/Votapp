@@ -159,7 +159,7 @@ angular.module("app.controllers",[])
 				            renderTo: 'container-'+$scope.encuestas[index].id,
 				        },
 				        title: {
-				            text: 'Resultado encuesta (prueba)'
+				            text: 'Resultado encuesta: '+$scope.encuestas[index].nombre
 				        },
 				        subtitle: {
 				        	text: 'Total encuestados: '+ $scope.encuestas[index].cantidadRespuestas,
@@ -482,7 +482,6 @@ angular.module("app.controllers",[])
 .controller('encuestaController', ['$scope', '$stateParams', '$timeout',function($scope,$stateParams,$timeout){
 	
 	$scope.encuesta = $stateParams.encuesta;
-	console.log($scope.encuesta);
 	
 	/*******************************/
 	/*******Seccion Graficas********/
@@ -501,6 +500,46 @@ angular.module("app.controllers",[])
 				id : 2
 		}
 		$scope.tiposGraficas.push(graficaEdad);
+	}
+	
+	if($scope.encuesta.preguntarNivelEstudio){
+		var graficaEducacion = {
+				nombre : 'Gráfica columna segun nivel educativo',
+				id : 3
+		}
+		$scope.tiposGraficas.push(graficaEducacion);
+	}
+	
+	if($scope.encuesta.preguntarLista){
+		var graficaLista = {
+				nombre : 'Gráfica listas',
+				id : 4
+		}
+		$scope.tiposGraficas.push(graficaLista);
+	}
+	
+	if($scope.encuesta.preguntarSiTrabaja){
+		var graficaTrabaja = {
+				nombre : 'Gráfica segun actividad laboral',
+				id : 5
+		}
+		$scope.tiposGraficas.push(graficaTrabaja);
+	}
+	
+	if($scope.encuesta.preguntarIngresos){
+		var graficaIngresos = {
+				nombre : 'Gráfica segun rango ingresos',
+				id : 6
+		}
+		$scope.tiposGraficas.push(graficaIngresos);
+	}
+	
+	if($scope.encuesta.preguntarSexo){
+		var graficaGenero = {
+				nombre : 'Gráfica segun género',
+				id : 7
+		}
+		$scope.tiposGraficas.push(graficaGenero);
 	}
 	
 	$scope.graficaSeleccionada = $scope.tiposGraficas[0];
@@ -597,10 +636,13 @@ angular.module("app.controllers",[])
 		var de31a50 = resultado.mapEdad31a50;
 		var de51omas = resultado.mapEdad51omas;
 		
+		var valorVotoBlanco = -1;
+		var valorVotoNoSabe = -1;
+		
 		if($scope.encuesta.porCandidato){
 			var mapCandidatos = resultado.mapCandidatos;
 			var candidatos = $scope.encuesta.dataCandidatos;		
-			
+
 			for(var i=0; i < candidatos.length; i++){
 				var candidato = candidatos[i];
 				var cantidad18a23 = de18a23[candidato.id];
@@ -612,7 +654,12 @@ angular.module("app.controllers",[])
 		                name: candidato.nombre,
 		                data: [cantidad18a23, cantidad24a30, cantidad31a50, cantidadde51omas]
 		            }
-				serieEdad.push(valor);
+				if(candidato.id === 0)
+					valorVotoBlanco = valor;
+				else if(candidato.id === -1)
+					valorVotoNoSabe = valor;
+				else
+					serieEdad.push(valor);
 			}
 		}else{
 			var mapPartidos = resultado.mapPartidos;
@@ -629,12 +676,332 @@ angular.module("app.controllers",[])
 		                name: partido.nombre,
 		                data: [cantidad18a23, cantidad24a30, cantidad31a50, cantidadde51omas]
 		            }
-				serieEdad.push(valor);
+				
+				if(partido.id === 0)
+					valorVotoBlanco = valor;
+				else if(partido.id === -1)
+					valorVotoNoSabe = valor;
+				else
+					serieEdad.push(valor);
+			}
+		}	
+		if(valorVotoBlanco !== -1) /*Cuidado, hay que ver q existan votos en blanco*/
+			serieEdad.push(valorVotoBlanco);
+		if(valorVotoNoSabe !== -1) /*Cuidado, hay que ver q existan respuestas "no sabe"*/
+			serieEdad.push(valorVotoNoSabe);
+	}
+	
+	/****************************************************************************/
+	/****************CARGA DE DATOS DE GRAFICA POR NIVEL ESTUDIO*****************/
+	/****************************************************************************/
+	/****************************************************************************/
+	if($scope.encuesta.preguntarNivelEstudio){
+		var serieEstudio = [];
+		var primaria = resultado.mapNivelEstudioPrimaria;
+		var secundaria = resultado.mapNivelEstudioSecundaria;
+		var terciario = resultado.mapNivelEstudioTerciario;
+		var noSabe = resultado.mapNivelEstudioNoSabe;
+		
+		var valorVotoBlanco = -1;
+		var valorVotoNoSabe = -1;
+		
+		if($scope.encuesta.porCandidato){
+			var mapCandidatos = resultado.mapCandidatos;
+			var candidatos = $scope.encuesta.dataCandidatos;		
+			
+			for(var i=0; i < candidatos.length; i++){
+				var candidato = candidatos[i];
+				var cantidadPrimaria = primaria[candidato.id];
+				var cantidadSecundaria = secundaria[candidato.id];
+				var cantidadTerciario = terciario[candidato.id];
+				var cantidadNoSabe = noSabe[candidato.id];
+				
+				var valor = {
+		                name: candidato.nombre,
+		                data: [cantidadPrimaria, cantidadSecundaria, cantidadTerciario, cantidadNoSabe]
+		            }
+				if(candidato.id === 0)
+					valorVotoBlanco = valor;
+				else if(candidato.id === -1)
+					valorVotoNoSabe = valor;
+				else
+					serieEstudio.push(valor);
+			}
+		}else{
+			var mapPartidos = resultado.mapPartidos;
+			var partidos = $scope.encuesta.dataPartidos;
+			
+			for( var i = 0; i < partidos.length; i++){
+				var partido = partidos[i];
+				var cantidadPrimaria = primaria[partido.id];
+				var cantidadSecundaria = secundaria[partido.id];
+				var cantidadTerciario = terciario[partido.id];
+				var cantidadNoSabe = noSabe[partido.id];
+				
+				var valor = {
+		                name: partido.nombre,
+		                data: [cantidadPrimaria, cantidadSecundaria, cantidadTerciario, cantidadNoSabe]
+		            }
+				if(partido.id === 0)
+					valorVotoBlanco = valor;
+				else if(partido.id === -1)
+					valorVotoNoSabe = valor;
+				else
+					serieEstudio.push(valor);
+			}
+		}
+		
+		if(valorVotoBlanco !== -1) /*Cuidado, hay que ver q existan votos en blanco*/
+			serieEstudio.push(valorVotoBlanco);
+		if(valorVotoNoSabe !== -1) /*Cuidado, hay que ver q existan respuestas "no sabe"*/
+			serieEstudio.push(valorVotoNoSabe);		
+	}
+	/****************************************************************************/
+	/****************************************************************************/
+	/****************CARGA DE DATOS DE GRAFICA POR LISTA*****************/
+	/****************************************************************************/
+	/****************************************************************************/
+	if($scope.encuesta.preguntarLista){
+		var serieLista = [{
+			name: "Votos",
+		    colorByPoint: true,
+		    data: []
+		}];
+		
+		var drilldownLista = {
+				series:[]
+		}
+		
+		var mapListas = resultado.mapListas;
+		if($scope.encuesta.porCandidato){
+			var mapCandidatos = resultado.mapCandidatos;
+			var candidatos = $scope.encuesta.dataCandidatos;		
+			
+			for(var i=0; i < candidatos.length; i++){				
+				var candidato = candidatos[i];
+				var serie = {
+						name: candidato.nombre,
+						id: candidato.id,
+						data:[]						
+				}
+				
+				for(var j = 0; j < candidato.dataListas.length; j++){
+					var dato = ['Lista '+candidato.dataListas[j].numero, mapListas[candidato.dataListas[j].id]];
+					serie.data.push(dato);
+				}		
+					
+				drilldownLista.series.push(serie);				
+				
+				var valor = {
+		                name: candidato.nombre,
+		                y : mapCandidatos[candidato.id],
+		                drilldown: candidato.id,
+		            }
+				serieLista[0].data.push(valor);
+			}
+		}else{
+			var mapPartidos = resultado.mapPartidos;
+			var partidos = $scope.encuesta.dataPartidos;
+			
+			for(var i=0; i < partidos.length; i++){				
+				var partido = partidos[i];
+				var serie = {
+						name: partido.nombre,
+						id: partido.id,
+						data:[]						
+				}
+				
+				for(var j = 0; j < partido.listas.length; j++){
+					var dato = ['Lista '+partido.listas[j].numero, mapListas[partido.listas[j].id]]
+					serie.data.push(dato);
+				}		
+					
+				drilldownLista.series.push(serie);				
+				
+				var valor = {
+		                name: partido.nombre,
+		                y : mapPartidos[partido.id],
+		                drilldown: partido.id,
+		            }
+				serieLista[0].data.push(valor);
+			}
+		}		
+		
+	}
+	
+	/****************************************************************************/
+	/****************************************************************************/
+	/**********************CARGA DE DATOS DE GRAFICA TRABAJO*********************/
+	/****************************************************************************/
+	/****************************************************************************/
+	
+	if($scope.encuesta.preguntarSiTrabaja){
+		var serieTrabaja = [];
+		var trabaja = resultado.mapTrabaja;
+		var noTrabaja = resultado.mapNoTrabaja;
+		
+		if($scope.encuesta.porCandidato){
+			var candidatos = $scope.encuesta.dataCandidatos;
+			for (var i = 0; i < candidatos.length; i++) {
+				var candidato = candidatos[i];
+				var cantidadTrabaja = trabaja[candidato.id];
+				var cantidadNoTrabaja = noTrabaja[candidato.id];
+				
+				var valor = {
+						name : candidato.nombre,
+						data:[cantidadTrabaja, cantidadNoTrabaja]
+				}
+				serieTrabaja.push(valor);
+			}
+		}else{
+			var partidos = $scope.encuesta.dataPartidos;
+			for (var i = 0; i < partidos.length; i++) {
+				var partido = candidatos[i];
+				var cantidadTrabaja = trabaja[partido.id];
+				var cantidadNoTrabaja = noTrabaja[partido.id];
+				
+				var valor = {
+						name : partido.nombre,
+						data:[cantidadTrabaja, cantidadNoTrabaja]
+				}
+				serieTrabaja.push(valor);
+			}
+			
+		}		
+		
+	}
+	
+	/****************************************************************************/
+	/****************************************************************************/
+	/**********************CARGA DE DATOS DE GRAFICA INGRESOS*********************/
+	/****************************************************************************/
+	/****************************************************************************/
+	
+	if($scope.encuesta.preguntarIngresos){
+		var serieIngresos = [];
+		var mapIngresos1 = resultado.mapIngresos1;
+		var mapIngresos2 = resultado.mapIngresos2;
+		var mapIngresos3 = resultado.mapIngresos3;
+		var mapIngresos4 = resultado.mapIngresos4;
+		
+		if($scope.encuesta.porCandidato){
+			var candidatos = $scope.encuesta.dataCandidatos;
+			for (var i = 0; i < candidatos.length; i++) {
+				var candidato = candidatos[i];
+				var cantidadIngreso1 = mapIngresos1[candidato.id];
+				var cantidadIngreso2 = mapIngresos2[candidato.id];
+				var cantidadIngreso3 = mapIngresos3[candidato.id];
+				var cantidadIngreso4 = mapIngresos4[candidato.id];
+				
+				var valor = {
+						name : candidato.nombre,
+						data:[cantidadIngreso1, cantidadIngreso2, cantidadIngreso3, cantidadIngreso4]
+				}
+				serieIngresos.push(valor);
+			}
+		}else{
+			var partidos = $scope.encuesta.dataPartidos;
+			for (var i = 0; i < partidos.length; i++) {
+				var partido = partidos[i];
+				var cantidadIngreso1 = mapIngresos1[partido.id];
+				var cantidadIngreso2 = mapIngresos2[partido.id];
+				var cantidadIngreso3 = mapIngresos3[partido.id];
+				var cantidadIngreso4 = mapIngresos4[partido.id];
+				
+				var valor = {
+						name : candidato.nombre,
+						data:[cantidadIngreso1, cantidadIngreso2, cantidadIngreso3, cantidadIngreso4]
+				}
+				serieIngresos.push(valor);
+			}
+		}
+	}
+	
+	/****************************************************************************/
+	/****************************************************************************/
+	/**********************CARGA DE DATOS DE GRAFICA POR GENERO******************/
+	/****************************************************************************/
+	/****************************************************************************/
+	
+	if($scope.encuesta.preguntarSexo){
+		var serieGenero = [{
+			name: "Votos",
+		    colorByPoint: true,
+		    data: []
+		}];
+		var drilldownGenero = {
+				series:[]
+		}
+		var mapMasculino = resultado.mapGeneroMas;
+		var mapOtro = resultado.mapGeneroOtro;
+		var mapFemenino = resultado.mapGeneroFem;
+		
+		if($scope.encuesta.porCandidato){
+			var mapCandidatos = resultado.mapCandidatos;
+			var candidatos = $scope.encuesta.dataCandidatos;
+			
+			for(var i=0; i < candidatos.length; i++){
+				var candidato = candidatos[i];
+				var cantidad = mapCandidatos[candidato.id];
+				var valor = {
+		                name: candidato.nombre,
+		                y: cantidad,
+		                drilldown: candidato.id
+		            }
+				serieGenero[0].data.push(valor);
+				
+				var serie = {
+						name: candidato.nombre,
+						id: candidato.id,
+						data:[]						
+				}				
+				
+				var datoMasc = ['Masculino', mapMasculino[candidato.id]];
+				var datoFem = ['Femenino', mapFemenino[candidato.id]];
+				var datoOtro = ['Otro', mapOtro[candidato.id]];
+				serie.data.push(datoMasc);				
+				serie.data.push(datoFem);				
+				serie.data.push(datoOtro);
+				
+				drilldownGenero.series.push(serie);
+				
+			}		
+			
+		}else{
+			var mapPartidos = resultado.mapPartidos;
+			var partidos = $scope.encuesta.dataPartidos;
+			
+			for(var i = 0; i < partidos.length; i++){
+				var partido = partidos[i];
+				var cantidad = mapPartidos[partido.id];
+				var valor = {
+		                name: partido.nombre,
+		                y: cantidad,
+		                drilldown: partido.id
+		            }
+				serieGenero[0].data.push(valor);
+				
+				var serie = {
+						name: partido.nombre,
+						id: partido.id,
+						data:[]						
+				}				
+				
+				var datoMasc = ['Masculino', mapMasculino[partido.id]];
+				var datoFem = ['Femenino', mapFemenino[partido.id]];
+				var datoOtro = ['Otro', mapOtro[partido.id]];
+				serie.data.push(datoMasc);				
+				serie.data.push(datoFem);				
+				serie.data.push(datoOtro);
+				
+				drilldownGenero.series.push(serie);
 			}
 		}	
 		
 		
 	}
+	
+	
 	/******************************************************************************************************************/
 	/******************************************************************************************************************/
 	/************AQUI ES EN DONDE SE CARGAN LOS DATOS ANTERIORES DEPENDIENDO DE QUE GRAFICA SE SELECCIONA**************/
@@ -642,12 +1009,14 @@ angular.module("app.controllers",[])
 	/******************************************************************************************************************/
 	
 	$scope.changeChart = function(){
-		if($scope.graficaSeleccionada.id === 1){
-			
+		
+		switch ($scope.graficaSeleccionada.id) {
+		case 1:
 			/*Igualo a null a todas las demas graficas*/
 			chartColumEdad = null;
+			chartColumEducacion = null;
 			
-			var chartPie = new Highcharts.Chart({
+			chartPie = new Highcharts.Chart({
 			    chart: {
 			            plotBackgroundColor: null,
 			            plotBorderWidth: null,
@@ -682,58 +1051,295 @@ angular.module("app.controllers",[])
 			            colorByPoint: true,
 			            data : data
 			        }]
+			})
+			break;
+		case 2:
+			//chartPie = null;
+			chartColumEducacion = null;
+			
+			var chartColumEdad = new Highcharts.Chart({
+			    chart: {
+			    	type: 'column',
+			    	renderTo: 'container2',
+			    },
+			    title: {
+		            text: 'Votos por edad'
+		        },
+		        subtitle: {
+		        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+		        },
+		        xAxis: {
+		            categories: [
+		                '18 a 23',
+		                '24 a 30',
+		                '31 a 50',
+		                'Mas de 50',
+		               
+		            ],
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Cantidad de votos'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		                '<td style="padding:0"><b> {point.y}</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: serieEdad
+		        
+			})
+			
+			break;
+		case 3:
+			//chartPie = null;
+			chartColumEdad = null;
+			var chartColumEducacion = new Highcharts.Chart({
+			    chart: {
+			    	type: 'column',
+			    	renderTo: 'container3',
+			    },
+			    title: {
+		            text: 'Votos por nivel estudio'
+		        },
+		        subtitle: {
+		        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+		        },
+		        xAxis: {
+		            categories: [
+		                'Primaria',
+		                'Secundaria',
+		                'Terciario',
+		                'No sabe',
+		               
+		            ],
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Cantidad de votos'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		                '<td style="padding:0"><b> {point.y}</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: serieEstudio
+		        
+			})
+			
+			break;
+		case 4:
+			//chartPie = null;
+			chartColumEdad = null;
+			chartColumEducacion = null;
+			
+			var chartColumLista = new Highcharts.Chart({
+				chart: {
+		            renderTo: 'container4',
+		            type: 'column'            
+		        },
+		        title: {
+		            text: 'Votos con detalles de listas'
+		        },
+		        subtitle: {
+		            text: 'Click en las columnas para ver las listas'
+		        },
+		        xAxis: {
+		            type: 'category'
+		        },
+		        yAxis: {
+		            title: {
+		                text: 'Total de votos'
+		            }
+		        },
+		        legend: {
+		            enabled: false
+		        },
+		        plotOptions: {
+		            series: {
+		                borderWidth: 0,
+		                dataLabels: {
+		                    enabled: true
+		                }
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		            pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> votos<br/>'
+		        },
+		        series : serieLista,
+		        drilldown : drilldownLista,
 			});
-			chartPie.reflow();
-		}else
-			if($scope.graficaSeleccionada.id === 2){
-				chartPie = null;
-				
-				var chartColumEdad = new Highcharts.Chart({
-				    chart: {
-				    	type: 'column',
-				    	renderTo: 'container2',
-				    },
-				    title: {
-			            text: 'Votos por edad'
-			        },
-			        subtitle: {
-			        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
-			        },
-			        xAxis: {
-			            categories: [
-			                '18 a 23',
-			                '24 a 30',
-			                '31 a 50',
-			                'Mas de 50',
-			               
-			            ],
-			            crosshair: true
-			        },
-			        yAxis: {
-			            min: 0,
-			            title: {
-			                text: 'Cantidad de votos'
-			            }
-			        },
-			        tooltip: {
-			            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-			            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-			                '<td style="padding:0"><b> {point.y}</b></td></tr>',
-			            footerFormat: '</table>',
-			            shared: true,
-			            useHTML: true
-			        },
-			        plotOptions: {
-			            column: {
-			                pointPadding: 0.2,
-			                borderWidth: 0
-			            }
-			        },
-			        series: serieEdad
-			        
-				});
-				chartColumEdad.reflow();
-			}
+			
+			break;
+		case 5:
+			//chartPie = null;
+			chartColumEducacion = null;
+			chartColumEdad = null;
+			
+			var chartColumTrabaja = new Highcharts.Chart({
+			    chart: {
+			    	type: 'column',
+			    	renderTo: 'container5',
+			    },
+			    title: {
+		            text: 'Votos por actividad laboral'
+		        },
+		        subtitle: {
+		        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+		        },
+		        xAxis: {
+		            categories: [
+		                'Trabaja',
+		                'No trabaja'		               
+		            ],
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Cantidad de votos'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		                '<td style="padding:0"><b> {point.y}</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: serieTrabaja
+		        
+			})
+			
+			break;
+		case 6:
+			//chartPie = null;
+			chartColumEducacion = null;
+			chartColumEdad = null;
+			chartColumTrabaja = null;
+			
+			var chartColumIngresos = new Highcharts.Chart({
+			    chart: {
+			    	type: 'column',
+			    	renderTo: 'container6',
+			    },
+			    title: {
+		            text: 'Votos segun rangos de ingresos'
+		        },
+		        subtitle: {
+		        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+		        },
+		        xAxis: {
+		            categories: [
+		                'menos de 10.000',
+		                'de 10.000 a 21.365',
+		                'de 21.366 a 40.000',
+		                'mas de 40.000'
+		            ],
+		            crosshair: true
+		        },
+		        yAxis: {
+		            min: 0,
+		            title: {
+		                text: 'Cantidad de votos'
+		            }
+		        },
+		        tooltip: {
+		            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+		            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+		                '<td style="padding:0"><b> {point.y}</b></td></tr>',
+		            footerFormat: '</table>',
+		            shared: true,
+		            useHTML: true
+		        },
+		        plotOptions: {
+		            column: {
+		                pointPadding: 0.2,
+		                borderWidth: 0
+		            }
+		        },
+		        series: serieIngresos
+		        
+			})
+			
+			break;
+		case 7:
+			//chartPie = null;
+			chartColumEducacion = null;
+			chartColumEdad = null;
+			chartColumTrabaja = null;
+			chartColumIngresos = null;
+			
+			var chartColumIngresos = new Highcharts.Chart({
+			    chart: {
+			    	type: 'pie',
+			    	renderTo: 'container7',
+			    },
+			    title: {
+		            text: 'Votos segun genero'
+		        },
+		        subtitle: {
+		        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,
+		        },
+		        tooltip: {
+		            pointFormat: '{series.name}: <b>{point.y}</b>'
+		        },
+		        plotOptions: {
+		            pie: {
+		                allowPointSelect: true,
+		                cursor: 'pointer',
+		                dataLabels: {
+		                    enabled: true,
+		                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+		                    style: {
+		                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+		                    }
+		                }
+		            }
+		        },
+		        series: serieGenero,
+		        drilldown : drilldownGenero
+		        
+			})
+			
+			break;
+		default:
+			break;
+		}
+		
+		
 	}
 	
 }])
