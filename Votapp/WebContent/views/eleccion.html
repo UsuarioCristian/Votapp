@@ -85,7 +85,7 @@
 
 <div id="fifth" class="fifth eleccion-fifth" >
 	<div class="container noticias-votapp">
-		<div ng-repeat="fuen in noticias" ng-switch="fuen.tipo">
+		<div ng-repeat="fuen in noticias | orderBy:'tipo'" ng-switch="fuen.tipo">
 		   	<div ng-switch-when="facebook">
 		  	   	<div class="height-social facebook-container col-md-4">
 		  	   	<div class="header-social-votapp">

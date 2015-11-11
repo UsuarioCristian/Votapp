@@ -27,7 +27,7 @@
           <div class="col-xs-6 col-md-4"></div>
     </div>      
 </div>
-<div ng-repeat="fuen in fuentes" ng-switch="fuen.tipo">
+<div ng-repeat="fuen in fuentes | orderBy:'tipo'" ng-switch="fuen.tipo">
       <div ng-switch-when="facebook">
      	   	<div class="height-social facebook-container col-md-4">
      	   	<div class="header-social-votapp">
