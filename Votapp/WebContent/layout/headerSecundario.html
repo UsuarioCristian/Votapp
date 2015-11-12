@@ -19,7 +19,7 @@
         <ul class="nav navbar-nav">
           <li ng-hide="eleccion.tipoEleccion == 'Departamental'"><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'second'})" href="#second" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Candidatos</a></li>        
           
-          <li ng-hide="eleccion.tipoEleccion == 'Departamental' || eleccion.tipoEleccion == 'Otra'"><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'third'})" href="#third" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Partidos</a></li>
+          <li ng-hide="eleccion.tipoEleccion == 'Departamental' || eleccion.tipoEleccion == 'Otra' || eleccion.tipoEleccion == 'Simple'"><a  ui-sref="eleccion({ eleccionId: eleccion.id, anchor: 'third'})" href="#third" du-smooth-scroll class="btn btn-navbar" ng-click="navCollapsed = true">Ver Partidos</a></li>
           
                         
       </div><!-- /.navbar-collapse -->

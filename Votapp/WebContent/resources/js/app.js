@@ -65,7 +65,7 @@ angular.module('app', [
 		url: '/eleccion/{eleccionId}/encuesta/',
 		templateUrl: 'views/encuesta.html',
 		controller: 'encuestaController',
-		params: {encuesta: null },
+		params: {encuesta: null, eleccion: null },
 	})
 		
 }])
