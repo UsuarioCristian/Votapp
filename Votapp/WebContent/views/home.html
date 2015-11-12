@@ -1,3 +1,12 @@
+<div class="container-background">
+	<img class="background-image" alt="Montevideo" src="resources/img/montevideo.jpg">
+	<div class="container-central-votapp col-md-6 col-md-offset-4">
+		<img class="img-responsive" alt="VotApp" src="resources/img/votapp4.png">
+		<a href="#content-elecciones" du-smooth-scroll class="btn btn-circle col-md-1 col-md-offset-5">
+	    	<img class="img-responsive" alt="" src="resources/img/fa-angle-double-down.png">
+	    </a>
+    </div>
+</div>
 <div id="content-elecciones" class="container content-elecciones">
 	       <div class="col-lg-4 eleccion-previa" ng-repeat="eleccion in elecciones" >
 	         <img class="img-circle" ng-src="data:image/{{eleccion.logo.tipo}};base64,{{eleccion.logo.file}}" alt="{{eleccion.logo.name}}" width="100" height="100">
