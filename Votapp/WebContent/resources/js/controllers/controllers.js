@@ -196,8 +196,8 @@ angular.module("app.controllers",[])
 		}		
 	);
 	
-	$scope.goToEncuesta = function(encuesta){
-		$state.go('encuesta', {encuesta : encuesta, eleccionId : $scope.eleccion.id});
+	$scope.goToEncuesta = function(encuesta, eleccion){
+		$state.go('encuesta', {encuesta : encuesta, eleccionId : eleccion});
 	}
 	
 	
@@ -482,6 +482,8 @@ angular.module("app.controllers",[])
 .controller('encuestaController', ['$scope', '$stateParams', '$timeout',function($scope,$stateParams,$timeout){
 	
 	$scope.encuesta = $stateParams.encuesta;
+	$scope.eleccion = {};
+	$scope.eleccion.id = $stateParams.eleccionId;
 	
 	/*******************************/
 	/*******Seccion Graficas********/
