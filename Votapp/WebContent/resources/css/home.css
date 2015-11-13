@@ -94,6 +94,9 @@ body{
 .full-size{
 	height: 100%;
 }
+.full-width{
+	width: 100%;
+}
 .first{	
 	width: 100%;
 	height: 100%;
