@@ -26,6 +26,7 @@ public class DataEncuesta implements Serializable {
 	private List<DataPartido> dataPartidos;
 	private DataResultado resultado;
 	private DataConsultora dataConsultora;
+	private String nombreDepartamento;
 	
 	public DataEncuesta(){
 		this.listaEncuestaDeptos = new ArrayList<DataDepartamento>();
@@ -167,6 +168,14 @@ public class DataEncuesta implements Serializable {
 
 	public void setPreguntarIngresos(boolean preguntarIngresos) {
 		this.preguntarIngresos = preguntarIngresos;
+	}
+
+	public String getNombreDepartamento() {
+		return nombreDepartamento;
+	}
+
+	public void setNombreDepartamento(String nombreDepartamento) {
+		this.nombreDepartamento = nombreDepartamento;
 	};
 
 }

@@ -1027,7 +1027,7 @@ angular.module("app.controllers",[])
 			            renderTo: 'container',
 			        },
 			        title: {
-			            text: 'Resultado encuesta (prueba)'
+			            text: 'Resultado encuesta ('+ $scope.encuesta.dataConsultora.nombre+')'
 			        },
 			        subtitle: {
 			        	text: 'Total encuestados: '+ $scope.encuesta.cantidadRespuestas,

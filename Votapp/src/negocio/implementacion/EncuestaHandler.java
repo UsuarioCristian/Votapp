@@ -425,8 +425,11 @@ public class EncuestaHandler implements IEncuestaHandler {
 			dataEncuesta.setPreguntarIngresos(encuesta.isPreguntarIngresos());
 			
 			//Aca se podria cambiar el nombre para que no sea necesario cambiarlo en la vista
-			if(encuesta.getEleccion().getClass() == EleccionDepartamental.class)
+			if(encuesta.getEleccion().getClass() == EleccionDepartamental.class){
 				dataEncuesta.setNombre(encuesta.getNombre()+" de "+encuesta.getNombreDepartamento());
+				dataEncuesta.setNombreDepartamento(encuesta.getNombreDepartamento());
+			}
+				
 			else{
 				dataEncuesta.setNombre(encuesta.getNombre());
 				if(encuesta.getEleccion().getClass() == EleccionNacional.class){
