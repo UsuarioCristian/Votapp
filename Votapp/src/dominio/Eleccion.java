@@ -42,6 +42,7 @@ public abstract class Eleccion {
 	
 	@Column(length=100000)
 	protected String descripcion;
+	@Column(length=100000)
 	protected String css;
 	
 	@OneToOne(cascade = CascadeType.ALL)
