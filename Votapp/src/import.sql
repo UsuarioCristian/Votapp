@@ -333,3 +333,28 @@ INSERT INTO `encuesta_candidato` VALUES(7, 38);
 INSERT INTO `encuesta_candidato` VALUES(8, 40);
 INSERT INTO `encuesta_candidato` VALUES(5, 200);
 INSERT INTO `encuesta_candidato` VALUES(5, 201);
+
+UPDATE `hibernate_sequence` SET `next_val`=1000;
+
+delete from Candidato where id=15
+delete from Imagen where id=16
+delete from Candidato where id=13
+delete from Imagen where id=14
+delete from Eleccion where id=9
+delete from Imagen where id=12
+
+delete from Candidato where id=8
+delete from Imagen where id=9
+delete from Candidato where id=10
+delete from Imagen where id=11
+delete from Eleccion where id=8
+delete from Imagen where id=7
+
+update FuenteDatos set idCandidato=null where idCandidato=3
+delete from Lista_Candidato where listas_id=14
+delete from FuenteDatos where id=112
+delete from Candidato where id=3
+delete from Imagen where id=4
+delete from Lista where id=14
+delete from Eleccion where id=7
+delete from Imagen where id=2
