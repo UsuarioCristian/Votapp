@@ -403,8 +403,8 @@ angular.module("app.controllers",[])
 	/*****************************SECCION PAGINACION************************************/
 	/***********************************************************************************/
 	
-	$scope.viewby = 4;
-	$scope.totalItems = $scope.eleccion.dataCandidatos.length;
+	$scope.viewby = 6;
+	$scope.totalItems = $scope.candidatosXDepto.length;
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = $scope.viewby;
 	$scope.maxSize = 5; //Number of pager buttons to show
@@ -422,7 +422,7 @@ angular.module("app.controllers",[])
 	  $scope.currentPage = 1; //reset to first paghe
 	}
 	
-	$scope.totalItemsPartidos = $scope.eleccion.dataCandidatos.length;
+	$scope.totalItemsPartidos = $scope.partidosXDeptos.length;
 	$scope.currentPagePartidos = 1;
 	$scope.itemsPerPagePartidos = $scope.viewby; 
 	$scope.pageChangedPartidos = function() {
