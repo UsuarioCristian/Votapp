@@ -73,18 +73,23 @@
 
  <div id="fourth" class="fourth eleccion-fourth" ng-hide="eleccion.tipoEleccion == 'Departamental'">
 		<div class="container">
-		    <carousel interval="myInterval" class="carousel-votapp" on-carousel-change="onSlideChanged(nextSlide, direction)">
-		      <slide ng-repeat="encuesta in encuestas" >
-		      		<div class="slide-votapp text-center">
-				        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta, eleccion.id)">
-				        </div>
-				        <div class="carousel-caption">
-		          			<h4>{{encuesta.dataConsultora.nombre}}</h4>
-		          			<p>{{encuesta.dataConsultora.descripcion}}</p>
-		        		</div>
+		<div ng-hide="encuestas.length > 0" class="col-md-6 col-md-offset-3 text-center texto-encuestas">
+			<h1>No se han realizado encuestas aún.</h1>
+			<img class="img-responsive" alt="VotApp" src="resources/img/votapp4.png">
+		</div>
+		<h3 ng-hide="encuestas.length == 0" class="col-md-6 col-md-offset-3 text-center texto-blanco">Encuestas realizadas por nuestras consultoras asociadas.</h3>
+	    <carousel interval="myInterval" class="carousel-votapp" on-carousel-change="onSlideChanged(nextSlide, direction)">
+	      <slide ng-repeat="encuesta in encuestas" >
+	      		<div class="slide-votapp text-center">
+			        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta, eleccion.id)">
+			        </div>
+			        <div class="carousel-caption">
+	          			<h4>{{encuesta.dataConsultora.nombre}}</h4>
+	          			<p>{{encuesta.dataConsultora.descripcion}}</p>
 	        		</div>
-		      </slide>
-		    </carousel>
+        		</div>
+	      </slide>
+	    </carousel>
 		</div>
 		</div>
 

@@ -48,8 +48,26 @@
 				</div>
 		 	</div>
 		</div>
+		<div class="panel panel-primary" >
+		 	<div class="panel-heading">Encuestas:</div>
+		 		<div class="panel-body">
+		 			<div class="container">
+					    <carousel interval="myInterval" class="carousel-votapp" on-carousel-change="onSlideChanged(nextSlide, direction)">
+					      <slide ng-repeat="encuesta in encuestas" >
+					      		<div class="slide-votapp text-center">
+							        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta, eleccion.id)">
+							        </div>
+							        <div class="carousel-caption">
+					          			<h4>{{encuesta.dataConsultora.nombre}}</h4>
+					          			<p>{{encuesta.dataConsultora.descripcion}}</p>
+					        		</div>
+				        		</div>
+					      </slide>
+					    </carousel>
+					</div>
+		 	</div>
+		</div>
 	</div>
 </div> <!-- CONTENEDOR GENERAL -->
-
 
 

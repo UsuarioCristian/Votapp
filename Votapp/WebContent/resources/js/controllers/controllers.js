@@ -403,7 +403,7 @@ angular.module("app.controllers",[])
 	/*****************************SECCION PAGINACION************************************/
 	/***********************************************************************************/
 	
-	$scope.viewby = 6;
+	$scope.viewby = 4;
 	$scope.totalItems = $scope.eleccion.dataCandidatos.length;
 	$scope.currentPage = 1;
 	$scope.itemsPerPage = $scope.viewby;
