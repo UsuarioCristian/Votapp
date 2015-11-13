@@ -75,7 +75,7 @@ body, html{
 	padding-bottom: 6em;
 }
 .container-encuesta{
-	margin-top: 5%;
+	padding-top: 6em;
 }
 .texto-encuestas{
 	margin-top: 10%;
@@ -202,7 +202,7 @@ a {
 /* contenedor de TODOS los candidatos */
 .contenedor-candidatos{
 	height: 90%;
-	overflow-y: auto;
+	/*overflow-y: auto;*/
 	
 }
 /* paginado que va debajo del contenedor de candidatos */

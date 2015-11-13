@@ -42,7 +42,7 @@
 			<span ng-hide="eleccion.tipoEleccion == 'Otra' || eleccion.tipoEleccion == 'Simple'">Partido: <strong>{{candidato.nombrePartido}}</strong></span>
 			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Cargo: <strong>{{candidato.cargo}}</strong></span>
 			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Edad: <strong>{{candidato.edad}}</strong></span>
-			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{candidato.edad}}</strong></span>
+			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{lista.numero}}</strong></span>
  			<a class="btn btn-default btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
     		</div>
 	    </div><!-- ng repeat de candidatos -->
@@ -80,8 +80,8 @@
 		<h3 ng-hide="encuestas.length == 0" class="col-md-6 col-md-offset-3 text-center texto-blanco">Encuestas realizadas por nuestras consultoras asociadas.</h3>
 	    <carousel interval="myInterval" class="carousel-votapp" on-carousel-change="onSlideChanged(nextSlide, direction)">
 	      <slide ng-repeat="encuesta in encuestas" >
-	      		<div class="slide-votapp text-center">
-			        <div ng-attr-id="{{ 'container-' + encuesta.id }}" ng-click="goToEncuesta(encuesta, eleccion.id)">
+	      		<div class="slide-votapp text-center" ng-click="goToEncuesta(encuesta, eleccion.id)">
+			        <div ng-attr-id="{{ 'container-' + encuesta.id }}">
 			        </div>
 			        <div class="carousel-caption">
 	          			<h4>{{encuesta.dataConsultora.nombre}}</h4>

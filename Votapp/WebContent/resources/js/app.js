@@ -58,7 +58,12 @@ angular.module('app', [
 	$stateProvider.state('departamento', {
 		url:'/eleccion/{eleccionId}/departamento/{departamentoId}', 
 		templateUrl: 'views/departamento.html',
-		controller: 'deptoController'
+		controller: 'deptoController',
+		resolve:{
+	        encuestas: function(EleccionFactory, $stateParams){
+	        	return EleccionFactory.getEncuestasByIdEleccion($stateParams.eleccionId);
+	        }
+	    }
 		})
 		
 	.state('encuesta',{
