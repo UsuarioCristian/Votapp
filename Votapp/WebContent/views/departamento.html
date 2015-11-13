@@ -5,7 +5,7 @@
 		  <div class="panel-heading">Candidatos</div>
 		  <div class="panel-body">
 		  	<div class="container contenedor-candidatos">
-				<div class="col-md-6 contenedor-candidato" ng-repeat="candidato in candidatosXDepto.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))" >
+				<div class="col-md-6 contenedor-candidato" ng-repeat="candidato in candidatosXDepto.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:'nombre'" >
 					<div class="col-xs-4 col-md-4">
 						<img  class="img-thumbnail img-responsive"  ng-src="data:image/{{candidato.imagen.tipo}};base64,{{candidato.imagen.file}}" alt="{{candidato.imagen.name}}"/>
 					</div>
@@ -28,7 +28,7 @@
 		 	<div class="panel-heading">Partidos:</div>
 		 		<div class="panel-body">
 		 			<div class="container contenedor-candidatos">
-				 		<div class="col-md-6 contenedor-candidato" ng-repeat="partido in partidosXDeptos.slice(((currentPagePartidos-1)*itemsPerPagePartidos), ((currentPagePartidos)*itemsPerPagePartidos))" >
+				 		<div class="col-md-6 contenedor-candidato" ng-repeat="partido in partidosXDeptos.slice(((currentPagePartidos-1)*itemsPerPagePartidos), ((currentPagePartidos)*itemsPerPagePartidos)) | orderBy:'nombre'" >
 				         	<div class="col-xs-4 col-md-4">
 								<img  class="img-thumbnail img-responsive"  ng-src="data:image/{{partido.imagen.tipo}};base64,{{partido.imagen.file}}" alt="{{partido.imagen.name}}"/>
 							</div>

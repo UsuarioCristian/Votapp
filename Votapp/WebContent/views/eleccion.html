@@ -43,7 +43,7 @@
 			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Cargo: <strong>{{candidato.cargo}}</strong></span>
 			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Edad: <strong>{{candidato.edad}}</strong></span>
 			<span  ng-hide="eleccion.tipoEleccion == 'Simple'"> Listas: <strong ng-repeat="lista in candidato.dataListas"> {{lista.numero}}</strong></span>
- 			<a class="btn btn-default btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
+ 			<a class="btn btn-primary btn-xs" ui-sref="candidato({eleccionId: eleccion.id, candidatoId: candidato.id})" role="button">Ver más »</a>
     		</div>
 	    </div><!-- ng repeat de candidatos -->
 	</div>
@@ -62,7 +62,7 @@
 			<h3>{{partido.nombre}}</h3>
 			<span> Fundación: <strong>{{partido.fechaFundacion | date:'dd-MM-yyyy'}}</strong></span>
 			<span> Listas: <strong ng-repeat="lista in partido.listas"> {{lista.numero}}</strong></span>
- 			<a class="btn btn-default btn-xs" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})" role="button">Ver más »</a>
+ 			<a class="btn btn-primary btn-xs" ui-sref="partido({eleccionId: eleccion.id, partidoId: partido.id})" role="button">Ver más »</a>
     		</div>
 	    </div><!-- ng repeat de candidatos -->
 	</div>
@@ -95,7 +95,7 @@
 
 <div id="fifth" class="fifth eleccion-fifth" >
 	<div class="container noticias-votapp">
-		<div ng-repeat="fuen in noticias" ng-switch="fuen.tipo">
+		<div ng-repeat="fuen in noticias | orderBy:'tipo'" ng-switch="fuen.tipo">
 		   	<div ng-switch-when="facebook">
 		  	   	<div class="height-social facebook-container col-md-4">
 		  	   	<div class="header-social-votapp">
